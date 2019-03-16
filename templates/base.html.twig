@@ -2,11 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}DBC{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" 
+                  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+                  crossorigin="anonymous">
+            <link rel="stylesheet" 
+                  href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
+                  integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" 
+                  crossorigin="anonymous">
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="container">
+            <div class="row">
+                {% block navbar %}{% endblock %}
+            </div>
+            <div class="row">
+                {% block body %}{% endblock %}
+            </div>
+            <div class="row">
+                {% block footer %}{% endblock %}
+            </div>
+            {% block javascripts %}{% endblock %}
+        </div>
     </body>
 </html>
