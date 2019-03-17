@@ -32,29 +32,21 @@ class FileRepository extends EntityRepository
         foreach ($customers as $customer) {
             $ids[] = $customer->getId();
         }
-        
-        $customersIds = implode(',', $ids);        
-        $signature = $searchCriteria['signature'];
-        $statuses = implode(',', $searchCriteria['status']);
-        
-        $query = "SELECT f FROM App:File f WHERE f.note IS NULL ";
-        if ($signature) {
-            $query .= "AND f.signature LIKE :signature ";
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('f')->from('App:File', 'f');
+
+        if ($searchCriteria['signature']) {
+            $qb->andWhere('f.signature LIKE :signature')->setParameter(":signature", '%'.$searchCriteria['signature'].'%');
         }
-        if ($statuses) {
-            $query .= "AND f.status IN(:statuses) ";
+        if (!empty($searchCriteria['status'])) {
+            $qb->andWhere('f.status IN(:statuses)')->setParameter(":statuses", $searchCriteria['status']);
         }
-        if ($customersIds) {
-            $query .= "AND f.customer IN(:customersIds)";
+        if (!empty($ids)) {
+            $qb->andWhere('f.customer IN(:customers)')->setParameter(":customers", $ids);
         }
-        
-        $files = $this->getEntityManager()->createQuery($query)
-            ->setParameter(':signature', '%'.$signature.'%')
-            ->setParameter(':statuses', $statuses)
-            ->setParameter(':customersIds', $customersIds)
-            ->getResult();
-        
-        return $files;            
+
+        return $qb->getQuery()->getResult();           
     }
 }
  
