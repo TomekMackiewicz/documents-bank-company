@@ -44,14 +44,12 @@ class FileController extends Controller
             $em = $this->getDoctrine()->getManager();
             $action->setFile($file);
             $action->setCustomer($file->getCustomer());
-            $action->setDate($form['lastAction']->getData());
+            $action->setDate(new \DateTime());
             $action->setAction($file->getStatus());
             
             $em->persist($file);
             $em->persist($action);
             $em->flush(); 
-
-            return $this->redirectToRoute('file_show', array('id' => $file->getId()));
         }
         
         return $this->render('file/new.html.twig', array(

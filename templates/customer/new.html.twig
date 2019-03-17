@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div class="col-sm">	
+        <h1>New customer</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Create" class="btn btn-default" />
+        {{ form_end(form) }}
+        <a href="{{ path('customer_index') }}" class="btn btn-default">Back to the list</a>
+    </div>
+
+{% endblock %}
