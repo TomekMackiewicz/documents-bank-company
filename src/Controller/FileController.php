@@ -8,12 +8,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * @Route("file")
  */
 class FileController extends Controller 
-{ 
+{
     /**
      * Lists files entities
      * 
@@ -22,8 +27,22 @@ class FileController extends Controller
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function indexAction(Request $request) {
-        return $this->render('file/index.html.twig');
+    public function indexAction(Request $request) 
+    {
+        $searchResults = [];
+        $searchForm = $this->createSearchForm();
+        $searchForm->handleRequest($request);
+       
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $searchCriteria = $searchForm->getData();
+            $em = $this->getDoctrine()->getManager();
+            $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);  
+        }
+        
+        return $this->render('file/index.html.twig', array(
+            'searchForm' => $searchForm->createView(),
+            'searchResults' => $searchResults
+        ));
     }
 
     /**
@@ -34,27 +53,32 @@ class FileController extends Controller
      * @Method({"GET", "POST"})
      * @return File
      */
-    public function newAction(Request $request) {
+    public function newAction(Request $request) 
+    {
         $file = new File();
         $action = new Action();
         $form = $this->createForm('App\Form\FileType', $file);
         $form->handleRequest($request);
-
+       
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();                
             $action->setFile($file);
             $action->setCustomer($file->getCustomer());
             $action->setDate(new \DateTime());
             $action->setAction($file->getStatus());
-            
+
             $em->persist($file);
             $em->persist($action);
-            $em->flush(); 
+            $em->flush();
+            
+            $this->addFlash('success', 'New file created');
+            
+            return $this->redirectToRoute('file_index');
         }
         
         return $this->render('file/new.html.twig', array(
             'file' => $file,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 //
@@ -148,4 +172,35 @@ class FileController extends Controller
 //        ->getForm();
 //    }
 
+    private function createSearchForm()
+    {
+        return $this->createFormBuilder(null)
+            ->add('signature', SearchType::class, [
+                'required' => false
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices'  => [
+                    'In' => 'In',
+                    'Out' => 'Out',
+                    'Unknown' => 'Unknown'
+                ],
+                'expanded' => true,
+                'multiple' => true
+            ])
+            ->add('customer', EntityType::class, [
+                'class' => 'App:Customer',
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC')
+                        ->where('c.roles NOT LIKE :roles')
+                        ->setParameter('roles', '%ROLE_ADMIN%');
+                },
+                'expanded' => true,
+                'multiple' => true
+            ])                
+            ->add('search', SubmitType::class)
+            ->getForm();        
+    }    
+    
 }

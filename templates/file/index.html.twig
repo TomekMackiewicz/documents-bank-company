@@ -1,6 +1,34 @@
 {% extends "layout.html.twig" %}
 
 {% block body %}
-    file :)
-    <a class="nav-link" href="{{path('file_new')}}">New</a>
+    <a class="nav-link" href="{{ path('file_new') }}">New file</a>
+    {{ form_start(searchForm) }}
+        {{ form_widget(searchForm) }}
+    {{ form_end(searchForm) }}
+
+{% if searchResults is not empty %}
+    
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Signature</th>
+                <th scope="col">Status</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in searchResults %}
+                <tr>
+                    <td>{{ file.signature }}</td>
+                    <td>{{ file.status }}</td>
+                    <td>{{ file.customer.name }}</td>
+                    <td>{{ file.note }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>    
+ 
+{% endif %}        
+        
 {% endblock %}

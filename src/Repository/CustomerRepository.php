@@ -32,6 +32,8 @@ class CustomerRepository extends EntityRepository
         return $filesCountByCustomers;
     }
 // @Fixme set params
+//$query->setParameter(':orgID', $orgID);
+//$count = $query->getSingleScalarResult();    
     public function filesInCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(

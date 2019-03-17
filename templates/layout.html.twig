@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block navbar %}
-    <div class="col-sm">
+    <div class="col-sm-12">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{path('index')}}">
                 <i class="fas fa-database"></i> DBC
@@ -18,18 +18,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{path('file_index')}}">
-                            Files <span class="sr-only">(current)</span>
-                        </a>
-                        <a class="nav-link" href="{{path('customer_index')}}">
-                            Customers <span class="sr-only">(current)</span>
-                        </a>                            
+                        <a class="nav-link" href="{{ path('file_index') }}">
+                            Files
+                        </a>                           
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ path('customer_index') }}">
+                            Customers
+                        </a>                         
                     </li>
                 </ul>
             </div>
         </nav>
-    </div>
-{% endblock %}        
+    </div>                        
+{% endblock %} 
+{% block info %}
+    {{ include('info.html.twig') }}
+{% endblock %}
 {% block body %}{% endblock %}
 {% block footer %}
 Footer
