@@ -1,0 +1,136 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<div class="col-sm-12">
+  <h1>Customer: {{ customer.name }}</h1>
+
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>Company Name</th>
+        <td>{{ customer.name }}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>{{ customer.address }}</td>
+      </tr>
+      <tr>
+        <th>Number of files</th>
+        <td>{{ customer.files|length }}</td>
+      </tr>    
+      <tr>
+        <th>Number of files in</th>
+        <td>
+          {% if filesIn.0.filesCount is defined %}
+            {{ filesIn.0.filesCount }}
+          {% else %}
+            0
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>Number of files out</th>
+        <td>
+          {% if filesOut.0.filesCount is defined %}
+            {{ filesOut.0.filesCount }}
+          {% else %}
+            0
+          {% endif %}
+        </td>
+      </tr>                                  
+    </tbody>
+  </table>
+  <a href="{{ path('customer_index') }}" class="btn btn-default inline">Back to the list</a>
+
+  <a href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">Edit</a>
+
+  {{ form_start(delete_form) }}
+    <input type="submit" value="Delete" class="btn btn-danger inline">
+  {{ form_end(delete_form) }}
+
+
+</div>
+
+    <div class="col-sm-6">
+      <h2>Show actions</h2>
+
+      {{ form_start(actionsForm, {'attr': {'class': 'modal-form'}}) }}
+        {{ form_widget(actionsForm) }}
+        <input type="submit" value="Search" class="btn btn-default" />
+      {{ form_end(actionsForm) }}
+    </div>
+    <div class="col-sm-6">
+      <h2>Search box</h2>
+
+      {% if filterForm is defined %}
+        {{ form_start(filterForm, {'attr': {'class': 'modal-form'}}) }}
+          {{ form_widget(filterForm) }}
+          <input type="submit" value="Search" class="btn btn-default inline" />
+        {{ form_end(filterForm) }}
+      {% endif %}      
+    </div>
+    
+    <div class="col-sm-12">
+        {% if searchResults is not empty %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Signature</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in searchResults %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('file_show', { 'id': file.id }) }}">
+                                    {{ file.signature }}
+                                </a>
+                            </td>
+                            <td>{{ file.status }}</td>
+                            <td>{{ file.customer.name }}</td>
+                            <td>{{ file.note }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                             
+                
+        {% endif %}         
+    </div>    
+
+    <div class="col-sm-12">
+        {% if actionsFromTo is not empty %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Action</th>
+                        <th scope="col">File</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for action in actionsFromTo %}
+                        <tr>
+                            <td>{{ action.action }}</td>
+                            <td>
+                                <a href="{{ path('file_show', { 'id': action.file.id }) }}">
+                                    {{ action.file.signature }}
+                                </a>
+                            </td>
+                            
+                            <td>{{ action.customer.name }}</td>
+                            <td>{{ action.date|date('d-m-Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                             
+                
+        {% endif %}         
+    </div>         
+        
+{% endblock %}

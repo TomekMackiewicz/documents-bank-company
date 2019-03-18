@@ -122,7 +122,8 @@ class FileController extends Controller
      * @Route("/{id}/edit", name="file_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, File $file) {
+    public function editAction(Request $request, File $file) 
+    {
         $action = new Action();
         $editForm = $this->createForm('App\Form\FileType', $file);
         $editForm->handleRequest($request);
@@ -157,7 +158,8 @@ class FileController extends Controller
      * @Route("/{id}", name="file_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, File $file) {
+    public function deleteAction(Request $request, File $file) 
+    {
         $form = $this->createDeleteForm($file);
         $form->handleRequest($request);
 
@@ -176,7 +178,8 @@ class FileController extends Controller
      * @param File $file
      * @return Form
      */
-    private function createDeleteForm(File $file) {
+    private function createDeleteForm(File $file) 
+    {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('file_delete', array('id' => $file->getId())))
             ->setMethod('DELETE')

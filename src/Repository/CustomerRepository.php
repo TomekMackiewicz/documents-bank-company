@@ -31,23 +31,21 @@ class CustomerRepository extends EntityRepository
         
         return $filesCountByCustomers;
     }
-// @Fixme set params
-//$query->setParameter(':orgID', $orgID);
-//$count = $query->getSingleScalarResult();    
+   
     public function filesInCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(b.id) as filesCount 
+            "SELECT c.name, count(f.id) as filesCount 
              FROM App:Customer c 
-             LEFT JOIN c.files b
-             WHERE b.status='In'
-             AND c.id=$id
+             LEFT JOIN c.files f
+             WHERE f.status='In'
+             AND c.id=:id
              GROUP BY c.name"
-        )->getResult();
+        )->setParameter(':id', $id)->getResult();
         
         return $filesCountByCustomers;
     }
-// @Fixme set params
+
     public function filesOutCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
@@ -55,9 +53,9 @@ class CustomerRepository extends EntityRepository
              FROM App:Customer c 
              LEFT JOIN c.files b
              WHERE b.status='Out'
-             AND c.id=$id
+             AND c.id=:id
              GROUP BY c.name"
-        )->getResult();
+        )->setParameter(':id', $id)->getResult();
         
         return $filesCountByCustomers;
     }
@@ -70,9 +68,9 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('c')
-            ->from($this->_entityName, 'c')
-            ->where('c.roles = :roles')
-            ->setParameter('roles', 'a:1:{i:0;s:9:"ROLE_USER";}');
+            ->from('App:Customer', 'c');
+            //->where('c.roles = :roles')
+            //->setParameter('roles', 'a:1:{i:0;s:9:"ROLE_USER";}');
 
         return $qb->getQuery()->getResult();
     }

@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+    <div class="col-sm-12">
+        <h1>Edit customer</h1>
+
+        {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <input type="submit" value="Edit" class="btn btn-default inline" />
+        {{ form_end(edit_form) }}
+        <a href="{{ path('customer_index') }}" class="btn btn-default inline">Back to the list</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger inline">
+        {{ form_end(delete_form) }}
+    </div>
+
+{% endblock %}

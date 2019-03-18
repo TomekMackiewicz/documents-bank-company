@@ -13,8 +13,12 @@
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" 
                   crossorigin="anonymous">
             <style>
-                body, .sticky-footer-wrapper {
+                body {
                     min-height:100vh;
+                }
+                
+                main {
+                    padding: 16px 0 16px 0;
                 }
 
                 .flex-fill {
@@ -23,17 +27,21 @@
             </style>
         {% endblock %}
     </head>
-    <body>
-        <div class="container d-flex flex-column sticky-footer-wrapper">
+    <body class="d-flex flex-column">
+        <div class="container-fluid">
             <div class="row">
                 {% block navbar %}{% endblock %}
             </div>
+        </div>
+        <div class="container flex-fill">    
             <div class="row">
                 {% block info %}{% endblock %}
             </div>            
-            <main class="row flex-fill">
+            <main class="row">
                 {% block body %}{% endblock %}
             </main>
+        </div>
+        <div class="container-fluid">
             <div class="row">
                 {% block footer %}{% endblock %}
             </div>
