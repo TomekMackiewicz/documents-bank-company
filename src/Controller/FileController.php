@@ -38,7 +38,7 @@ class FileController extends Controller
             $em = $this->getDoctrine()->getManager();
             $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);  
         }
-        
+
         return $this->render('file/index.html.twig', array(
             'searchForm' => $searchForm->createView(),
             'searchResults' => $searchResults
@@ -115,36 +115,40 @@ class FileController extends Controller
             'delete_form' => $this->createDeleteForm($file)->createView()
         ]);
     }
-//
-//    /**
-//     * Displays a form to edit an existing box entity.
-//     * @Route("/{id}/edit", name="box_edit")
-//     * @Method({"GET", "POST"})
-//     */
-//    public function editAction(Request $request, Box $box) {
-//      $action = new Action();
-//      $editForm = $this->createForm('InventoryBundle\Form\BoxType', $box);
-//      $editForm->handleRequest($request);
-//
-//      if ($editForm->isSubmitted() && $editForm->isValid()) {
-//        $em = $this->getDoctrine()->getManager();
-//        $action->setBox($box);
-//        $action->setCustomer($box->getCustomer());
-//        $action->setDate($editForm['lastAction']->getData());
-//        $action->setAction($box->getStatus());
-//        $em->persist($box);
-//        $em->persist($action);
-//        $em->flush();
-//
-//        return $this->redirectToRoute('box_show', array('id' => $box->getId()));
-//      }
-//      return $this->render('box/edit.html.twig', array(
-//        'box' => $box,
-//        'edit_form' => $editForm->createView(),
-//        'delete_form' => $this->createDeleteForm($box)->createView()
-//      ));
-//    }
-//
+
+    /**
+     * Edit file
+     * 
+     * @Route("/{id}/edit", name="file_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, File $file) {
+        $action = new Action();
+        $editForm = $this->createForm('App\Form\FileType', $file);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $action->setFile($file);
+            $action->setCustomer($file->getCustomer());
+            $action->setDate(new \DateTime());
+            $action->setAction($file->getStatus());
+            $em->persist($file);
+            $em->persist($action);
+            $em->flush();
+            
+            $this->addFlash('success', 'File edited successfully');
+
+            return $this->redirectToRoute('file_show', array('id' => $file->getId()));
+        }
+        
+        return $this->render('file/edit.html.twig', array(
+            'file' => $file,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $this->createDeleteForm($file)->createView()
+        ));
+    }
+
     /**
      * Delete file
      * 

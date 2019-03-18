@@ -12,19 +12,28 @@
                   href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" 
                   crossorigin="anonymous">
+            <style>
+                body, .sticky-footer-wrapper {
+                    min-height:100vh;
+                }
+
+                .flex-fill {
+                    flex:1 1 auto;
+                }                
+            </style>
         {% endblock %}
     </head>
     <body>
-        <div class="container">
+        <div class="container d-flex flex-column sticky-footer-wrapper">
             <div class="row">
                 {% block navbar %}{% endblock %}
             </div>
             <div class="row">
                 {% block info %}{% endblock %}
             </div>            
-            <div class="row">
+            <main class="row flex-fill">
                 {% block body %}{% endblock %}
-            </div>
+            </main>
             <div class="row">
                 {% block footer %}{% endblock %}
             </div>

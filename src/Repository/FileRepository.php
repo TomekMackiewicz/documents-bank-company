@@ -37,16 +37,24 @@ class FileRepository extends EntityRepository
         $qb->select('f')->from('App:File', 'f');
 
         if ($searchCriteria['signature']) {
-            $qb->andWhere('f.signature LIKE :signature')->setParameter(":signature", '%'.$searchCriteria['signature'].'%');
+            $qb->andWhere('f.signature LIKE :signature')
+                ->setParameter(":signature", '%'.$searchCriteria['signature'].'%');
         }
         if (!empty($searchCriteria['status'])) {
-            $qb->andWhere('f.status IN(:statuses)')->setParameter(":statuses", $searchCriteria['status']);
+            $qb->andWhere('f.status IN(:statuses)')
+               ->setParameter(":statuses", $searchCriteria['status']);
         }
         if (!empty($ids)) {
-            $qb->andWhere('f.customer IN(:customers)')->setParameter(":customers", $ids);
+            $qb->andWhere('f.customer IN(:customers)')
+               ->setParameter(":customers", $ids);
         }
-
+        
         return $qb->getQuery()->getResult();           
     }
+    
+//    public function countFiles()
+//    {
+//        return $this->_em->createQuery("SELECT COUNT(f.id) FROM App:File f")->getSingleScalarResult();
+//    }      
 }
  
