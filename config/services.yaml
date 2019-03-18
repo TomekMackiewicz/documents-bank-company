@@ -24,5 +24,11 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+#    authentication.handler.login_success_handler:
+#        class:  App\Security\LoginSuccessHandler
+#        arguments:  ['@router', '@security.authorization_checker']
+#
+#    app.form.profile:
+#        class: App\Form\CustomerType
+#        tags:
+#            - { name: form.type, alias: app_user_profile } 
