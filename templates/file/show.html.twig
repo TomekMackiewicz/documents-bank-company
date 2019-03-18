@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div class="col-sm-12">
+        <h1>{{ file.signature }}</h1>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Signature</th>
+                    <td>{{ file.signature }}</td>
+                </tr>
+                <tr>
+                    <th>Customer</th>
+                    <td></td>
+                    {#<td><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></td>#}
+                </tr>              
+                <tr>
+                    <th>Status</th>
+                    <td>{{ file.status }}</td>
+                </tr>
+                <tr>
+                    <th>Last action</th>
+                    <td></td>
+                    {#<td>{% if box.lastAction %}{{ box.lastAction|date('Y-m-d') }}{% endif %}</td>#}
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('file_index') }}" class="btn btn-default inline">Back to the list</a>
+        {#<a href="{{ path('box_edit', { 'id': box.id }) }}" class="btn btn-default inline">Edit</a>#}
+        {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+            <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}       
+    </div>
+    <div class="col-sm-12">
+        <h2>Show actions</h2>
+
+        {{ form_start(actionsForm, {'attr': {'class': 'modal-form'}}) }}
+            {{ form_widget(actionsForm) }}
+            <input type="submit" value="Search" class="btn btn-default" id="modalShow" data-toggle="modal" data-target="#modal" />
+        {{ form_end(actionsForm) }}
+
+        {% if actionsFromTo is not null %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <td>Action</td>
+                        <td>Date</td>
+                    </tr>  
+                </thead>         
+                <tbody>
+                {% for action in actionsFromTo %}
+                    <tr>
+                        <td>{{ action.action }}</td>
+                        <td>{{ action.date|date('Y-m-d') }}</td>
+                    </tr>                
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}        
+    </div>
+{% endblock %}

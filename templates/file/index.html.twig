@@ -1,34 +1,57 @@
 {% extends "layout.html.twig" %}
 
 {% block body %}
-    <a class="nav-link" href="{{ path('file_new') }}">New file</a>
-    {{ form_start(searchForm) }}
-        {{ form_widget(searchForm) }}
-    {{ form_end(searchForm) }}
-
-{% if searchResults is not empty %}
     
-    <table class="table">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Signature</th>
-                <th scope="col">Status</th>
-                <th scope="col">Customer</th>
-                <th scope="col">Note</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for file in searchResults %}
-                <tr>
-                    <td>{{ file.signature }}</td>
-                    <td>{{ file.status }}</td>
-                    <td>{{ file.customer.name }}</td>
-                    <td>{{ file.note }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>    
- 
-{% endif %}        
-        
+    <div class="col-sm-12">
+        <a class="btn btn-primary" href="{{ path('file_new') }}">New file</a>
+        {{ form_start(searchForm) }}
+            {{ form_widget(searchForm) }}
+        {{ form_end(searchForm) }}        
+    </div>
+    <div class="col-sm-12">
+        {% if searchResults is not empty %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Signature</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in searchResults %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('file_show', { 'id': file.id }) }}">
+                                    {{ file.signature }}
+                                </a>
+                            </td>
+                            <td>{{ file.status }}</td>
+                            <td>{{ file.customer.name }}</td>
+                            <td>{{ file.note }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                
+            <nav aria-label="">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>                
+                
+        {% endif %}         
+    </div>
+       
 {% endblock %}

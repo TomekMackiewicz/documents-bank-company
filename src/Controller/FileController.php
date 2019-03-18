@@ -81,38 +81,40 @@ class FileController extends Controller
             'form' => $form->createView()
         ));
     }
-//
-//    /**
-//     * Finds and displays a box entity.
-//     * @Route("/{id}", name="box_show")
-//     * @Method({"GET", "POST"})
-//     * @Template("box/show.html.twig")
-//     */
-//    public function showAction(Request $request, Box $box) {
-//      $actionsFromTo = null;
-//      $datesError = null;
-//      $em = $this->getDoctrine()->getManager();
-//      $repo = $this->getDoctrine()->getRepository('InventoryBundle:Action');
-//      $actionsForm = $this->createForm('InventoryBundle\Form\ActionType');
-//      $actionsForm->handleRequest($request);
-//      if ($actionsForm->isSubmitted() && $actionsForm->isValid()) {
-//        $dateFrom = $actionsForm["dateFrom"]->getData()->format('Y-m-d');
-//        $dateTo = $actionsForm["dateTo"]->getData()->format('Y-m-d');
-//        if( strtotime($dateFrom) < strtotime($dateTo) ) {
-//          $actionsFromTo = $em->getRepository('InventoryBundle:Action')
-//            ->boxActionsFromTo($box->getId(), $dateFrom, $dateTo);
-//        } else {
-//            $datesError = "Start value can't be higher than end date!";        
-//        }
-//      }
-//      return [
-//        'box' => $box,
-//        'actionsForm' => $actionsForm->createView(),
-//        'actionsFromTo' => $actionsFromTo,            
-//        'delete_form' => $this->createDeleteForm($box)->createView(),
-//        'datesError' => $datesError
-//      ];
-//    }
+
+    /**
+     * Show file
+     * 
+     * @param Request $request
+     * @param File $file
+     * @Route("/{id}", name="file_show")
+     * @Method({"GET", "POST"})
+     */
+    public function showAction(Request $request, File $file) 
+    {
+        $actionsFromTo = null;
+        $em = $this->getDoctrine()->getManager();
+        $actionsForm = $this->createForm('App\Form\ActionType');
+        $actionsForm->handleRequest($request);
+
+        if ($actionsForm->isSubmitted() && $actionsForm->isValid()) {
+            $dateFrom = $actionsForm["dateFrom"]->getData()->format('Y-m-d');
+            $dateTo = $actionsForm["dateTo"]->getData()->format('Y-m-d');
+            if( strtotime($dateFrom) < strtotime($dateTo) ) {
+                $actionsFromTo = $em->getRepository('App:Action')
+                    ->fileActionsFromTo($file->getId(), $dateFrom, $dateTo);
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }
+        }
+        
+        return $this->render('file/show.html.twig', [
+            'file' => $file,
+            'actionsForm' => $actionsForm->createView(),
+            'actionsFromTo' => $actionsFromTo,            
+            'delete_form' => $this->createDeleteForm($file)->createView()
+        ]);
+    }
 //
 //    /**
 //     * Displays a form to edit an existing box entity.
@@ -143,35 +145,45 @@ class FileController extends Controller
 //      ));
 //    }
 //
-//    /**
-//     * Deletes a box entity.
-//     * @Route("/{id}", name="box_delete")
-//     * @Method("DELETE")
-//     */
-//    public function deleteAction(Request $request, Box $box) {
-//      $form = $this->createDeleteForm($box);
-//      $form->handleRequest($request);
-//
-//      if ($form->isSubmitted() && $form->isValid()) {
-//        $em = $this->getDoctrine()->getManager();
-//        $em->remove($box);
-//        $em->flush($box);
-//      }
-//      return $this->redirectToRoute('box_index');
-//    }
-//
-//    /**
-//     * Creates a form to delete a box entity.
-//     * @param Box $box The box entity
-//     * @return \Symfony\Component\Form\Form The form
-//     */
-//    private function createDeleteForm(Box $box) {
-//      return $this->createFormBuilder()
-//        ->setAction($this->generateUrl('box_delete', array('id' => $box->getId())))
-//        ->setMethod('DELETE')
-//        ->getForm();
-//    }
+    /**
+     * Delete file
+     * 
+     * @param Request $request
+     * @param File $file
+     * @Route("/{id}", name="file_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, File $file) {
+        $form = $this->createDeleteForm($file);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($file);
+            $em->flush($file);
+        }
+
+        return $this->redirectToRoute('file_index');
+    }
+
+    /**
+     * Creates a form to delete a file entity
+     * 
+     * @param File $file
+     * @return Form
+     */
+    private function createDeleteForm(File $file) {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('file_delete', array('id' => $file->getId())))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+    
+    /**
+     * Create search form
+     * 
+     * @return Form
+     */
     private function createSearchForm()
     {
         return $this->createFormBuilder(null)
