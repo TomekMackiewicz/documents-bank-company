@@ -51,7 +51,7 @@ class FileController extends Controller
      * @param Request $request
      * @Route("/new", name="file_new")
      * @Method({"GET", "POST"})
-     * @return File
+     * @return array
      */
     public function newAction(Request $request) 
     {
@@ -89,6 +89,7 @@ class FileController extends Controller
      * @param File $file
      * @Route("/{id}", name="file_show")
      * @Method({"GET", "POST"})
+     * @return array
      */
     public function showAction(Request $request, File $file) 
     {

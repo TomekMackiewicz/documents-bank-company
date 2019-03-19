@@ -26,7 +26,7 @@ class Customer extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string", length=64)
+     * @ORM\Column(name="name", type="string", length=64, nullable=true)
      * @Assert\NotBlank(
      *   message = "Name field cannot be empty."
      * )     
@@ -35,7 +35,7 @@ class Customer extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      * @Assert\NotBlank(
      *   message = "Address field cannot be empty."
      * )       
@@ -48,9 +48,9 @@ class Customer extends BaseUser
     private $files;
 
     /**
-     * @ORM\OneToMany(targetEntity="Action", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="Transfer", mappedBy="customer")
      */
-    private $actions;
+    private $transfers;
 
     /**
      * @ORM\OneToOne(targetEntity="Fees", mappedBy="customer")
@@ -61,7 +61,7 @@ class Customer extends BaseUser
     {
         parent::__construct();
         $this->files = new ArrayCollection();
-        $this->actions = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     /**
@@ -135,29 +135,29 @@ class Customer extends BaseUser
     }
 
     /**
-     * @param Action $action
+     * @param Transfer $transfer
      * @return Customer
      */
-    public function addAction(Action $action) 
+    public function addTransfer(Transfer $transfer) 
     {
-        $this->actions[] = $action;
+        $this->transfers[] = $transfer;
         return $this;
     }
 
     /**
-     * @param Action $action
+     * @param Transfer $transfer
      */
-    public function removeAction(Action $action) 
+    public function removeTransfer(Transfer $transfer) 
     {
-        $this->actions->removeElement($action);
+        $this->transfers->removeElement($transfer);
     }
 
     /**
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getActions() 
+    public function getTransfers() 
     {
-        return $this->actions;
+        return $this->transfers;
     }
 
     /**

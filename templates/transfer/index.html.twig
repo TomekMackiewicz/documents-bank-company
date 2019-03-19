@@ -1,0 +1,41 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+
+    <div class="col-sm-12">
+        <h1>Transfers</h1>
+        <a class="btn btn-primary" href="{{ path('transfer_new') }}">New transfer</a>
+        {{ form_start(searchForm) }}
+            {{ form_widget(searchForm) }}
+        {{ form_end(searchForm) }}        
+    </div>
+    <div class="col-sm-12">
+        {% if searchResults is not empty %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Customer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in searchResults %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('transfer_show', { 'id': file.id }) }}">
+                                    {{ transfer.id }}
+                                </a>
+                            </td>
+                            <td>{{ transfer.date|date('d-m-Y') }}</td>
+                            <td>{{ transfer.type }}</td>
+                            <td>{{ file.customer.name }}</td>                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>               
+        {% endif %}         
+    </div>
+    
+{% endblock %}

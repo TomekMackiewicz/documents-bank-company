@@ -65,13 +65,13 @@ class File
     private $customer;
 
     /**
-     * @ORM\OneToMany(targetEntity="Action", mappedBy="file")
+     * @ORM\ManyToMany(targetEntity="Transfer", mappedBy="files")
      */
-    private $actions;
+    private $transfers;
 
     public function __construct() 
     {
-        $this->actions = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     /**
@@ -155,30 +155,29 @@ class File
     }
 
     /**
-     * @param Action $actions
+     * @param Transfer $transfer
      * @return File
      */
-    public function addAction(Action $actions) 
+    public function addTransfer(Transfer $transfer) 
     {
-        $this->actions[] = $actions;
+        $this->transfers[] = $transfer;
         return $this;
     }
 
     /**
-     * @param Action $actions
+     * @param Transfer $transfer
      */
-    public function removeAction(Action $actions) 
+    public function removeTransfer(Transfer $transfer) 
     {
-        $this->actions->removeElement($actions);
+        $this->transfers->removeElement($transfer);
     }
 
     /**
-     * Get actions
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getActions() 
+    public function getTransfers() 
     {
-        return $this->actions;
+        return $this->transfers;
     }
 
 }
