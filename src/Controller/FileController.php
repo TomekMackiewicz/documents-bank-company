@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\File;
-use App\Entity\Action;
+use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,19 +56,19 @@ class FileController extends Controller
     public function newAction(Request $request) 
     {
         $file = new File();
-        $action = new Action();
+        $transfer = new Transfer();
         $form = $this->createForm('App\Form\FileType', $file);
         $form->handleRequest($request);
        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();                
-            $action->setFile($file);
-            $action->setCustomer($file->getCustomer());
-            $action->setDate(new \DateTime());
-            $action->setAction($file->getStatus());
+            $transfer->addFile($file);
+            $transfer->setCustomer($file->getCustomer());
+            $transfer->setDate(new \DateTime());
+            $transfer->setType(Transfer::$transferAdjustment);
 
             $em->persist($file);
-            $em->persist($action);
+            $em->persist($transfer);
             $em->flush();
             
             $this->addFlash('success', 'New file created');

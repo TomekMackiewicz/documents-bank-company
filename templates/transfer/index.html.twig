@@ -21,16 +21,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for file in searchResults %}
+                    {% for transfer in searchResults %}
                         <tr>
                             <td>
-                                <a href="{{ path('transfer_show', { 'id': file.id }) }}">
+                                <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     {{ transfer.id }}
                                 </a>
                             </td>
                             <td>{{ transfer.date|date('d-m-Y') }}</td>
                             <td>{{ transfer.type }}</td>
-                            <td>{{ file.customer.name }}</td>                            
+                            <td>{{ transfer.customer.name }}</td>                            
                         </tr>
                     {% endfor %}
                 </tbody>

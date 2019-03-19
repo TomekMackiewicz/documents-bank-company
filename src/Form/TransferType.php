@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
+use App\Entity\Transfer;
 
 class TransferType extends AbstractType 
 {
@@ -20,10 +21,18 @@ class TransferType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'In' => 'In',
-                    'Out' => 'Out',
-                    'Unknown' => 'Adjustment'
+                    'In' => Transfer::$transferIn,
+                    'Out' => Transfer::$transferOut
                 ]
+            ])
+            ->add('files', EntityType::class,[
+                'class' => 'App:File',
+                'choice_label' => 'signature',
+                'multiple' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.signature', 'ASC');
+                }
             ])
             ->add('customer', EntityType::class,[
                 'class' => 'App:Customer',

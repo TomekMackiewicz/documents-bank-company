@@ -13,11 +13,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-//use Symfony\Component\Form\Extension\Core\Type\SearchType;
-//use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-//use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-//use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-//use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * @Route("transfer")
@@ -49,8 +45,6 @@ class TransferController extends Controller
             'searchResults' => $searchResults
         ));
     } 
-    
-//////////////////////////
 
     /**
      * New transfer
@@ -65,18 +59,21 @@ class TransferController extends Controller
         $transfer = new Transfer();
         $form = $this->createForm('App\Form\TransferType', $transfer);
         $form->handleRequest($request);
-       
+      
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager(); 
-
-            $transfer->addFiles($data['files']);
-            $transfer->setCustomer($data['customer']);
+            
+            foreach ($data->getFiles()->toArray() as $file) {
+                $file->setStatus($data->getType());
+                $transfer->addFile($file);
+                $em->persist($file);               
+            }
+            
+            $transfer->setCustomer($data->getCustomer());
             $transfer->setDate(new \DateTime());
-            $transfer->setType($data['type']);
+            $transfer->setType($data->getType());
 
-            // Trzeba zmienić status pudeł!!!
-            //$em->persist($file);
             $em->persist($transfer);
             $em->flush();
             
@@ -109,6 +106,28 @@ class TransferController extends Controller
     }    
 
     /**
+     * Delete transfer
+     * 
+     * @param Request $request
+     * @param Transfer $transfer
+     * @Route("/{id}", name="transfer_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, Transfer $transfer) 
+    {
+        $form = $this->createDeleteForm($transfer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($transfer);
+            $em->flush($transfer);
+        }
+
+        return $this->redirectToRoute('transfer_index');
+    }    
+    
+    /**
      * Creates a form to delete a transfer
      * 
      * @param Transfer $transfer
@@ -130,6 +149,15 @@ class TransferController extends Controller
     private function createSearchForm()
     {
         return $this->createFormBuilder(null)
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'In' => Transfer::$transferIn,
+                    'Out' => Transfer::$transferOut,
+                    'Adjustment' => Transfer::$transferAdjustment
+                ],
+                'expanded' => true,
+                'multiple' => true
+            ])                
             ->add('dateFrom', DateType::class, array(
                 'label' => 'From',
                 'widget' => 'single_text'                

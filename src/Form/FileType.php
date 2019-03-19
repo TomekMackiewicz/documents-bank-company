@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
+use App\Entity\File;
 
 class FileType extends AbstractType 
 {
@@ -20,9 +21,9 @@ class FileType extends AbstractType
             ->add('signature')
             ->add('status', ChoiceType::class, [
                 'choices'  => [
-                    'In' => 'In',
-                    'Out' => 'Out',
-                    'Unknown' => 'Unknown'
+                    'In' => File::$statusIn,
+                    'Out' => File::$statusOut,
+                    'Unknown' => File::$statusUnknown
                 ]
             ])
             ->add('customer', EntityType::class,[

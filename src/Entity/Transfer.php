@@ -12,6 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Transfer 
 {
+    static $transferIn = 1;
+    static $transferOut = 2;
+    static $transferAdjustment = 3;
+    
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
@@ -42,14 +46,14 @@ class Transfer
     private $customer;
 
     /**
-     * @ORM\ManyToMany(targetEntity="File", inversedBy="transfers")
+     * @ORM\ManyToMany(targetEntity="File", inversedBy="transfers", cascade={"persist"}, indexBy="signature", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="files_transfers")
      */
     private $files;
     
     /**
      * @var int
-     * @ORM\Column(name="boxes", type="integer") 
+     * @ORM\Column(name="boxes", type="integer", nullable=true) 
      */
     private $boxes;
 
@@ -126,8 +130,12 @@ class Transfer
      */
     public function addFile(File $file)
     {
-        $this->files[] = $file;
-        return $this;
+        if ($this->files->contains($file)) {
+            return $this;
+        }
+
+        $tagKey = $file->getSignature() ?? $file->getId();
+        $this->files[$tagKey] = $file;        
     }
     
     /**

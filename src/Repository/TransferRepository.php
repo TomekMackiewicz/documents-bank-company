@@ -54,9 +54,12 @@ class TransferRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('t')->from('App:Transfer', 't');
 
-
+        if (!empty($searchCriteria['type'])) {
+            $qb->andWhere('t.type IN(:types)')
+               ->setParameter(":types", $searchCriteria['type']);
+        }
         if (!empty($searchCriteria['dateFrom'])) {
-            $qb->andWhere('t.date > :fromDate')
+            $qb->andWhere('t.date > :dateFrom')
                ->setParameter(":dateFrom", $searchCriteria['dateFrom']);
         }
         if (!empty($searchCriteria['dateTo'])) {

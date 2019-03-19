@@ -1,5 +1,12 @@
 {% extends "layout.html.twig" %}
 
 {% block body %}
-    New
+    <div class="col-sm col-md-6 offset-md-3">
+        <h1>Add new transfer</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Create" class="btn btn-primary" />
+        {{ form_end(form) }}
+        <a href="{{ path('transfer_index') }}" class="btn btn-secondary">Back to the list</a>
+    </div>   
 {% endblock %}  

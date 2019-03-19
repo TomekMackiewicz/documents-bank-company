@@ -13,7 +13,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("signature")
  */
 class File 
-{    
+{ 
+    static $statusIn = 1;
+    static $statusOut = 2;
+    static $statusUnknown = 3;
+    
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
@@ -38,13 +42,13 @@ class File
 
     /**
      * @var string
-     * @ORM\Column(name="status", type="string", length=8)
+     * @ORM\Column(name="status", type="integer")
      * @Assert\NotBlank(
      *   message = "Status cannot be empty."
      * )
      * @Assert\Choice(
-     *   choices = { "In", "Out", "Unknown" },
-     *   message = "Choose a valid value (In, Out, Unknown)."
+     *   choices = { 1, 2, 3 },
+     *   message = "Choose a valid value."
      * )        
      */
     private $status;
