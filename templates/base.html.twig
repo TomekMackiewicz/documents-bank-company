@@ -23,7 +23,35 @@
 
                 .flex-fill {
                     flex:1 1 auto;
-                }                
+                } 
+ 
+                .ui-autocomplete {
+                    position: absolute;
+                    z-index: 1000;
+                    cursor: default;
+                    padding: 0;
+                    margin-top: 2px;
+                    list-style: none;
+                    background-color: #ffffff;
+                    border: 1px solid #ccc;
+                    -webkit-border-radius: 5px;
+                       -moz-border-radius: 5px;
+                            border-radius: 5px;
+                    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                }
+                .ui-autocomplete > li {
+                    padding: 3px 20px;
+                    cursor:pointer;
+                }
+                .ui-autocomplete > li.ui-state-focus {
+                    background-color: #DDD;
+                }
+                .ui-helper-hidden-accessible {
+                    display: none;
+                }
+
             </style>
         {% endblock %}
     </head>
@@ -47,9 +75,6 @@
             </div>            
         </div>
         {% block javascripts %}
-{#            <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
-                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
-                    crossorigin="anonymous"></script>#}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>        
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>        
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
@@ -79,7 +104,9 @@
                         })
                         .autocomplete({
                             source: function( request, response ) {
-                                $.getJSON( "http://localhost:8000/file/test/"+request.term, {}, response );
+                                var lastIndex = request.term.lastIndexOf(",");
+                                var term = request.term.substring(lastIndex + 1);
+                                $.getJSON( "http://localhost:8000/file/test/"+term.trim(), {}, response );
                             },
                             search: function() {
                                 // custom minLength
