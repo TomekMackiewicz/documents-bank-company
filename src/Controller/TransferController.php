@@ -59,7 +59,7 @@ class TransferController extends Controller
         $transfer = new Transfer();
         $form = $this->createForm('App\Form\TransferType', $transfer);
         $form->handleRequest($request);
-      
+     
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager(); 

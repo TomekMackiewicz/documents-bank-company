@@ -20,6 +20,20 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
+     * @Route("/test/{text}", name="files_test")
+     * @param string
+     * @Method({"GET"})
+     * 
+     */
+    public function filesAction($text)
+    {
+        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text);
+        $files = array_column($data, 'signature');
+        
+        return $this->json($files);
+    }
+    
+    /**
      * Lists files entities
      * 
      * @param Request $request
@@ -221,6 +235,6 @@ class FileController extends Controller
             ])                
             ->add('search', SubmitType::class)
             ->getForm();        
-    }    
+    } 
     
 }

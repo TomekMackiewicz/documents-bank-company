@@ -6,10 +6,17 @@ use Doctrine\ORM\EntityRepository;
 
 class FileRepository extends EntityRepository 
 {
+    public function getAllFiles($term)
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT f.signature FROM App:File f WHERE f.signature LIKE :signature"
+        )->setParameter(":signature", '%'.$term.'%')->setMaxResults(10)->getArrayResult();        
+    }
+    
     public function filesIn() 
     {
         $filesIn = $this->getEntityManager()->createQuery(
-            "SELECT count(b.id) FROM App:File b WHERE b.status='In'"
+            "SELECT count(f.id) FROM App:File f WHERE f.status='In'"
         )->getSingleScalarResult();
         
         return $filesIn;
@@ -18,7 +25,7 @@ class FileRepository extends EntityRepository
     public function filesOut() 
     {
         $filesOut = $this->getEntityManager()->createQuery(
-            "SELECT count(b.id) FROM App:File b WHERE b.status='Out'"
+            "SELECT count(f.id) FROM App:File f WHERE f.status='Out'"
         )->getSingleScalarResult();
         
         return $filesOut;

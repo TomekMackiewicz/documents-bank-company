@@ -6,13 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Transfer;
+use App\Form\DataTransformer\StringToFileTransformer;
 
 class TransferType extends AbstractType 
 {
+    private $transformer;
+
+    public function __construct(StringToFileTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }    
+    
     /**
      * {@inheritdoc}
      */
@@ -24,16 +33,8 @@ class TransferType extends AbstractType
                     'In' => Transfer::$transferIn,
                     'Out' => Transfer::$transferOut
                 ]
-            ])
-            ->add('files', EntityType::class,[
-                'class' => 'App:File',
-                'choice_label' => 'signature',
-                'multiple' => true,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('f')
-                        ->orderBy('f.signature', 'ASC');
-                }
-            ])
+            ])                
+            ->add('files', TextType::class)
             ->add('customer', EntityType::class,[
                 'class' => 'App:Customer',
                 'choice_label' => 'name',
@@ -48,6 +49,8 @@ class TransferType extends AbstractType
                 'label' => 'Date',
                 'widget' => 'single_text'                
             ));
+            
+        $builder->get('files')->addModelTransformer($this->transformer);
     }
 
     /**

@@ -47,55 +47,66 @@
             </div>            
         </div>
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+{#            <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
                     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
-                    crossorigin="anonymous"></script>
+                    crossorigin="anonymous"></script>#}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>        
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>        
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
                     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
                     crossorigin="anonymous"></script> 
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
                     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
                     crossorigin="anonymous"></script> 
-{#              <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+              
 
-  <script>
-  $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
- 
-    $( "#tags" ).autocomplete({
-      source: availableTags
-    });
-  } );
-  </script>#}
+            <script>
+
+                $(document).ready(function() {       
+                    function split( val ) {
+                      return val.split( /,\s*/ );
+                    }
+                    function extractLast( term ) {
+                      return split( term ).pop();
+                    }
+
+                    $( "#app_transfer_files" )
+                        // don't navigate away from the field on tab when selecting an item
+                        .on( "keydown", function( event ) {
+                            if ( event.keyCode === $.ui.keyCode.TAB && $( this ).autocomplete( "instance" ).menu.active ) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            source: function( request, response ) {
+                                $.getJSON( "http://localhost:8000/file/test/"+request.term, {}, response );
+                            },
+                            search: function() {
+                                // custom minLength
+                                var term = extractLast( this.value );
+                                if ( term.length < 1 ) {
+                                    return false;
+                                }
+                            },
+                            focus: function() {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function( event, ui ) {
+                                var terms = split( this.value );
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push( ui.item.value );
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push( "" );
+                                this.value = terms.join( ", " );
+                                return false;
+                            }
+                        });
+                });
+
+            </script>
               
         {% endblock %}
     </body>
