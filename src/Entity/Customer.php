@@ -53,7 +53,7 @@ class Customer extends BaseUser
     private $transfers;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fees", mappedBy="customer")
+     * @ORM\OneToOne(targetEntity="Fee", mappedBy="customer")
      */
     private $fee;
 

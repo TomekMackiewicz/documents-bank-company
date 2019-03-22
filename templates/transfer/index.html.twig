@@ -3,11 +3,80 @@
 {% block body %}
 
     <div class="col-sm-12">
-        <h1>Transfers</h1>
-        <a class="btn btn-primary" href="{{ path('transfer_new') }}">New transfer</a>
+        <div class="row">
+            <div class="col-sm-12">
+{#                <h1>Transfers</h1>
+            </div>
+            <div class="col-sm-9">
+                <a class="btn btn-primary" href="{{ path('transfer_new') }}">
+                    <i class="fas fa-plus"></i> New transfer
+                </a>
+            </div>#}
+<div class="jumbotron">
+  <h1 class="display-4">Transfers</h1>
+                <a class="btn btn-primary" href="{{ path('transfer_new') }}">
+                    <i class="fas fa-plus"></i> New transfer
+                </a>
+</div>
+{#<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Transfers</a>
+    </li> 
+    <li class="nav-item">
+        <a class="btn btn-primary" href="{{ path('transfer_new') }}">
+            <i class="fas fa-plus"></i> New transfer
+        </a>        
+    </li>
+</ul>#}
+            </div>
+        </div>        
         {{ form_start(searchForm) }}
-            {{ form_widget(searchForm) }}
-        {{ form_end(searchForm) }}        
+            <div class="row">            
+                <div class="col">                    
+                    <div class="input-group">
+                        {{ form_label(searchForm.dateFrom) }}
+                        {{ form_errors(searchForm.dateFrom) }}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Date from</div>
+                    </div>    
+                        {{ form_widget(searchForm.dateFrom) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        {{ form_label(searchForm.dateTo) }}
+                        {{ form_errors(searchForm.dateTo) }}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Date to</div>
+                    </div>    
+                        {{ form_widget(searchForm.dateTo) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        {{ form_label(searchForm.type) }}
+                        {{ form_errors(searchForm.type) }}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Type</div>
+                    </div>    
+                        {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple'}}) }}
+                    </div>                    
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        {{ form_label(searchForm.customer) }}
+                        {{ form_errors(searchForm.customer) }}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Customer</div>
+                    </div>    
+                        {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple'}}) }}
+                    </div>                     
+                </div>
+                <div class="col-sm-1">
+                    {{ form_row(searchForm.search) }}
+                </div>
+            </div>
+        {{ form_end(searchForm) }}         
     </div>
     <div class="col-sm-12">
         {% if searchResults is not empty %}

@@ -12,6 +12,8 @@
                   href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" 
                   crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+            
             <style>
                 body {
                     min-height:100vh;
@@ -51,6 +53,16 @@
                 .ui-helper-hidden-accessible {
                     display: none;
                 }
+                .multiselect-container {
+                    min-width: 12rem
+                }
+                .multiselect-container > li > a {
+                    color: #212529
+                }
+                .multiselect-native-select {
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;                    
+                }
 
             </style>
         {% endblock %}
@@ -83,7 +95,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
                     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
                     crossorigin="anonymous"></script> 
-              
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>              
 
             <script>
 
@@ -131,6 +143,40 @@
                                 return false;
                             }
                         });
+                    $('#form_type').multiselect({
+                        buttonText: function(options, select) {
+                            if (options.length === 0) {
+                                return 'None';
+                            } else {
+                                var labels = [];
+                                options.each(function() {
+                                    if ($(this).attr('label') !== undefined) {
+                                        labels.push($(this).attr('label'));
+                                    } else {
+                                        labels.push($(this).html());
+                                    }
+                                });
+                                return labels.join(', ') + '';
+                            }                            
+                        }
+                    });
+                    $('#form_customer').multiselect({
+                        buttonText: function(options, select) {
+                            if (options.length === 0) {
+                                return 'None';
+                            } else {
+                                var labels = [];
+                                options.each(function() {
+                                    if ($(this).attr('label') !== undefined) {
+                                        labels.push($(this).attr('label'));
+                                    } else {
+                                        labels.push($(this).html());
+                                    }
+                                });
+                                return labels.join(', ') + '';
+                            }
+                        }                            
+                    });
                 });
 
             </script>

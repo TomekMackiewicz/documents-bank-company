@@ -149,23 +149,24 @@ class TransferController extends Controller
     private function createSearchForm()
     {
         return $this->createFormBuilder(null)
+            ->add('dateFrom', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text'                
+            ))
+            ->add('dateTo', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text'                
+            ))                 
             ->add('type', ChoiceType::class, [
                 'choices'  => [
                     'In' => Transfer::$transferIn,
                     'Out' => Transfer::$transferOut,
                     'Adjustment' => Transfer::$transferAdjustment
                 ],
-                'expanded' => true,
-                'multiple' => true
-            ])                
-            ->add('dateFrom', DateType::class, array(
-                'label' => 'From',
-                'widget' => 'single_text'                
-            ))
-            ->add('dateTo', DateType::class, array(
-                'label' => 'To',
-                'widget' => 'single_text'                
-            ))                
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
+            ])                               
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
                 'choice_label' => 'name',
@@ -173,10 +174,11 @@ class TransferController extends Controller
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC')
                         ->where('c.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ROLE_ADMIN%');
+                        ->setParameter('roles', '%ADMIN%');
                 },
-                'expanded' => true,
-                'multiple' => true
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
             ])                
             ->add('search', SubmitType::class)
             ->getForm();        

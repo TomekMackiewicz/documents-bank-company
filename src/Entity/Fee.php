@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Fees
  * @ORM\Table(name="fees")
- * @ORM\Entity(repositoryClass="App\Repository\FeesRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FeeRepository")
  */
-class Fees 
+class Fee 
 {
     /**
      * @var int
