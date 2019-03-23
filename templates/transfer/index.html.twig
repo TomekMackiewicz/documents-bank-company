@@ -25,12 +25,7 @@
                   </li>
                 </ul>
             </div>
-        </div>
-{#        <div class="row">
-            <div class="col-sm-12">
-                <h1>Transfers</h1>
-            </div>
-        </div>  #}    
+        </div>   
         {{ form_start(searchForm) }}
             <div class="row">            
                 <div class="col">                    
@@ -60,7 +55,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Type</div>
                     </div>    
-                        {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple'}}) }}
+                        {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
                     </div>                    
                 </div>
                 <div class="col">
@@ -70,7 +65,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Customer</div>
                     </div>    
-                        {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple'}}) }}
+                        {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
                     </div>                     
                 </div>
                 <div class="col-sm-2">

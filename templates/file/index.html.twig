@@ -1,14 +1,72 @@
 {% extends "layout.html.twig" %}
 
 {% block body %}
-
-    <div class="col-sm-12">
-        <h1>Files</h1>
-        <a class="btn btn-primary" href="{{ path('file_new') }}">New file</a>
-        {{ form_start(searchForm) }}
-            {{ form_widget(searchForm) }}
-        {{ form_end(searchForm) }}        
+    
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Files</h2></a>
+            </li>
+        </ul>
     </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+          <li class="nav-item">
+            <a class="btn btn-light" href="{{ path('file_new') }}">
+                <i class="fas fa-plus"></i> New file
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-light" href="#">
+                <i class="fas fa-print"></i> Print
+            </a>        
+          </li>
+        </ul>
+    </div>
+</div>
+                    
+{{ form_start(searchForm) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_label(searchForm.signature) }}
+                {{ form_errors(searchForm.signature) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Signature</div>
+            </div>    
+                {{ form_widget(searchForm.signature) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(searchForm.status) }}
+                {{ form_errors(searchForm.status) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Status</div>
+            </div>    
+                {{ form_widget(searchForm.status, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(searchForm.customer) }}
+                {{ form_errors(searchForm.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Customer</div>
+            </div>    
+                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
+            </div>                     
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light float-right">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(searchForm) }}         
+   
+<div class="row pb-4">   
     <div class="col-sm-12">
         {% if searchResults is not empty %}
             <table class="table table-striped">
@@ -28,28 +86,23 @@
                                     {{ file.signature }}
                                 </a>
                             </td>
-                            <td>{{ file.status }}</td>
+                            <td>
+                                {% if file.status == 1 %}
+                                    In
+                                {% elseif file.status == 2 %}
+                                    Out
+                                {% else %}
+                                    Unknown
+                                {% endif %}
+                            </td>
                             <td>{{ file.customer.name }}</td>
                             <td>{{ file.note }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-                
-{#            <nav aria-label="">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
-                    </li>
-                    
-                    <li class="page-item"><a class="page-link" href="?page={{page-1}}">Previous</a></li>                 
-                    
-                    <li class="page-item"><a class="page-link" href="?page={{page+1}}">Next</a></li>
-
-                </ul>
-            </nav> #}               
-                
         {% endif %}         
     </div>
-       
+</div>
+        
 {% endblock %}

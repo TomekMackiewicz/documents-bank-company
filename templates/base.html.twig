@@ -74,10 +74,8 @@
             </div>
         </div>
         <div class="container flex-fill">    
-            <div class="row">
-                {% block info %}{% endblock %}
-            </div>            
-            <main class="row">
+            {% block info %}{% endblock %}
+            <main>
                 {% block body %}{% endblock %}
             </main>
         </div>
@@ -143,7 +141,7 @@
                                 return false;
                             }
                         });
-                    $('#form_type').multiselect({
+                    $('.multiple').multiselect({
                         buttonText: function(options, select) {
                             if (options.length === 0) {
                                 return 'None';
@@ -159,23 +157,6 @@
                                 return labels.join(', ') + '';
                             }                            
                         }
-                    });
-                    $('#form_customer').multiselect({
-                        buttonText: function(options, select) {
-                            if (options.length === 0) {
-                                return 'None';
-                            } else {
-                                var labels = [];
-                                options.each(function() {
-                                    if ($(this).attr('label') !== undefined) {
-                                        labels.push($(this).attr('label'));
-                                    } else {
-                                        labels.push($(this).html());
-                                    }
-                                });
-                                return labels.join(', ') + '';
-                            }
-                        }                            
                     });
                 });
 

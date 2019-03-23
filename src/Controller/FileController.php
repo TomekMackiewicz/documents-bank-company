@@ -46,16 +46,18 @@ class FileController extends Controller
         $searchResults = [];
         $searchForm = $this->createSearchForm();
         $searchForm->handleRequest($request);
-       
+$test=null;       
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchCriteria = $searchForm->getData();
+            $test=$searchForm->getData();
             $em = $this->getDoctrine()->getManager();
             $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);  
         }
 
         return $this->render('file/index.html.twig', array(
             'searchForm' => $searchForm->createView(),
-            'searchResults' => $searchResults
+            'searchResults' => $searchResults,
+            'test' => $test
         ));
     }
 
@@ -210,16 +212,18 @@ class FileController extends Controller
     {
         return $this->createFormBuilder(null)
             ->add('signature', SearchType::class, [
-                'required' => false
+                'required' => false,
+                'label' => false
             ])
             ->add('status', ChoiceType::class, [
                 'choices'  => [
-                    'In' => 'In',
-                    'Out' => 'Out',
-                    'Unknown' => 'Unknown'
+                    'In' => File::$statusIn,
+                    'Out' => File::$statusOut,
+                    'Unknown' => File::$statusUnknown
                 ],
-                'expanded' => true,
-                'multiple' => true
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
             ])
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
@@ -228,12 +232,12 @@ class FileController extends Controller
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC')
                         ->where('c.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ROLE_ADMIN%');
+                        ->setParameter('roles', '%ADMIN%');
                 },
-                'expanded' => true,
-                'multiple' => true
-            ])                
-            ->add('search', SubmitType::class)
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
+            ])
             ->getForm();        
     } 
     
