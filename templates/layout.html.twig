@@ -32,6 +32,11 @@
                             Customers
                         </a>                         
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('fee_index') }}">
+                            Fees
+                        </a>                         
+                    </li>                    
                 </ul>
                 <ul class="navbar-nav">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

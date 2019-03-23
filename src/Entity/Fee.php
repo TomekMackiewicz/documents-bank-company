@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Fees
+ * 
  * @ORM\Table(name="fees")
  * @ORM\Entity(repositoryClass="App\Repository\FeeRepository")
  */
@@ -53,7 +53,7 @@ class Fee
 
     /**
      * @param integer $delivery
-     * @return Fees
+     * @return Fee
      */
     public function setDelivery($delivery) 
     {
@@ -71,7 +71,7 @@ class Fee
 
     /**
      * @param integer $import
-     * @return Fees
+     * @return Fee
      */
     public function setImport($import) 
     {
@@ -89,7 +89,7 @@ class Fee
 
     /**
      * @param integer $storage
-     * @return Fees
+     * @return Fee
      */
     public function setStorage($storage) 
     {
@@ -107,7 +107,7 @@ class Fee
 
     /**
      * @param Customer $customer
-     * @return Fees
+     * @return Fee
      */
     public function setCustomer(Customer $customer = null)
     {

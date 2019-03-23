@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+  <h1>Fees list</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Delivery</th>
+        <th>Import</th>
+        <th>Storage</th>
+        <th>Customer</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for fee in fees %}
+      <tr>
+        <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">{{ fee.id }}</a></td>
+        <td>{{ fee.delivery }}</td>
+        <td>{{ fee.import }}</td>
+        <td>{{ fee.storage }}</td>
+        <td>{{ fee.customer.name }}</td>
+        <td>
+          <ul>
+            <li>
+              <a href="{{ path('fee_show', { 'id': fee.id }) }}">show</a>
+            </li>
+            <li>
+              <a href="{{ path('fee_edit', { 'id': fee.id }) }}">edit</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ path('fee_new') }}" class="btn btn-primary">Create a new fee</a>
+
+{% endblock %}

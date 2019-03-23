@@ -161,17 +161,17 @@ class Customer extends BaseUser
     }
 
     /**
-     * @param Fees $fee
+     * @param Fee $fee
      * @return Customer
      */
-    public function setFee(Fees $fee = null) 
+    public function setFee(Fee $fee = null) 
     {
         $this->fee = $fee;
         return $this;
     }
 
     /**
-     * @return Fees 
+     * @return Fee
      */
     public function getFee() 
     {

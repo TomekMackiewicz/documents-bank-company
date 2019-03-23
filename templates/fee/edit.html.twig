@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+  <h1>Fee edit</h1>
+
+  {{ form_start(edit_form) }}
+     {{ form_widget(edit_form) }}
+     <input type="submit" value="Edit" class="btn btn-primary inline" />
+  {{ form_end(edit_form) }}
+  <a href="{{ path('fee_index') }}" class="btn btn-primary inline">Back to the list</a>
+  {{ form_start(delete_form) }}
+     <input type="submit" value="Delete" class="btn btn-danger inline">
+  {{ form_end(delete_form) }}
+
+{% endblock %}

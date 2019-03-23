@@ -1,0 +1,94 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+
+  <div id="resultTable">
+
+    {% if datesError is not null %}
+      <div class="alert alert-danger" role="alert">{{datesError}}</div>
+    {% endif %}
+
+    {% if feeTable is not null %}
+      <table class="table table-striped">
+        <tr>
+          <td>Storage</td>
+          <td>{{ feeTable.storage }} * {{ years }} years * {{ months }} months</td>
+        </tr>  
+        <tr>
+          <td>Delivery</td>
+          <td>{{ feeTable.delivery }} * {{ feeTable.actionOut }}</td>
+        </tr> 
+        <tr>
+          <td>Import</td>
+          <td>{{ feeTable.import }} * {{ feeTable.actionIn }}</td>
+        </tr>
+        <tr>
+          <td>Sum =</td>
+          <td>{{ sum }}</td>
+        </tr>                                         
+      </table>
+    {% endif %} 
+
+  </div>    
+
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Fees</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <h1>Fee for: {{ fee.customer.name }}</h1>
+
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>Delivery fee</th>
+        <td>{{ fee.delivery }}</td>
+      </tr>
+      <tr>
+        <th>Import fee</th>
+        <td>{{ fee.import }}</td>
+      </tr>
+      <tr>
+        <th>Storage fee</th>
+        <td>{{ fee.storage }}</td>
+      </tr>
+      <tr>
+        <th>Customer</th>
+        <td>{{ fee.customer.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{{ path('fee_index') }}" class="btn btn-default inline">Back to the list</a>
+
+  <a href="{{ path('fee_edit', { 'id': fee.id }) }}" class="btn btn-default inline">Edit</a>
+
+  {{ form_start(delete_form) }}
+    <input type="submit" value="Delete" class="btn btn-danger inline">
+  {{ form_end(delete_form) }}
+
+  <div class="clearfix">
+
+  <h2>Calculate Fee</h2>
+  {{ form_start(calculateFeeForm, {'attr': {'class': 'modal-form'}}) }}
+
+    {{ form_widget(calculateFeeForm) }}
+    <input type="submit" value="Calculate" id="modalShow" class="btn btn-default" data-toggle="modal" data-target="#modal" />
+  {{ form_end(calculateFeeForm) }}
+  
+  {% if datesError is not null %}
+    <div class="alert alert-danger" role="alert">{{ datesError }}</div>
+  {% endif %}
+   
+{% endblock %}

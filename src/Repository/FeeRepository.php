@@ -4,22 +4,22 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class FeesRepository extends EntityRepository 
+class FeeRepository extends EntityRepository 
 {
     public function actionsToCalculate($id, $from, $to) 
     {
 // @Fixme set params        
         // Liczba usług
         $actionsQuery = $this->getEntityManager()->createQuery(
-            "SELECT a.action FROM App:Action a WHERE a.customer = $id AND a.date BETWEEN '$from' and '$to'"
+            "SELECT t.type FROM App:Transfer t WHERE t.customer = $id AND t.date BETWEEN '$from' and '$to'"
         )->getResult();
 
         // Lista opłat
-        $feesQuery = $this->getEntityManager()->createQuery(
-                "SELECT f.delivery,f.import,f.storage FROM App:Fees f WHERE f.customer = $id"
+        $feeQuery = $this->getEntityManager()->createQuery(
+                "SELECT f.delivery,f.import,f.storage FROM App:Fee f WHERE f.customer = $id"
         )->getResult();
 
-        $fees = $feesQuery[0];
+        $fee = $feeQuery[0];
 
         // Liczymy usługi (ilość przywozów i dowozów)
         $numberOfActions = [];
@@ -41,7 +41,7 @@ class FeesRepository extends EntityRepository
            $numberOfActions['actionOut'] = 0;
         }    
 
-        return $feesTable = array_merge($fees, $numberOfActions);
+        return $feeTable = array_merge($fee, $numberOfActions);
     }
 
 }
