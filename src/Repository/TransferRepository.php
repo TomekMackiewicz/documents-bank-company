@@ -71,6 +71,8 @@ class TransferRepository extends EntityRepository
                ->setParameter(":customers", $ids);
         }
         
+        $qb->orderBy('t.date', 'DESC');
+        
         return $qb->getQuery()->getResult();           
     }     
     

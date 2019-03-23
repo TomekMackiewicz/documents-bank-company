@@ -160,6 +160,7 @@ class TransferController extends Controller
                     'Out' => Transfer::$transferOut,
                     'Adjustment' => Transfer::$transferAdjustment
                 ],
+                'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
@@ -173,13 +174,11 @@ class TransferController extends Controller
                         ->where('c.roles NOT LIKE :roles')
                         ->setParameter('roles', '%ADMIN%');
                 },
+                'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
-            ])                
-//            ->add('search', SubmitType::class, [
-//                'attr' => ['class' => 'btn-light']
-//            ])
+            ])
             ->getForm();        
     }    
     

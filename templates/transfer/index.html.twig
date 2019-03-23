@@ -2,104 +2,118 @@
 
 {% block body %}
 
-    <div class="col-sm-12">
-        <div class="row">
-            <div class="col-sm-6">               
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a>Transfers</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-6">               
-                <ul class="nav float-right">
-                  <li class="nav-item">
-                    <a class="btn btn-light" href="{{ path('transfer_new') }}">
-                        <i class="fas fa-plus"></i> New transfer
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="btn btn-light" href="#">
-                        <i class="fas fa-print"></i> Print
-                    </a>        
-                  </li>
-                </ul>
-            </div>
-        </div>   
-        {{ form_start(searchForm) }}
-            <div class="row">            
-                <div class="col">                    
-                    <div class="input-group">
-                        {{ form_label(searchForm.dateFrom) }}
-                        {{ form_errors(searchForm.dateFrom) }}
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Date from</div>
-                    </div>    
-                        {{ form_widget(searchForm.dateFrom) }}
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group">
-                        {{ form_label(searchForm.dateTo) }}
-                        {{ form_errors(searchForm.dateTo) }}
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Date to</div>
-                    </div>    
-                        {{ form_widget(searchForm.dateTo) }}
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group">
-                        {{ form_label(searchForm.type) }}
-                        {{ form_errors(searchForm.type) }}
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Type</div>
-                    </div>    
-                        {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
-                    </div>                    
-                </div>
-                <div class="col">
-                    <div class="input-group">
-                        {{ form_label(searchForm.customer) }}
-                        {{ form_errors(searchForm.customer) }}
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Customer</div>
-                    </div>    
-                        {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
-                    </div>                     
-                </div>
-                <div class="col-sm-2">
-                    {#<input type="submit" id="_submit" class="btn btn-primary" name="_submit" value="{{ 'security.login.submit'|trans }}" />#}
-                    <button type="submit" class="btn btn-light">
-                        <i class="fab fa-searchengin"></i> Search
-                    </button>
-                    {#{{ form_row(searchForm.search) }}#}
-                </div>
-            </div>
-        {{ form_end(searchForm) }}         
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Transfers</h2></a>
+            </li>
+        </ul>
     </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+          <li class="nav-item pl-2">
+            <a class="btn btn-light" href="{{ path('transfer_new') }}">
+                <i class="fas fa-plus"></i> New transfer
+            </a>
+          </li>
+          <li class="nav-item pl-2">
+            <button class="btn btn-light">
+                <i class="fas fa-print"></i> Print
+            </button>        
+          </li>
+          <li class="nav-item pl-2">
+            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                    Combined search of inventory transfers for given dates.<br>
+                    You can also get combined results for multiple types (in, out...) and/or customers.<br>
+                    Search results are limited to 100 records.
+            ">
+                <i class="fas fa-info-circle"></i> Info
+            </button>        
+          </li>          
+        </ul>
+    </div>
+</div>
+{{ form_start(searchForm) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_label(searchForm.dateFrom) }}
+                {{ form_errors(searchForm.dateFrom) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date from</div>
+            </div>    
+                {{ form_widget(searchForm.dateFrom) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(searchForm.dateTo) }}
+                {{ form_errors(searchForm.dateTo) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date to</div>
+            </div>    
+                {{ form_widget(searchForm.dateTo) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(searchForm.type) }}
+                {{ form_errors(searchForm.type) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Type</div>
+            </div>    
+                {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+            </div>                    
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(searchForm.customer) }}
+                {{ form_errors(searchForm.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Customer</div>
+            </div>    
+                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+            </div>                     
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(searchForm) }}         
+    
     <div class="col-sm-12">
         {% if searchResults is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Date</th>
                         <th scope="col">Type</th>
                         <th scope="col">Customer</th>
+                        <th scope="col">Show</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for transfer in searchResults %}
                         <tr>
+                            <td>{{ transfer.date|date('d-m-Y') }}</td>
+                            <td>
+                                {% if transfer.type == 1 %}
+                                    In
+                                {% elseif transfer.type == 2 %}
+                                    Out
+                                {% else %}
+                                    Adjustment
+                                {% endif %}
+                            </td>
+                            <td>{{ transfer.customer.name }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
-                                    {{ transfer.id }}
+                                    Show
                                 </a>
-                            </td>
-                            <td>{{ transfer.date|date('d-m-Y') }}</td>
-                            <td>{{ transfer.type }}</td>
-                            <td>{{ transfer.customer.name }}</td>                            
+                            </td>                            
                         </tr>
                     {% endfor %}
                 </tbody>
