@@ -103,6 +103,46 @@ class TransferController extends Controller
     }    
 
     /**
+     * Edit transfer
+     * 
+     * @Route("/{id}/edit", name="transfer_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, Transfer $transfer) 
+    {
+        $editForm = $this->createForm('App\Form\TransferType', $transfer);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $data = $editForm->getData();
+            $em = $this->getDoctrine()->getManager(); 
+            
+            foreach ($data->getFiles()->toArray() as $file) {
+                $file->setStatus($data->getType());
+                $transfer->addFile($file);
+                $em->persist($file);               
+            }
+            
+            $transfer->setCustomer($data->getCustomer());
+            $transfer->setDate(new \DateTime());
+            $transfer->setType($data->getType());
+
+            $em->persist($transfer);
+            $em->flush();
+            
+            $this->addFlash('success', 'Transfer edited');
+            
+            return $this->redirectToRoute('transfer_index');
+        }
+        
+        return $this->render('transfer/edit.html.twig', array(
+            'transfer' => $transfer,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $this->createDeleteForm($transfer)->createView()
+        ));
+    }    
+    
+    /**
      * Delete transfer
      * 
      * @param Request $request

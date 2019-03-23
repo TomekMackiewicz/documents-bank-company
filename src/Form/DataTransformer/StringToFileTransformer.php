@@ -19,16 +19,23 @@ class StringToFileTransformer implements DataTransformerInterface
     /**
      * Transforms an object to a string
      *
-     * @param  File|null $file
+     * @param  ArrayCollection|null $collection
      * @return string
      */
-    public function transform($file)
+    public function transform($collection)
     {
-        if (null === $file) {
-            return '';
+        if (!$collection) {
+            return;
+        }
+        
+        $files = $collection->toArray();
+        $signatures = [];
+        
+        foreach ($files as $file) {
+            $signatures[] = $file->getSignature();
         }
 
-        return $file;
+        return implode(', ', $signatures);
     }
 
     /**

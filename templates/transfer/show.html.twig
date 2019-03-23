@@ -1,5 +1,105 @@
-{% extends "layout.html.twig" %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
-    Show
-{% endblock %}    
+    
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Customer:</td>
+                            <th><a href="{{ path('customer_show', {'id':transfer.customer.id}) }}">{{ transfer.customer.name }}</a></th>
+                            <td>Type:</td>
+                            <th>
+                                {% if transfer.type == 1 %}
+                                    In
+                                {% elseif transfer.type == 2 %}
+                                    Out
+                                {% else %}
+                                    Adjustment
+                                {% endif %}
+                            </th>
+                            <td>Date:</td>
+                            <th>{{ transfer.date|date('Y-m-d') }}</th>                            
+                        </tr>
+                    </tbody>
+                </table> 
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('transfer_edit', { 'id': transfer.id }) }}" class="btn btn-default inline">
+                    <i class="far fa-edit"></i> Edit
+                </a>
+            </li>  
+            <li class="nav-item pl-2">
+              <button class="btn btn-light">
+                  <i class="fas fa-print"></i> Print
+              </button>        
+            </li>
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('transfer_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Here you can see transfer details.
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>             
+            <li class="nav-item pl-2">
+                {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete
+                    </button>
+                {{ form_end(delete_form) }}
+            </li> 
+        </ul>
+    </div>
+</div>    
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <h4>Files</h4>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Signature</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in transfer.files %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('file_show', { 'id': file.id }) }}">
+                                {{ file.signature }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if file.status == 1 %}
+                                In
+                            {% elseif file.status == 2 %}
+                                Out
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td>{{ file.customer.name }}</td>
+                        <td>{{ file.note }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
+    </div>
+</div>
+        
+{% endblock %}
+ 

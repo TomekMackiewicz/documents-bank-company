@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Add new transfer</h2>
+                    <h2>Edit transfer</h2>
                 </a>
             </li>
         </ul>
@@ -21,7 +21,7 @@
             </li>
             <li class="nav-item pl-2">
               <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      You can add multiple files - comma separated.
+                      You can edit multiple files - comma separated.
               ">
                   <i class="fas fa-info-circle"></i> Info
               </button>        
@@ -29,54 +29,55 @@
         </ul>
     </div>
 </div>
-{{ form_start(form) }}            
+{{ form_start(edit_form) }}            
     <div class="row pb-4">    
         <div class="col-auto">
             <div class="input-group">
-                {{ form_label(form.type) }}
-                {{ form_errors(form.type) }}
+                {{ form_label(edit_form.type) }}
+                {{ form_errors(edit_form.type) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Type</div>
             </div>    
-                {{ form_widget(form.type) }}
+                {{ form_widget(edit_form.type) }}
             </div>
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_label(form.files) }}
-                {{ form_errors(form.files) }}
+                {{ form_label(edit_form.files) }}
+                {{ form_errors(edit_form.files) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Files</div>
             </div>    
-                {{ form_widget(form.files) }}
+                {{ form_widget(edit_form.files) }}
             </div>
         </div> 
         <div class="col-auto">
             <div class="input-group">
-                {{ form_label(form.customer) }}
-                {{ form_errors(form.customer) }}
+                {{ form_label(edit_form.customer) }}
+                {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(form.customer) }}
+                {{ form_widget(edit_form.customer) }}
             </div>
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_label(form.date) }}
-                {{ form_errors(form.date) }}
+                {{ form_label(edit_form.date) }}
+                {{ form_errors(edit_form.date) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Date</div>
             </div>    
-                {{ form_widget(form.date) }}
+                {{ form_widget(edit_form.date) }}
             </div>
         </div>             
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Create
+                <i class="far fa-edit"></i> Edit
             </button>
         </div>            
     </div>
-{{ form_end(form) }}
+{{ form_end(edit_form) }}
         
 {% endblock %}  
+
