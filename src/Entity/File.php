@@ -33,7 +33,7 @@ class File
      *   message = "Signature cannot be empty."
      * ) 
      * @Assert\Regex(
-     *     pattern = "/^[a-zA-Z0-9]*$/",
+     *     pattern = "/^[a-zA-Z0-9, ]*$/",
      *     match = true,
      *     message = "Only letters and digits are allowed"
      * )  

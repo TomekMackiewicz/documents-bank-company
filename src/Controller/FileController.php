@@ -72,19 +72,37 @@ class FileController extends Controller
         $transfer = new Transfer();
         $form = $this->createForm('App\Form\FileType', $file);
         $form->handleRequest($request);
-       
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();                
-            $transfer->addFile($file);
-            $transfer->setCustomer($file->getCustomer());
+            $data = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            
+            $signatures = explode(',', $data->getSignature());
             $transfer->setDate(new \DateTime());
             $transfer->setType(Transfer::$transferAdjustment);
-
-            $em->persist($file);
+            $transfer->setCustomer($data->getCustomer());
+            
+            foreach ($signatures as $signature) {
+                if (empty($signature)) {
+                    continue;
+                }
+                
+                $signature = strtoupper($signature);
+                
+                $file = new File();
+                $file->setSignature(trim($signature));
+                $file->setStatus($data->getStatus());
+                $file->setCustomer($data->getCustomer());
+                $file->addTransfer($transfer);
+                $em->persist($file);
+                
+                $transfer->addFile($file);
+            }
+            
             $em->persist($transfer);
             $em->flush();
             
-            $this->addFlash('success', 'New file created');
+            $this->addFlash('success', 'New file(s) created');
             
             return $this->redirectToRoute('file_index');
         }
