@@ -218,6 +218,7 @@ class FileController extends Controller
                     'Out' => File::$statusOut,
                     'Unknown' => File::$statusUnknown
                 ],
+                'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
@@ -231,6 +232,7 @@ class FileController extends Controller
                         ->where('c.roles NOT LIKE :roles')
                         ->setParameter('roles', '%ADMIN%');
                 },
+                'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false

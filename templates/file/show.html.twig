@@ -37,15 +37,22 @@
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <a class="btn btn-light" href="#">
+              <button class="btn btn-light">
                   <i class="fas fa-print"></i> Print
-              </a>        
+              </button>        
             </li>
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> Back
                 </a>
             </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Here you can see file details and also check inventory in's and out's for given period.
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
@@ -68,7 +75,7 @@
                 {{ form_label(transfersForm.dateFrom) }}
                 {{ form_errors(transfersForm.dateFrom) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">From:</div>
+                <div class="input-group-text">Date from:</div>
             </div>    
                 {{ form_widget(transfersForm.dateFrom) }}
             </div>
@@ -78,7 +85,7 @@
                 {{ form_label(transfersForm.dateTo) }}
                 {{ form_errors(transfersForm.dateTo) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">To</div>
+                <div class="input-group-text">Date to:</div>
             </div>    
                 {{ form_widget(transfersForm.dateTo) }}
             </div>

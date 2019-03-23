@@ -144,7 +144,7 @@
                     $('.multiple').multiselect({
                         buttonText: function(options, select) {
                             if (options.length === 0) {
-                                return 'None';
+                                return 'All';
                             } else {
                                 var labels = [];
                                 options.each(function() {
@@ -158,6 +158,13 @@
                             }                            
                         }
                     });
+                    
+                    $("[data-toggle=popover]").popover();
+                    
+                    $('.popover-dismiss').popover({
+                      trigger: 'focus'
+                    });
+                    
                 });
 
             </script>
