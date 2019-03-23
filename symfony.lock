@@ -159,6 +159,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "pclzip/pclzip": {
+        "version": "2.8.2"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -167,6 +170,12 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpoffice/common": {
+        "version": "0.2.9"
+    },
+    "phpoffice/phpword": {
+        "version": "0.16.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -545,6 +554,9 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.1"
+    },
+    "zendframework/zend-escaper": {
+        "version": "2.6.0"
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"

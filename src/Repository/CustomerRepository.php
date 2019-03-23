@@ -68,9 +68,9 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('c')
-            ->from('App:Customer', 'c');
-            //->where('c.roles = :roles')
-            //->setParameter('roles', 'a:1:{i:0;s:9:"ROLE_USER";}');
+            ->from('App:Customer', 'c')
+            ->where('c.roles NOT LIKE :roles')
+            ->setParameter('roles', '%ADMIN%');
 
         return $qb->getQuery()->getResult();
     }
