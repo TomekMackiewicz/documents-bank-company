@@ -180,7 +180,9 @@ class TransferController extends Controller
                 'multiple' => true,
                 'label' => false
             ])                
-            ->add('search', SubmitType::class)
+//            ->add('search', SubmitType::class, [
+//                'attr' => ['class' => 'btn-light']
+//            ])
             ->getForm();        
     }    
     

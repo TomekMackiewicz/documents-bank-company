@@ -4,32 +4,33 @@
 
     <div class="col-sm-12">
         <div class="row">
+            <div class="col-sm-6">               
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a>Transfers</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">               
+                <ul class="nav float-right">
+                  <li class="nav-item">
+                    <a class="btn btn-light" href="{{ path('transfer_new') }}">
+                        <i class="fas fa-plus"></i> New transfer
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="btn btn-light" href="#">
+                        <i class="fas fa-print"></i> Print
+                    </a>        
+                  </li>
+                </ul>
+            </div>
+        </div>
+{#        <div class="row">
             <div class="col-sm-12">
-{#                <h1>Transfers</h1>
+                <h1>Transfers</h1>
             </div>
-            <div class="col-sm-9">
-                <a class="btn btn-primary" href="{{ path('transfer_new') }}">
-                    <i class="fas fa-plus"></i> New transfer
-                </a>
-            </div>#}
-<div class="jumbotron">
-  <h1 class="display-4">Transfers</h1>
-                <a class="btn btn-primary" href="{{ path('transfer_new') }}">
-                    <i class="fas fa-plus"></i> New transfer
-                </a>
-</div>
-{#<ul class="nav">
-    <li class="nav-item">
-        <a class="nav-link disabled" href="#">Transfers</a>
-    </li> 
-    <li class="nav-item">
-        <a class="btn btn-primary" href="{{ path('transfer_new') }}">
-            <i class="fas fa-plus"></i> New transfer
-        </a>        
-    </li>
-</ul>#}
-            </div>
-        </div>        
+        </div>  #}    
         {{ form_start(searchForm) }}
             <div class="row">            
                 <div class="col">                    
@@ -72,8 +73,12 @@
                         {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple'}}) }}
                     </div>                     
                 </div>
-                <div class="col-sm-1">
-                    {{ form_row(searchForm.search) }}
+                <div class="col-sm-2">
+                    {#<input type="submit" id="_submit" class="btn btn-primary" name="_submit" value="{{ 'security.login.submit'|trans }}" />#}
+                    <button type="submit" class="btn btn-light">
+                        <i class="fab fa-searchengin"></i> Search
+                    </button>
+                    {#{{ form_row(searchForm.search) }}#}
                 </div>
             </div>
         {{ form_end(searchForm) }}         
