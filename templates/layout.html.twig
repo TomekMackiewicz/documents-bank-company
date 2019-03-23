@@ -40,11 +40,11 @@
                 </ul>
                 <ul class="navbar-nav">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <span class="navbar-text">
+                        <span class="navbar-text pl-2">
                             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                         </span>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                        <li class="nav-item pl-2">
+                            <a class="nav-link btn btn-light" href="{{ path('fos_user_security_logout') }}">
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                             </a>
                         </li>                        

@@ -1,13 +1,72 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-    <div class="col-sm col-md-6 offset-md-3">
-        <h1>Add new files</h1>
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <input type="submit" value="Create" class="btn btn-primary" />
-        {{ form_end(form) }}
-        <a href="{{ path('file_index') }}" class="btn btn-secondary">Back to the list</a>
+
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a>
+                    <h2>Add new file(s)</h2>
+                </a>
+            </li>
+        </ul>
     </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Add one or multiple files (comma separated).
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>
+        </ul>
+    </div>
+</div>
+{{ form_start(form) }}            
+    <div class="row pb-4">    
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(form.signature) }}
+                {{ form_errors(form.signature) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Signature</div>
+            </div>    
+                {{ form_widget(form.signature) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(form.status) }}
+                {{ form_errors(form.status) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Status</div>
+            </div>    
+                {{ form_widget(form.status) }}
+            </div>
+        </div> 
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(form.customer) }}
+                {{ form_errors(form.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Customer</div>
+            </div>    
+                {{ form_widget(form.customer) }}
+            </div>
+        </div> 
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="far fa-edit"></i> Create
+            </button>
+        </div>            
+    </div>
+{{ form_end(form) }}
 
 {% endblock %}
