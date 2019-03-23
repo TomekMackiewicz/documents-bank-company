@@ -6,7 +6,26 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>{{ file.signature }}</h2></a>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Signature:</td>
+                            <th>{{ file.signature }}</th>
+                            <td>Customer:</td>
+                            <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></th>
+                            <td>Status:</td>
+                            <th>
+                                {% if file.status == 1 %}
+                                    In
+                                {% elseif file.status == 2 %}
+                                    Out
+                                {% else %}
+                                    Unknown
+                                {% endif %}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table> 
             </li>
         </ul>
     </div>
@@ -37,30 +56,6 @@
         </ul>
     </div>
 </div>    
-<div class="row pb-4">    
-    <div class="col-auto">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>Signature:</td>
-                    <th>{{ file.signature }}</th>
-                    <td>Customer:</td>
-                    <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></th>
-                    <td>Status:</td>
-                    <th>
-                        {% if file.status == 1 %}
-                            In
-                        {% elseif file.status == 2 %}
-                            Out
-                        {% else %}
-                            Unknown
-                        {% endif %}
-                    </th>
-                </tr>
-            </tbody>
-        </table>       
-    </div>
-</div> 
 <div class="row pb-4">
     <div class="col-sm-12">
         <h4>Show transfers</h4>
@@ -104,6 +99,7 @@
                     <tr>
                         <th>Type</th>
                         <th>Date</th>
+                        <th>Show transfer</th>
                     </tr>  
                 </thead>         
                 <tbody>
@@ -119,6 +115,11 @@
                             {% endif %}                            
                         </td>
                         <td>{{ transfer.date|date('Y-m-d') }}</td>
+                        <td>
+                            <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
+                                Show
+                            </a>                            
+                        </td>
                     </tr>                
                 {% endfor %}
                 </tbody>

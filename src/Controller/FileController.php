@@ -138,18 +138,18 @@ class FileController extends Controller
      */
     public function editAction(Request $request, File $file) 
     {
-        $action = new Action();
+        $transfer = new Transfer();
         $editForm = $this->createForm('App\Form\FileType', $file);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $action->setFile($file);
-            $action->setCustomer($file->getCustomer());
-            $action->setDate(new \DateTime());
-            $action->setAction($file->getStatus());
+            $transfer->addFile($file);
+            $transfer->setCustomer($file->getCustomer());
+            $transfer->setDate(new \DateTime());
+            $transfer->setType(Transfer::$transferAdjustment);
             $em->persist($file);
-            $em->persist($action);
+            $em->persist($transfer);
             $em->flush();
             
             $this->addFlash('success', 'File edited successfully');
