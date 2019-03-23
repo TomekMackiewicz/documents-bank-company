@@ -15,11 +15,11 @@ class ActionType extends AbstractType
     {
         $builder
             ->add('dateFrom', DateType::class, array(
-                'label' => 'From',
+                'label' => false,
                 'widget' => 'single_text'                
             ))
             ->add('dateTo', DateType::class, array(
-                'label' => 'To',
+                'label' => false,
                 'widget' => 'single_text'                
             ));            
     }

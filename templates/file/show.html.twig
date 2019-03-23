@@ -1,62 +1,130 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-    <div class="col-sm-12">
-        <h1>{{ file.signature }}</h1>
+    
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>{{ file.signature }}</h2></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('file_edit', { 'id': file.id }) }}" class="btn btn-default inline">
+                    <i class="far fa-edit"></i> Edit
+                </a>
+            </li>  
+            <li class="nav-item pl-2">
+              <a class="btn btn-light" href="#">
+                  <i class="fas fa-print"></i> Print
+              </a>        
+            </li>
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+                {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete
+                    </button>
+                {{ form_end(delete_form) }}
+            </li> 
+        </ul>
+    </div>
+</div>    
+<div class="row pb-4">    
+    <div class="col-auto">
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th>Signature</th>
-                    <td>{{ file.signature }}</td>
-                </tr>
-                <tr>
-                    <th>Customer</th>
-                    <td></td>
-                    {#<td><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></td>#}
-                </tr>              
-                <tr>
-                    <th>Status</th>
-                    <td>{{ file.status }}</td>
-                </tr>
-                <tr>
-                    <th>Last action</th>
-                    <td></td>
-                    {#<td>{% if box.lastAction %}{{ box.lastAction|date('Y-m-d') }}{% endif %}</td>#}
+                    <td>Signature:</td>
+                    <th>{{ file.signature }}</th>
+                    <td>Customer:</td>
+                    <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></th>
+                    <td>Status:</td>
+                    <th>
+                        {% if file.status == 1 %}
+                            In
+                        {% elseif file.status == 2 %}
+                            Out
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </th>
                 </tr>
             </tbody>
-        </table>
-
-        <a href="{{ path('file_index') }}" class="btn btn-default inline">Back to the list</a>
-        <a href="{{ path('file_edit', { 'id': file.id }) }}" class="btn btn-default inline">Edit</a>
-        {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-            <input type="submit" value="Delete" class="btn btn-danger">
-        {{ form_end(delete_form) }}       
+        </table>       
     </div>
+</div> 
+<div class="row pb-4">
     <div class="col-sm-12">
-        <h2>Show actions</h2>
+        <h4>Show transfers</h4>
+    </div>
+</div>
+{{ form_start(transfersForm) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_label(transfersForm.dateFrom) }}
+                {{ form_errors(transfersForm.dateFrom) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">From:</div>
+            </div>    
+                {{ form_widget(transfersForm.dateFrom) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(transfersForm.dateTo) }}
+                {{ form_errors(transfersForm.dateTo) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">To</div>
+            </div>    
+                {{ form_widget(transfersForm.dateTo) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light float-right">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(transfersForm) }}                    
 
-        {{ form_start(actionsForm, {'attr': {'class': 'modal-form'}}) }}
-            {{ form_widget(actionsForm) }}
-            <input type="submit" value="Search" class="btn btn-default" id="modalShow" data-toggle="modal" data-target="#modal" />
-        {{ form_end(actionsForm) }}
-
-        {% if actionsFromTo is not null %}
+<div class="row pb-4">
+    <div class="col-auto">         
+        {% if transfersFromTo is not null %}
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <td>Action</td>
-                        <td>Date</td>
+                        <th>Type</th>
+                        <th>Date</th>
                     </tr>  
                 </thead>         
                 <tbody>
-                {% for action in actionsFromTo %}
+                {% for transfer in transfersFromTo %}
                     <tr>
-                        <td>{{ action.action }}</td>
-                        <td>{{ action.date|date('Y-m-d') }}</td>
+                        <td>
+                            {% if transfer.type == 1 %}
+                                In
+                            {% elseif transfer.type == 2 %}
+                                Out
+                            {% else %}
+                                Adjustment
+                            {% endif %}                            
+                        </td>
+                        <td>{{ transfer.date|date('Y-m-d') }}</td>
                     </tr>                
                 {% endfor %}
                 </tbody>
             </table>
         {% endif %}        
     </div>
+</div>
+        
 {% endblock %}

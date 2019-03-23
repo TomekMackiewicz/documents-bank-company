@@ -33,8 +33,8 @@ class TransferRepository extends EntityRepository
     {
         return $this->getEntityManager()->createQuery(
             "SELECT t FROM App:Transfer t 
-             WHERE t.file = :id 
-             AND t.date BETWEEN ':from' and ':to'
+             WHERE :id MEMBER OF t.files
+             AND t.date BETWEEN :from and :to
              ORDER BY t.date DESC"
         )->setParameter(':id', $id)
          ->setParameter(':from', $from)

@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
@@ -46,18 +45,16 @@ class FileController extends Controller
         $searchResults = [];
         $searchForm = $this->createSearchForm();
         $searchForm->handleRequest($request);
-$test=null;       
+      
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchCriteria = $searchForm->getData();
-            $test=$searchForm->getData();
             $em = $this->getDoctrine()->getManager();
             $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);  
         }
 
         return $this->render('file/index.html.twig', array(
             'searchForm' => $searchForm->createView(),
-            'searchResults' => $searchResults,
-            'test' => $test
+            'searchResults' => $searchResults
         ));
     }
 
@@ -109,17 +106,17 @@ $test=null;
      */
     public function showAction(Request $request, File $file) 
     {
-        $actionsFromTo = null;
+        $transfersFromTo = null;
         $em = $this->getDoctrine()->getManager();
-        $actionsForm = $this->createForm('App\Form\ActionType');
-        $actionsForm->handleRequest($request);
+        $transfersForm = $this->createForm('App\Form\ActionType');
+        $transfersForm->handleRequest($request);
 
-        if ($actionsForm->isSubmitted() && $actionsForm->isValid()) {
-            $dateFrom = $actionsForm["dateFrom"]->getData()->format('Y-m-d');
-            $dateTo = $actionsForm["dateTo"]->getData()->format('Y-m-d');
+        if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
+            $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
+            $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
             if( strtotime($dateFrom) < strtotime($dateTo) ) {
-                $actionsFromTo = $em->getRepository('App:Action')
-                    ->fileActionsFromTo($file->getId(), $dateFrom, $dateTo);
+                $transfersFromTo = $em->getRepository('App:Transfer')
+                    ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo);
             } else { 
                 $this->addFlash('error', "Start value can't be higher than end date");
             }
@@ -127,8 +124,8 @@ $test=null;
         
         return $this->render('file/show.html.twig', [
             'file' => $file,
-            'actionsForm' => $actionsForm->createView(),
-            'actionsFromTo' => $actionsFromTo,            
+            'transfersForm' => $transfersForm->createView(),
+            'transfersFromTo' => $transfersFromTo,            
             'delete_form' => $this->createDeleteForm($file)->createView()
         ]);
     }
