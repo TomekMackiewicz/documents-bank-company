@@ -1,136 +1,163 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-<div class="col-sm-12">
-  <h1>Customer: {{ customer.name }}</h1>
-
-  <table class="table table-striped">
-    <tbody>
-      <tr>
-        <th>Company Name</th>
-        <td>{{ customer.name }}</td>
-      </tr>
-      <tr>
-        <th>Address</th>
-        <td>{{ customer.address }}</td>
-      </tr>
-      <tr>
-        <th>Number of files</th>
-        <td>{{ customer.files|length }}</td>
-      </tr>    
-      <tr>
-        <th>Number of files in</th>
-        <td>
-          {% if filesIn.0.filesCount is defined %}
-            {{ filesIn.0.filesCount }}
-          {% else %}
-            0
-          {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <th>Number of files out</th>
-        <td>
-          {% if filesOut.0.filesCount is defined %}
-            {{ filesOut.0.filesCount }}
-          {% else %}
-            0
-          {% endif %}
-        </td>
-      </tr>                                  
-    </tbody>
-  </table>
-  <a href="{{ path('customer_index') }}" class="btn btn-default inline">Back to the list</a>
-
-  <a href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">Edit</a>
-
-  {{ form_start(delete_form) }}
-    <input type="submit" value="Delete" class="btn btn-danger inline">
-  {{ form_end(delete_form) }}
-
-
-</div>
-
-    <div class="col-sm-6">
-      <h2>Show actions</h2>
-
-      {{ form_start(actionsForm, {'attr': {'class': 'modal-form'}}) }}
-        {{ form_widget(actionsForm) }}
-        <input type="submit" value="Search" class="btn btn-default" />
-      {{ form_end(actionsForm) }}
-    </div>
-    <div class="col-sm-6">
-      <h2>Search box</h2>
-
-      {% if filterForm is defined %}
-        {{ form_start(filterForm, {'attr': {'class': 'modal-form'}}) }}
-          {{ form_widget(filterForm) }}
-          <input type="submit" value="Search" class="btn btn-default inline" />
-        {{ form_end(filterForm) }}
-      {% endif %}      
-    </div>
     
-    <div class="col-sm-12">
-        {% if searchResults is not empty %}
-            <table class="table table-striped">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Signature</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Note</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for file in searchResults %}
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <table class="table table-striped">
+                    <tbody>
                         <tr>
-                            <td>
-                                <a href="{{ path('file_show', { 'id': file.id }) }}">
-                                    {{ file.signature }}
-                                </a>
-                            </td>
-                            <td>{{ file.status }}</td>
-                            <td>{{ file.customer.name }}</td>
-                            <td>{{ file.note }}</td>
+                            <td>Customer:</td>
+                            <th>{{ customer.name }}</th>                         
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-                             
-                
-        {% endif %}         
-    </div>    
+                    </tbody>
+                </table> 
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
+                    <i class="far fa-edit"></i> Edit
+                </a>
+            </li>  
+            <li class="nav-item pl-2">
+              <button class="btn btn-light">
+                  <i class="fas fa-print"></i> Print
+              </button>        
+            </li>
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('customer_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Todo.
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>             
+            <li class="nav-item pl-2">
+                {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete
+                    </button>
+                {{ form_end(delete_form) }}
+            </li> 
+        </ul>
+    </div>
+</div>     
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Address:</td>
+                    <th>{{ customer.address }}</th>
+                    <td>Number of files</td>
+                    <th>{{ customer.files|length }}</th>
+                    <td>Number of files in</td>
+                    <th>
+                        {% if filesIn.0.filesCount is defined %}
+                            {{ filesIn.0.filesCount }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </th>
+                    <td>Number of files out</td>
+                    <th>
+                        {% if filesOut.0.filesCount is defined %}
+                            {{ filesOut.0.filesCount }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </th>                          
+                </tr>
+            </tbody>
+        </table>        
+    </div>
+</div>    
+{{ form_start(transfersForm) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_label(transfersForm.dateFrom) }}
+                {{ form_errors(transfersForm.dateFrom) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date from</div>
+            </div>    
+                {{ form_widget(transfersForm.dateFrom) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(transfersForm.dateTo) }}
+                {{ form_errors(transfersForm.dateTo) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date to</div>
+            </div>    
+                {{ form_widget(transfersForm.dateTo) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_label(transfersForm.type) }}
+                {{ form_errors(transfersForm.type) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Type</div>
+            </div>    
+                {{ form_widget(transfersForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+            </div>                    
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(transfersForm) }} 
 
+<div class="row pb-4">
     <div class="col-sm-12">
-        {% if actionsFromTo is not empty %}
+        {% if transfersFromTo is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Action</th>
-                        <th scope="col">File</th>
-                        <th scope="col">Customer</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Show</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for action in actionsFromTo %}
+                    {% for transfer in transfersFromTo %}
                         <tr>
-                            <td>{{ action.action }}</td>
+                            <td>{{ transfer.date|date('d-m-Y') }}</td>
                             <td>
-                                <a href="{{ path('file_show', { 'id': action.file.id }) }}">
-                                    {{ action.file.signature }}
-                                </a>
+                                {% if transfer.type == 1 %}
+                                    In
+                                {% elseif transfer.type == 2 %}
+                                    Out
+                                {% else %}
+                                    Adjustment
+                                {% endif %}
                             </td>
-                            
-                            <td>{{ action.customer.name }}</td>
-                            <td>{{ action.date|date('d-m-Y') }}</td>
+                            <td>{{ transfer.customer.name }}</td>
+                            <td>
+                                <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
+                                    Show
+                                </a>
+                            </td>                            
                         </tr>
                     {% endfor %}
                 </tbody>
-            </table>
-                             
-                
+            </table>               
         {% endif %}         
-    </div>         
+    </div>        
+</div>
         
 {% endblock %}

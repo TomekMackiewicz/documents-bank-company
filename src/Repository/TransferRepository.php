@@ -15,20 +15,6 @@ class TransferRepository extends EntityRepository
         )->setMaxResults(5)->getResult();		
     }
 
-    public function customerTransfersFromTo($id, $from, $to) 
-    {
-        return $this->getEntityManager()->createQuery(
-            "SELECT t
-             FROM App:Transfer t 
-             WHERE t.customer = :id 
-             AND t.date BETWEEN ':from' and ':to' 
-             ORDER BY t.date DESC"
-        )->setParameter(':id', $id)
-         ->setParameter(':from', $from)
-         ->setParameter(':to', $to)
-         ->getResult();
-    }
-
     public function fileTransfersFromTo($id, $from, $to) 
     {
         return $this->getEntityManager()->createQuery(
@@ -44,13 +30,18 @@ class TransferRepository extends EntityRepository
 
     public function searchTransfers($searchCriteria)
     {
-        $customers = $searchCriteria['customer']->toArray();
-        
         $ids = [];
-        foreach ($customers as $customer) {
-            $ids[] = $customer->getId();
+        
+        if (is_array($searchCriteria['customer'])) {
+            $customers = $searchCriteria['customer']->toArray();
+            
+            foreach ($customers as $customer) {
+                $ids[] = $customer->getId();
+            }            
+        } else {
+            $ids[] = $searchCriteria['customer']->getId();
         }
-
+        
         $qb = $this->_em->createQueryBuilder();
         $qb->select('t')->from('App:Transfer', 't');
 

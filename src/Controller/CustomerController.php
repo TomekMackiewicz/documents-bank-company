@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
  * @Route("customer")
@@ -71,48 +69,26 @@ class CustomerController extends Controller
     public function showAction(Request $request, Customer $customer) 
     {
         $searchResults = [];
-        $actionsFromTo = null;
-        $datesError = null;
-        $result = null;
 
-        $em = $this->getDoctrine()->getManager(); 
-        $repo = $this->getDoctrine()->getRepository('App:Action');
+        $em = $this->getDoctrine()->getManager();
         $filesIn  = $em->getRepository('App:Customer')->filesInCountByCustomer($customer->getId());
         $filesOut = $em->getRepository('App:Customer')->filesOutCountByCustomer($customer->getId());
-        $actionsForm = $this->createForm('App\Form\ActionType');
-        $actionsForm->handleRequest($request);
+        $transfersForm = $this->createSearchForm();
+        $transfersForm->handleRequest($request);
 
-        //$queryBuilder = $em->getRepository('App:File')->createQueryBuilder('e');
-        $searchForm = $this->createSearchForm();
-        $searchForm->handleRequest($request);  
-
-        if ($actionsForm->isSubmitted() && $actionsForm->isValid()) {
-            $dateFrom = $actionsForm["dateFrom"]->getData()->format('Y-m-d');
-            $dateTo = $actionsForm["dateTo"]->getData()->format('Y-m-d');
-            if( strtotime($dateFrom) < strtotime($dateTo) ) {
-              $actionsFromTo = $em->getRepository('App:Action')
-                ->customerActionsFromTo($customer->getId(), $dateFrom, $dateTo);
-            } else {
-                $datesError = "Start value can't be higher than end date!";
-            }
+        if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
+            $searchCriteria = $transfersForm->getData();
+            $searchCriteria['customer'] = $customer;
+            $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
         }
-
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            $searchCriteria = $searchForm->getData();
-            $em = $this->getDoctrine()->getManager();
-            $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);             
-        }   
 
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
             'delete_form' => $this->createDeleteForm($customer)->createView(),
             'filesIn' =>$filesIn,
             'filesOut' =>$filesOut,
-            'actionsForm' => $actionsForm->createView(),
-            'actionsFromTo' => $actionsFromTo,
-            'datesError' => $datesError,
-            'filterForm' => $searchForm->createView(),
-            'searchResults' => $searchResults
+            'transfersForm' => $transfersForm->createView(),
+            'transfersFromTo' => $searchResults
         ]);
     }
 
@@ -170,33 +146,27 @@ class CustomerController extends Controller
     private function createSearchForm()
     {
         return $this->createFormBuilder(null)
-            ->add('signature', SearchType::class, [
-                'required' => false
-            ])
-            ->add('status', ChoiceType::class, [
+            ->add('dateFrom', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text'                
+            ))
+            ->add('dateTo', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text'                
+            ))                 
+            ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'In' => 'In',
-                    'Out' => 'Out',
-                    'Unknown' => 'Unknown'
+                    'In' => Transfer::$transferIn,
+                    'Out' => Transfer::$transferOut,
+                    'Adjustment' => Transfer::$transferAdjustment
                 ],
-                'expanded' => true,
-                'multiple' => true
+                'required' => false,
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
             ])
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC')
-                        ->where('c.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ROLE_ADMIN%');
-                },
-                'expanded' => true,
-                'multiple' => true
-            ])                
-            ->add('search', SubmitType::class)
             ->getForm();        
-    }     
+    }      
     
     /**
      * Form to delete a customer entity

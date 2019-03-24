@@ -9,10 +9,10 @@ class CustomerRepository extends EntityRepository
     public function filesInCountByCustomers() 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(b.id) as fileCount 
+            "SELECT c.name, count(f.id) as fileCount 
              FROM App:Customer c 
-             LEFT JOIN c.files b
-             WHERE b.status='In'
+             LEFT JOIN c.files f
+             WHERE f.status=1
              GROUP BY c.name"
         )->getResult();
         
@@ -22,10 +22,10 @@ class CustomerRepository extends EntityRepository
     public function filesOutCountByCustomers() 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(b.id) as filesCount 
+            "SELECT c.name, count(f.id) as filesCount 
              FROM App:Customer c 
-             LEFT JOIN c.files b
-             WHERE b.status='Out'
+             LEFT JOIN c.files f
+             WHERE f.status=2
              GROUP BY c.name"
         )->getResult();
         
@@ -38,7 +38,7 @@ class CustomerRepository extends EntityRepository
             "SELECT c.name, count(f.id) as filesCount 
              FROM App:Customer c 
              LEFT JOIN c.files f
-             WHERE f.status='In'
+             WHERE f.status=1
              AND c.id=:id
              GROUP BY c.name"
         )->setParameter(':id', $id)->getResult();
@@ -49,10 +49,10 @@ class CustomerRepository extends EntityRepository
     public function filesOutCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(b.id) as filesCount 
+            "SELECT c.name, count(f.id) as filesCount 
              FROM App:Customer c 
-             LEFT JOIN c.files b
-             WHERE b.status='Out'
+             LEFT JOIN c.files f
+             WHERE f.status=2
              AND c.id=:id
              GROUP BY c.name"
         )->setParameter(':id', $id)->getResult();

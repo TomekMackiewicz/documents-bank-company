@@ -82,8 +82,9 @@
             </button>
         </div>
     </div>
-{{ form_end(searchForm) }}         
-    
+{{ form_end(searchForm) }}
+
+<div class="row pb-4">  
     <div class="col-sm-12">
         {% if searchResults is not empty %}
             <table class="table table-striped">
@@ -120,5 +121,6 @@
             </table>               
         {% endif %}         
     </div>
-    
+</div>
+
 {% endblock %}
