@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
- * @UniqueEntity("name")
+ * @UniqueEntity("username")
  */
 class Customer extends BaseUser 
 {
@@ -26,12 +26,12 @@ class Customer extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string", length=64, nullable=true)
+     * @ORM\Column(name="company", type="string", length=64, nullable=true)
      * @Assert\NotBlank(
-     *   message = "Name field cannot be empty."
+     *   message = "Company field cannot be empty."
      * )     
      */
-    private $name;
+    private $company;
 
     /**
      * @var string
@@ -73,21 +73,21 @@ class Customer extends BaseUser
     }
 
     /**
-     * @param string $name
+     * @param string $company
      * @return Customer
      */
-    public function setName($name) 
+    public function setCompany($company) 
     {
-        $this->name = $name;
+        $this->company = $company;
         return $this;
     }
 
     /**
      * @return string 
      */
-    public function getName() 
+    public function getCompany() 
     {
-        return $this->name;
+        return $this->company;
     }
 
     /**

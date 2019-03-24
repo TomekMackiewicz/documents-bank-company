@@ -9,11 +9,11 @@ class CustomerRepository extends EntityRepository
     public function filesInCountByCustomers() 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(f.id) as fileCount 
+            "SELECT c.company, count(f.id) as fileCount 
              FROM App:Customer c 
              LEFT JOIN c.files f
              WHERE f.status=1
-             GROUP BY c.name"
+             GROUP BY c.company"
         )->getResult();
         
         return $filesCountByCustomers;
@@ -22,11 +22,11 @@ class CustomerRepository extends EntityRepository
     public function filesOutCountByCustomers() 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(f.id) as filesCount 
+            "SELECT c.company, count(f.id) as filesCount 
              FROM App:Customer c 
              LEFT JOIN c.files f
              WHERE f.status=2
-             GROUP BY c.name"
+             GROUP BY c.company"
         )->getResult();
         
         return $filesCountByCustomers;
@@ -35,12 +35,12 @@ class CustomerRepository extends EntityRepository
     public function filesInCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(f.id) as filesCount 
+            "SELECT c.company, count(f.id) as filesCount 
              FROM App:Customer c 
              LEFT JOIN c.files f
              WHERE f.status=1
              AND c.id=:id
-             GROUP BY c.name"
+             GROUP BY c.company"
         )->setParameter(':id', $id)->getResult();
         
         return $filesCountByCustomers;
@@ -49,12 +49,12 @@ class CustomerRepository extends EntityRepository
     public function filesOutCountByCustomer($id) 
     {
         $filesCountByCustomers = $this->getEntityManager()->createQuery(
-            "SELECT c.name, count(f.id) as filesCount 
+            "SELECT c.company, count(f.id) as filesCount 
              FROM App:Customer c 
              LEFT JOIN c.files f
              WHERE f.status=2
              AND c.id=:id
-             GROUP BY c.name"
+             GROUP BY c.company"
         )->setParameter(':id', $id)->getResult();
         
         return $filesCountByCustomers;

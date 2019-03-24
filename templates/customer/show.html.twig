@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th>{{ customer.name }}</th>                         
+                            <th>{{ customer.company }}</th>                         
                         </tr>
                     </tbody>
                 </table> 
@@ -80,7 +80,12 @@
             </tbody>
         </table>        
     </div>
-</div>    
+</div>   
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <h4>Transfers</h4>
+    </div>
+</div>                         
 {{ form_start(transfersForm) }}
     <div class="row pb-4">            
         <div class="col-auto">                    

@@ -53,7 +53,7 @@ class CustomerController extends Controller
             return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
         
-        return $this->render('customer/index.html.twig', array(
+        return $this->render('customer/new.html.twig', array(
             'customer' => $customer,
             'form' => $form->createView(),
         ));

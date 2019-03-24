@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TransferRepository extends EntityRepository 
 {
@@ -32,7 +33,7 @@ class TransferRepository extends EntityRepository
     {
         $ids = [];
         
-        if (is_array($searchCriteria['customer'])) {
+        if ($searchCriteria['customer'] instanceof ArrayCollection) {
             $customers = $searchCriteria['customer']->toArray();
             
             foreach ($customers as $customer) {
