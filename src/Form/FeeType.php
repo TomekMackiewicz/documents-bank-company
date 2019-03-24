@@ -26,12 +26,12 @@ class FeeType extends AbstractType {
       ))
       ->add('customer', EntityType::class,[
         'class' => 'App:Customer',
-        'choice_label' => 'name',
+        'choice_label' => 'company',
         'query_builder' => function (EntityRepository $er) {
           return $er->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC')
+            ->orderBy('c.company', 'ASC')
             ->where('c.roles NOT LIKE :roles')
-            ->setParameter('roles', '%ROLE_ADMIN%');
+            ->setParameter('roles', '%ADMIN%');
         }
       ]);
   }

@@ -2,40 +2,66 @@
 
 {% block body %}
 
-  <h1>Fees list</h1>
-
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Delivery</th>
-        <th>Import</th>
-        <th>Storage</th>
-        <th>Customer</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for fee in fees %}
-      <tr>
-        <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">{{ fee.id }}</a></td>
-        <td>{{ fee.delivery }}</td>
-        <td>{{ fee.import }}</td>
-        <td>{{ fee.storage }}</td>
-        <td>{{ fee.customer.name }}</td>
-        <td>
-          <ul>
-            <li>
-              <a href="{{ path('fee_show', { 'id': fee.id }) }}">show</a>
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Fees</h2></a>
             </li>
-            <li>
-              <a href="{{ path('fee_edit', { 'id': fee.id }) }}">edit</a>
-            </li>
-          </ul>
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  <a href="{{ path('fee_new') }}" class="btn btn-primary">Create a new fee</a>
-
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+          <li class="nav-item pl-2">
+            <a class="btn btn-light" href="{{ path('fee_calculate') }}">
+                <i class="fas fa-cash-register"></i> Calculate
+            </a>
+          </li>            
+          <li class="nav-item pl-2">
+            <a class="btn btn-light" href="{{ path('fee_new') }}">
+                <i class="fas fa-plus"></i> New fee
+            </a>
+          </li>
+          <li class="nav-item pl-2">
+            <button class="btn btn-light">
+                <i class="fas fa-print"></i> Print
+            </button>        
+          </li>
+          <li class="nav-item pl-2">
+            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                    Todo.
+            ">
+                <i class="fas fa-info-circle"></i> Info
+            </button>        
+          </li>          
+        </ul>
+    </div>
+</div>
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Delivery</th>
+              <th>Import</th>
+              <th>Storage</th>
+              <th>Customer</th>
+              <th>Show</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for fee in fees %}
+            <tr>
+              <td>{{ fee.delivery }}</td>
+              <td>{{ fee.import }}</td>
+              <td>{{ fee.storage }}</td>
+              <td>{{ fee.customer.company }}</td>
+              <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">Show</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+          
 {% endblock %}

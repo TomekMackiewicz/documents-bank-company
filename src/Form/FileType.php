@@ -35,9 +35,9 @@ class FileType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC')
+                        ->orderBy('c.company', 'ASC')
                         ->where('c.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ROLE_ADMIN%');
+                        ->setParameter('roles', '%ADMIN%');
                 },
                 'label' => false
             ]);

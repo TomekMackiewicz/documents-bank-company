@@ -14,6 +14,20 @@ use App\Entity\Fee;
  */
 class FeeController extends Controller 
 {
+    
+    /**
+     * Calculate fee
+     * 
+     * @Route("/calculate", name="fee_calculate")
+     * @Method({"GET", "POST"})
+     */    
+    public function calculateAction()
+    {
+        return $this->render('fee/calculate.html.twig', array(
+
+        ));        
+    }    
+
     /**
      * Lists all fees
      * 
