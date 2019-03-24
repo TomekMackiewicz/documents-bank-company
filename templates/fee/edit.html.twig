@@ -2,15 +2,86 @@
 
 {% block body %}
 
-  <h1>Fee edit</h1>
-
-  {{ form_start(edit_form) }}
-     {{ form_widget(edit_form) }}
-     <input type="submit" value="Edit" class="btn btn-primary inline" />
-  {{ form_end(edit_form) }}
-  <a href="{{ path('fee_index') }}" class="btn btn-primary inline">Back to the list</a>
-  {{ form_start(delete_form) }}
-     <input type="submit" value="Delete" class="btn btn-danger inline">
-  {{ form_end(delete_form) }}
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a>
+                    <h2>Edit fee for {{ fee.customer.company }}</h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+                {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete
+                    </button>
+                {{ form_end(delete_form) }}
+            </li> 
+        </ul>
+    </div>
+</div>    
+    
+{{ form_start(edit_form) }}            
+    <div class="row pb-4">    
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.delivery) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Transfer (out)</div>
+            </div>    
+                {{ form_widget(edit_form.delivery) }}
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.import) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Transfer (in)</div>
+            </div>    
+                {{ form_widget(edit_form.import) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.storage) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Storage</div>
+            </div>    
+                {{ form_widget(edit_form.storage) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Customer</div>
+            </div>    
+                {{ form_widget(edit_form.customer) }}
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="far fa-edit"></i> Edit
+            </button>
+        </div>            
+    </div>
+{{ form_end(edit_form) }}
 
 {% endblock %}
