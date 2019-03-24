@@ -21,10 +21,39 @@ class FeeController extends Controller
      * @Route("/calculate", name="fee_calculate")
      * @Method({"GET", "POST"})
      */    
-    public function calculateAction()
+    public function calculateAction(Request $request)
     {
-        return $this->render('fee/calculate.html.twig', array(
+        $datesError = null;
+        $sum = null;
+        $months = 0;
+        $years = 0;
+        $em = $this->getDoctrine()->getManager();        
+        $feeTable = null;
+        $calculateFeeForm = $this->createForm('App\Form\FeeCountType');
+        $calculateFeeForm->handleRequest($request);
 
+        if ($calculateFeeForm->isSubmitted() && $calculateFeeForm->isValid()) {
+            $dateFrom = $calculateFeeForm["dateFrom"]->getData()->format('Y-m-d');
+            $dateTo = $calculateFeeForm["dateTo"]->getData()->format('Y-m-d');
+            if( strtotime($dateFrom) < strtotime($dateTo) ) {
+                $start = (new \DateTime($dateFrom))->modify('first day of this month');
+                $end = (new \DateTime($dateTo))->modify('first day of next month');
+                $interval = $end->diff($start);
+                $interval->format('%m months');
+                $months = $interval->m;
+                $years = $interval->y;
+                $feeTable = $em->getRepository('App:Fee')
+                    ->actionsToCalculate($fee->getCustomer()->getId(), $dateFrom, $dateTo);
+                $sum = ($feeTable['storage']*($interval->m + ($interval->y*12))) + 
+                    ($feeTable['import']*$feeTable['actionIn']) +
+                    ($feeTable['delivery']*$feeTable['actionOut']);
+            } else {
+                $datesError = "Start value can't be higher than end date!";              
+            } 
+        }
+        
+        return $this->render('fee/calculate.html.twig', array(
+            'feeTable' => $feeTable,
         ));        
     }    
 
@@ -79,44 +108,11 @@ class FeeController extends Controller
      */
     public function showAction(Request $request, Fee $fee) 
     {
-        $feeTable = null;
-        $datesError = null;
-        $sum = null;
-        $months = 0;
-        $years = 0;
-        $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($fee); 
-        $calculateFeeForm = $this->createForm('App\Form\FeeCountType');
-        $calculateFeeForm->handleRequest($request);
-        if ($calculateFeeForm->isSubmitted() && $calculateFeeForm->isValid()) {
-            $dateFrom = $calculateFeeForm["dateFrom"]->getData()->format('Y-m-d');
-            $dateTo = $calculateFeeForm["dateTo"]->getData()->format('Y-m-d');
-            if( strtotime($dateFrom) < strtotime($dateTo) ) {
-                $start = (new \DateTime($dateFrom))->modify('first day of this month');
-                $end = (new \DateTime($dateTo))->modify('first day of next month');
-                $interval = $end->diff($start);
-                $interval->format('%m months');
-                $months = $interval->m;
-                $years = $interval->y;
-                $feeTable = $em->getRepository('App:Fee')
-                    ->actionsToCalculate($fee->getCustomer()->getId(), $dateFrom, $dateTo);
-                $sum = ($feeTable['storage']*($interval->m + ($interval->y*12))) + 
-                    ($feeTable['import']*$feeTable['actionIn']) +
-                    ($feeTable['delivery']*$feeTable['actionOut']);
-            } else {
-                $datesError = "Start value can't be higher than end date!";              
-            } 
-        }
 
         return [
             'fee' => $fee,
-            'delete_form' => $deleteForm->createView(),
-            'calculateFeeForm' => $calculateFeeForm->createView(),
-            'feeTable' => $feeTable,
-            'sum' => $sum,
-            'months' => $months,
-            'years' => $years,
-            'datesError' => $datesError
+            'delete_form' => $deleteForm->createView()
         ];
     }
 

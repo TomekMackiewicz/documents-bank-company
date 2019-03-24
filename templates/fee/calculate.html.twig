@@ -1,5 +1,27 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-    Hello
+
+    {% if feeTable is not null %}
+      <table class="table table-striped">
+        <tr>
+          <td>Storage</td>
+          <td>{{ feeTable.storage }} * {{ years }} years * {{ months }} months</td>
+        </tr>  
+        <tr>
+          <td>Delivery</td>
+          <td>{{ feeTable.delivery }} * {{ feeTable.actionOut }}</td>
+        </tr> 
+        <tr>
+          <td>Import</td>
+          <td>{{ feeTable.import }} * {{ feeTable.actionIn }}</td>
+        </tr>
+        <tr>
+          <td>Sum =</td>
+          <td>{{ sum }}</td>
+        </tr>                                         
+      </table>
+    {% endif %}     
+    
+    
 {% endblock %}
