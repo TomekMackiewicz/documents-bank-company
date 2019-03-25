@@ -128,7 +128,7 @@ class FileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $transfersForm = $this->createForm('App\Form\ActionType');
         $transfersForm->handleRequest($request);
-
+$dateFrom = null;
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
@@ -144,7 +144,8 @@ class FileController extends Controller
             'file' => $file,
             'transfersForm' => $transfersForm->createView(),
             'transfersFromTo' => $transfersFromTo,            
-            'delete_form' => $this->createDeleteForm($file)->createView()
+            'delete_form' => $this->createDeleteForm($file)->createView(),
+            'date' => $dateFrom
         ]);
     }
 

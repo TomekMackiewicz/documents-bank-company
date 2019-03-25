@@ -36,24 +36,25 @@ class FeeController extends Controller
             $dateFrom = $calculateFeeForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $calculateFeeForm["dateTo"]->getData()->format('Y-m-d');
             if( strtotime($dateFrom) < strtotime($dateTo) ) {
-                $start = (new \DateTime($dateFrom))->modify('first day of this month');
-                $end = (new \DateTime($dateTo))->modify('first day of next month');
-                $interval = $end->diff($start);
-                $interval->format('%m months');
-                $months = $interval->m;
-                $years = $interval->y;
-                $feeTable = $em->getRepository('App:Fee')
-                    ->actionsToCalculate($fee->getCustomer()->getId(), $dateFrom, $dateTo);
-                $sum = ($feeTable['storage']*($interval->m + ($interval->y*12))) + 
-                    ($feeTable['import']*$feeTable['actionIn']) +
-                    ($feeTable['delivery']*$feeTable['actionOut']);
+//                $start = (new \DateTime($dateFrom))->modify('first day of this month');
+//                $end = (new \DateTime($dateTo))->modify('first day of next month');
+//                $interval = $end->diff($start);
+//                $interval->format('%m months');
+//                $months = $interval->m;
+//                $years = $interval->y;
+//                $feeTable = $em->getRepository('App:Fee')
+//                    ->actionsToCalculate($fee->getCustomer()->getId(), $dateFrom, $dateTo);
+//                $sum = ($feeTable['storage']*($interval->m + ($interval->y*12))) + 
+//                    ($feeTable['import']*$feeTable['actionIn']) +
+//                    ($feeTable['delivery']*$feeTable['actionOut']);
             } else {
-                $datesError = "Start value can't be higher than end date!";              
+                $this->addFlash('error', 'Start value can\'t be higher than end date');             
             } 
         }
         
         return $this->render('fee/calculate.html.twig', array(
             'feeTable' => $feeTable,
+            'form' => $calculateFeeForm->createView()
         ));        
     }    
 

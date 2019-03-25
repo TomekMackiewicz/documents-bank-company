@@ -32,7 +32,7 @@ class FileType extends AbstractType
             ])
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
-                'choice_label' => 'name',
+                'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.company', 'ASC')

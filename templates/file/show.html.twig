@@ -77,7 +77,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date from:</div>
             </div>    
-                {{ form_widget(transfersForm.dateFrom) }}
+                {{ form_widget(transfersForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
@@ -87,7 +87,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date to:</div>
             </div>    
-                {{ form_widget(transfersForm.dateTo) }}
+                {{ form_widget(transfersForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">

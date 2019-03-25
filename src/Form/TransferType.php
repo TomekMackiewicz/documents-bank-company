@@ -40,7 +40,7 @@ class TransferType extends AbstractType
             ])
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
-                'choice_label' => 'name',
+                'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.company', 'ASC')
@@ -50,9 +50,10 @@ class TransferType extends AbstractType
                 'label' => false
             ])
             ->add('date', DateType::class, array(
-                'label' => 'Date',
                 'widget' => 'single_text',
-                'label' => false                
+                'label' => false,
+                'format' => 'dd-MM-yyyy',
+                'html5' => false                
             ));
             
         $builder->get('files')->addModelTransformer($this->transformer);

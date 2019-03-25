@@ -188,11 +188,15 @@ class TransferController extends Controller
         return $this->createFormBuilder(null)
             ->add('dateFrom', DateType::class, array(
                 'label' => false,
-                'widget' => 'single_text'                
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false                
             ))
             ->add('dateTo', DateType::class, array(
                 'label' => false,
-                'widget' => 'single_text'                
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false                
             ))                 
             ->add('type', ChoiceType::class, [
                 'choices'  => [
@@ -207,7 +211,7 @@ class TransferController extends Controller
             ])                               
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
-                'choice_label' => 'name',
+                'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.company', 'ASC')

@@ -43,7 +43,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date from</div>
             </div>    
-                {{ form_widget(searchForm.dateFrom) }}
+                {{ form_widget(searchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
@@ -53,7 +53,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date to</div>
             </div>    
-                {{ form_widget(searchForm.dateTo) }}
+                {{ form_widget(searchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
@@ -109,7 +109,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.name }}</td>
+                            <td>{{ transfer.customer.company }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show

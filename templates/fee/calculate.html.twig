@@ -2,6 +2,65 @@
 
 {% block body %}
 
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Calculate fee</h2></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+                <button class="btn btn-light">
+                    <i class="fas fa-print"></i> Print
+                </button>        
+            </li>
+            <li class="nav-item pl-2">
+                <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                        Todo.
+                ">
+                    <i class="fas fa-info-circle"></i> Info
+                </button>        
+            </li>          
+        </ul>
+    </div>
+</div>    
+    
+{{ form_start(form) }}            
+    <div class="row pb-4">    
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(form.month) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Month</div>
+            </div>    
+                {{ form_widget(form.month, { 'attr' : { 'class': 'monthpicker' }}) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(form.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Customer</div>
+            </div>    
+                {{ form_widget(form.customer) }}
+            </div>
+        </div> 
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="far fa-edit"></i> Calculate
+            </button>
+        </div>            
+    </div>
+{{ form_end(form) }}    
+    
     {% if feeTable is not null %}
       <table class="table table-striped">
         <tr>
