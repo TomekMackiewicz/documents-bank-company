@@ -95,7 +95,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date from</div>
             </div>    
-                {{ form_widget(transfersForm.dateFrom) }}
+                {{ form_widget(transfersForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
@@ -105,7 +105,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Date to</div>
             </div>    
-                {{ form_widget(transfersForm.dateTo) }}
+                {{ form_widget(transfersForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
@@ -115,7 +115,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">Type</div>
             </div>    
-                {{ form_widget(transfersForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+                {{ form_widget(transfersForm.type, {'attr': { 'multiple':'multiple', 'class': 'multiple' }}) }}
             </div>                    
         </div>
         <div class="col-auto">
@@ -151,7 +151,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.name }}</td>
+                            <td>{{ transfer.customer.company }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show

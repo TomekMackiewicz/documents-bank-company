@@ -3,45 +3,45 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use App\Entity\Transfer;
 
 class FeeRepository extends EntityRepository 
 {
     public function actionsToCalculate($id, $from, $to) 
     {
-// @Fixme set params        
-        // Liczba usług
-        $actionsQuery = $this->getEntityManager()->createQuery(
-            "SELECT t.type FROM App:Transfer t WHERE t.customer = $id AND t.date BETWEEN '$from' and '$to'"
-        )->getResult();
+        $result = [];
 
-        // Lista opłat
-        $feeQuery = $this->getEntityManager()->createQuery(
-                "SELECT f.delivery,f.import,f.storage FROM App:Fee f WHERE f.customer = $id"
-        )->getResult();
+        $transfersQuery = $this->getEntityManager()->createQuery(
+            "SELECT 
+             SUM(CASE WHEN t.type = :typeIn THEN 1 ELSE 0 END) AS import,
+             SUM(CASE WHEN t.type = :typeOut THEN 1 ELSE 0 END) AS delivery
+             FROM App:Transfer t 
+             WHERE t.customer = :id 
+             AND t.date BETWEEN :from and :to
+             AND t.type IN (:typeIn, :typeOut)
+            "
+        )
+        ->setParameter(':id', $id)
+        ->setParameter(':from', $from)
+        ->setParameter(':to', $to)
+        ->setParameter(':typeIn', Transfer::$transferIn)
+        ->setParameter(':typeOut', Transfer::$transferOut)
+        ->getResult();
+        
+        $result['transfers'] = $transfersQuery[0];
 
-        $fee = $feeQuery[0];
+        $feesQuery = $this->getEntityManager()->createQuery(
+                "SELECT f.import, f.delivery FROM App:Fee f WHERE f.customer = :id"
+        )->setParameter(':id', $id)->getResult();
+        
+        $result['fees'] = $feesQuery[0];
 
-        // Liczymy usługi (ilość przywozów i dowozów)
-        $numberOfActions = [];
-        foreach ($actionsQuery as $value) {
-            foreach ($value as $key2 => $value2) {
-                $index = $key2.''.$value2;
-                if (array_key_exists($index, $numberOfActions)) {
-                   $numberOfActions[$index]++;
-                } else {
-                   $numberOfActions[$index] = 1;
-                }
-            }
-        }
+        $result['subtotals'] = array_map(function($x, $y) { return $x * $y; },
+                   $result['transfers'], $result['fees']); 
+        
+        $result['total'] = array_sum($result['subtotals']);
 
-        if(!isset($numberOfActions['actionIn'])) {
-           $numberOfActions['actionIn'] = 0;
-        }
-        if(!isset($numberOfActions['actionOut'])) {
-           $numberOfActions['actionOut'] = 0;
-        }    
-
-        return $feeTable = array_merge($fee, $numberOfActions);
+        return $result;
     }
 
 }

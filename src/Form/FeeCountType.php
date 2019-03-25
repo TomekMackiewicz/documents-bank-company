@@ -15,12 +15,18 @@ class FeeCountType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder 
-            ->add('month', DateType::class, array(
+            ->add('dateFrom', DateType::class, array(
                 'widget' => 'single_text',
-                'format' => 'MM-yyyy',
+                'format' => 'dd-MM-yyyy',
                 'label' => false,
                 'html5' => false
             ))
+            ->add('dateTo', DateType::class, array(
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'label' => false,
+                'html5' => false
+            ))                
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
                 'choice_label' => 'company',

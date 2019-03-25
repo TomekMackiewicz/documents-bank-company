@@ -37,13 +37,22 @@
     <div class="row pb-4">    
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(form.month) }}
+                {{ form_errors(form.dateFrom) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Month</div>
+                <div class="input-group-text">Date from</div>
             </div>    
-                {{ form_widget(form.month, { 'attr' : { 'class': 'monthpicker' }}) }}
+                {{ form_widget(form.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(form.dateTo) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date to</div>
+            </div>    
+                {{ form_widget(form.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
+            </div>
+        </div>            
         <div class="col-auto">
             <div class="input-group">
                 {{ form_errors(form.customer) }}
@@ -59,28 +68,42 @@
             </button>
         </div>            
     </div>
-{{ form_end(form) }}    
-    
-    {% if feeTable is not null %}
-      <table class="table table-striped">
-        <tr>
-          <td>Storage</td>
-          <td>{{ feeTable.storage }} * {{ years }} years * {{ months }} months</td>
-        </tr>  
-        <tr>
-          <td>Delivery</td>
-          <td>{{ feeTable.delivery }} * {{ feeTable.actionOut }}</td>
-        </tr> 
-        <tr>
-          <td>Import</td>
-          <td>{{ feeTable.import }} * {{ feeTable.actionIn }}</td>
-        </tr>
-        <tr>
-          <td>Sum =</td>
-          <td>{{ sum }}</td>
-        </tr>                                         
-      </table>
-    {% endif %}     
+{{ form_end(form) }}
+
+ {#{{ dump(calculation) }}#}
+ 
+{% if calculation is not null %}
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Sum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Transfers (in)</th> 
+                <td>{{ calculation.transfers.import }}</td>
+                <td>{{ calculation.fees.import }}</td>
+                <td>{{ calculation.subtotals.0 }}</td>
+            </tr>
+            <tr>
+                <th>Transfers (out)</th> 
+                <td>{{ calculation.transfers.delivery }}</td>
+                <td>{{ calculation.fees.delivery }}</td>
+                <td>{{ calculation.subtotals.1 }}</td>
+            </tr>
+            <tr>
+                <th colspan='3'>Sum</th>
+                <th>{{ calculation.total }}</th>
+            </tr>            
+        </tbody>
+        
+                                       
+    </table>
+{% endif %}     
     
     
 {% endblock %}

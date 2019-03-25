@@ -22,38 +22,23 @@ class FeeController extends Controller
      * @Method({"GET", "POST"})
      */    
     public function calculateAction(Request $request)
-    {
-        $datesError = null;
-        $sum = null;
-        $months = 0;
-        $years = 0;
-        $em = $this->getDoctrine()->getManager();        
-        $feeTable = null;
+    {        
+        $calculation = null;
         $calculateFeeForm = $this->createForm('App\Form\FeeCountType');
         $calculateFeeForm->handleRequest($request);
 
         if ($calculateFeeForm->isSubmitted() && $calculateFeeForm->isValid()) {
-            $dateFrom = $calculateFeeForm["dateFrom"]->getData()->format('Y-m-d');
-            $dateTo = $calculateFeeForm["dateTo"]->getData()->format('Y-m-d');
-            if( strtotime($dateFrom) < strtotime($dateTo) ) {
-//                $start = (new \DateTime($dateFrom))->modify('first day of this month');
-//                $end = (new \DateTime($dateTo))->modify('first day of next month');
-//                $interval = $end->diff($start);
-//                $interval->format('%m months');
-//                $months = $interval->m;
-//                $years = $interval->y;
-//                $feeTable = $em->getRepository('App:Fee')
-//                    ->actionsToCalculate($fee->getCustomer()->getId(), $dateFrom, $dateTo);
-//                $sum = ($feeTable['storage']*($interval->m + ($interval->y*12))) + 
-//                    ($feeTable['import']*$feeTable['actionIn']) +
-//                    ($feeTable['delivery']*$feeTable['actionOut']);
-            } else {
-                $this->addFlash('error', 'Start value can\'t be higher than end date');             
-            } 
+            $em = $this->getDoctrine()->getManager();
+            $data = $calculateFeeForm->getData();
+            
+            $dateFrom = $data["dateFrom"]->format('Y-m-d');
+            $dateTo = $data["dateTo"]->format('Y-m-d');
+            $customer = $data['customer']->getId();
+            $calculation = $em->getRepository('App:Fee')->actionsToCalculate($customer, $dateFrom, $dateTo);
         }
         
         return $this->render('fee/calculate.html.twig', array(
-            'feeTable' => $feeTable,
+            'calculation' => $calculation,
             'form' => $calculateFeeForm->createView()
         ));        
     }    
