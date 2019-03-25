@@ -57,7 +57,9 @@
                     <td>Transfer (in):</td>
                     <th>{{ fee.import }}</th>
                     <td>Storage:</td>
-                    <th>{{ fee.storage }}</th>                            
+                    <th>{{ fee.storage }}</th>
+                    <td>Box price:</td>
+                    <th>{{ fee.boxPrice }}</th>
                     <td>Customer:</td>
                     <th><a href="{{ path('customer_show', {'id':fee.customer.id}) }}">{{ fee.customer.company }}</a></th>
                 </tr>

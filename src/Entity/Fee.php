@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * 
@@ -23,22 +24,48 @@ class Fee
 
     /**
      * @var int
-     * @ORM\Column(name="delivery", type="integer")
+     * @ORM\Column(name="delivery", type="decimal", precision=9, scale=2)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9.]*$/",
+     *     match = true,
+     *     message = "Only digits and dot are allowed"
+     * ) 
      */
     private $delivery;
 
     /**
      * @var int
-     * @ORM\Column(name="import", type="integer")
+     * @ORM\Column(name="import", type="decimal", precision=9, scale=2)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9.]*$/",
+     *     match = true,
+     *     message = "Only digits and dot are allowed"
+     * ) 
      */
     private $import;
 
     /**
      * @var int
-     * @ORM\Column(name="storage", type="integer")
+     * @ORM\Column(name="storage", type="decimal", precision=9, scale=2)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9.]*$/",
+     *     match = true,
+     *     message = "Only digits and dot are allowed"
+     * ) 
      */
     private $storage;
 
+    /**
+     * @var int
+     * @ORM\Column(name="box_price", type="decimal", precision=9, scale=2)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9.]*$/",
+     *     match = true,
+     *     message = "Only digits and dot are allowed"
+     * ) 
+     */
+    private $boxPrice;    
+    
     /**
      * @ORM\OneToOne(targetEntity="Customer", inversedBy="fee")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
@@ -105,6 +132,24 @@ class Fee
     public function getStorage() 
     {
         return $this->storage;
+    }
+
+    /**
+     * @param integer $boxPrice
+     * @return Fee
+     */
+    public function setBoxPrice($boxPrice) 
+    {
+        $this->boxPrice = $boxPrice;
+        return $this;
+    }
+
+    /**
+     * @return integer 
+     */
+    public function getBoxPrice() 
+    {
+        return $this->boxPrice;
     }
 
     /**

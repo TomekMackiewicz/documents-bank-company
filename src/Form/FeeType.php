@@ -16,13 +16,16 @@ class FeeType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder
       ->add('delivery', TextType::class, array(
-        'label' => 'Delivery Price'
+        'label' => false
       ))
       ->add('import', TextType::class, array(
-        'label' => 'Import Price'
+        'label' => false
       ))
       ->add('storage', TextType::class, array(
-        'label' => 'Storage Price'
+        'label' => false
+      ))
+      ->add('boxPrice', TextType::class, array(
+        'label' => false
       ))
       ->add('customer', EntityType::class,[
         'class' => 'App:Customer',

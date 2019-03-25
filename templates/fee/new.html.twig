@@ -67,6 +67,17 @@
     <div class="row pb-4"> 
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="input-group">
+                {{ form_errors(form.boxPrice) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Box price</div>
+            </div>    
+                {{ form_widget(form.boxPrice) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
                 {{ form_errors(form.customer) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>

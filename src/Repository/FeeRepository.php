@@ -14,7 +14,9 @@ class FeeRepository extends EntityRepository
         $transfersQuery = $this->getEntityManager()->createQuery(
             "SELECT 
              SUM(CASE WHEN t.type = :typeIn THEN 1 ELSE 0 END) AS import,
-             SUM(CASE WHEN t.type = :typeOut THEN 1 ELSE 0 END) AS delivery
+             SUM(CASE WHEN t.type = :typeOut THEN 1 ELSE 0 END) AS delivery,
+             1 AS storage,
+             SUM(t.boxes) AS boxes
              FROM App:Transfer t 
              WHERE t.customer = :id 
              AND t.date BETWEEN :from and :to
@@ -31,7 +33,7 @@ class FeeRepository extends EntityRepository
         $result['transfers'] = $transfersQuery[0];
 
         $feesQuery = $this->getEntityManager()->createQuery(
-                "SELECT f.import, f.delivery FROM App:Fee f WHERE f.customer = :id"
+                "SELECT f.import, f.delivery, f.storage, f.boxPrice AS boxes FROM App:Fee f WHERE f.customer = :id"
         )->setParameter(':id', $id)->getResult();
         
         $result['fees'] = $feesQuery[0];

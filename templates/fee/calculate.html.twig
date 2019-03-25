@@ -69,8 +69,6 @@
         </div>            
     </div>
 {{ form_end(form) }}
-
- {#{{ dump(calculation) }}#}
  
 {% if calculation is not null %}
     <table class="table table-striped">
@@ -95,6 +93,18 @@
                 <td>{{ calculation.fees.delivery }}</td>
                 <td>{{ calculation.subtotals.1 }}</td>
             </tr>
+            <tr>
+                <th>Storage</th> 
+                <td>---</td>
+                <td>{{ calculation.fees.storage }}</td>
+                <td>{{ calculation.subtotals.2 }}</td>
+            </tr> 
+            <tr>
+                <th>Boxes</th> 
+                <td>{{ calculation.transfers.boxes }}</td>
+                <td>{{ calculation.fees.boxes }}</td>
+                <td>{{ calculation.subtotals.3 }}</td>
+            </tr> 
             <tr>
                 <th colspan='3'>Sum</th>
                 <th>{{ calculation.total }}</th>
