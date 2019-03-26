@@ -90,8 +90,7 @@ class TransferController extends Controller
      * @Route("/{id}", name="transfer_show", methods={"GET","POST"})
      */
     public function showAction(Transfer $transfer) 
-    {
-        
+    {        
         return $this->render('transfer/show.html.twig', [
             'transfer' => $transfer,            
             'delete_form' => $this->createDeleteForm($transfer)->createView()
@@ -155,6 +154,8 @@ class TransferController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($transfer);
             $em->flush($transfer);
+            
+            $this->addFlash('success', 'Transfer deleted');
         }
 
         return $this->redirectToRoute('transfer_index');

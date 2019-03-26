@@ -115,7 +115,7 @@ class FeeController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             
-            $this->addFlash('success', 'Fee edited successfully');
+            $this->addFlash('success', 'Fee edited');
             
             return $this->redirectToRoute('fee_show', array('id' => $fee->getId()));
         }
@@ -143,6 +143,8 @@ class FeeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($fee);
             $em->flush($fee);
+            
+            $this->addFlash('success', 'Fee deleted');
         }
         
         return $this->redirectToRoute('fee_index');

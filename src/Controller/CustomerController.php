@@ -47,6 +47,8 @@ class CustomerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($customer);
             $em->flush($customer);
+            
+            $this->addFlash('success', 'Customer created');
 
             return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
@@ -104,6 +106,8 @@ class CustomerController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Customer edited');
+            
             return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
 
@@ -130,6 +134,8 @@ class CustomerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($customer);
             $em->flush($customer);
+            
+            $this->addFlash('success', 'Customer deleted');
         }
         
         return $this->redirectToRoute('customer_index');
