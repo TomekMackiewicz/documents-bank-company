@@ -115,7 +115,7 @@
                     {% endfor %}
                 </tbody>
             </table>               
-        {% else %}
+        {% elseif app.request.method is same as('POST') %}
             <div class="alert alert-light" role="alert">
                 No results
             </div>
