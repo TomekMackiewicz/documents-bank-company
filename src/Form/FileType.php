@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
@@ -30,6 +31,9 @@ class FileType extends AbstractType
                 ],
                 'label' => false
             ])
+            ->add('note', TextareaType::class, [
+                'label' => false
+            ])                
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
                 'choice_label' => 'company',

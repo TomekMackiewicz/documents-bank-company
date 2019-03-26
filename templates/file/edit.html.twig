@@ -31,7 +31,7 @@
 </div>
 {{ form_start(edit_form) }}            
     <div class="row pb-4">    
-        <div class="col-auto">
+        <div class="col-sm-4">
             <div class="input-group">
                 {{ form_errors(edit_form.signature) }}
             <div class="input-group-prepend">
@@ -40,7 +40,9 @@
                 {{ form_widget(edit_form.signature) }}
             </div>
         </div>
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4">
+        <div class="col-sm-4">
             <div class="input-group">
                 {{ form_errors(edit_form.status) }}
             <div class="input-group-prepend">
@@ -49,7 +51,20 @@
                 {{ form_widget(edit_form.status) }}
             </div>
         </div> 
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-sm-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.note) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Note</div>
+            </div>    
+                {{ form_widget(edit_form.note) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4">
+        <div class="col-sm-4">
             <div class="input-group">
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
@@ -57,7 +72,9 @@
             </div>    
                 {{ form_widget(edit_form.customer) }}
             </div>
-        </div> 
+        </div>
+    </div>
+    <div class="row pb-4">
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
                 <i class="far fa-edit"></i> Edit

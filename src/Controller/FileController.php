@@ -88,6 +88,7 @@ class FileController extends Controller
                 $file = new File();
                 $file->setSignature(trim($signature));
                 $file->setStatus($data->getStatus());
+                $file->setNote($data->getNote());
                 $file->setCustomer($data->getCustomer());
                 $file->addTransfer($transfer);
                 $em->persist($file);
