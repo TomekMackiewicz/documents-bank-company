@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
-     * @Route("/test/{text}", name="files_test")
+     * @Route("/api/{text}", name="files_api")
      * @param string
      * @Method({"GET"})
      * 
