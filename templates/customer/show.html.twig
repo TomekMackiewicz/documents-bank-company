@@ -158,7 +158,11 @@
                     {% endfor %}
                 </tbody>
             </table>               
-        {% endif %}         
+        {% else %}
+            <div class="alert alert-light" role="alert">
+                No results
+            </div>
+        {% endif %}          
     </div>        
 </div>
         

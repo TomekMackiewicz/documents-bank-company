@@ -98,7 +98,7 @@
 
 <div class="row pb-4">
     <div class="col-auto">         
-        {% if transfersFromTo is not null %}
+        {% if transfersFromTo is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
@@ -129,6 +129,10 @@
                 {% endfor %}
                 </tbody>
             </table>
+        {% else %}
+            <div class="alert alert-light" role="alert">
+                No results
+            </div>
         {% endif %}        
     </div>
 </div>
