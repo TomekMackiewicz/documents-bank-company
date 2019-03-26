@@ -3,49 +3,59 @@
 {% block navbar %}
     <div class="col-sm-12">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{path('index')}}">
-                <i class="fas fa-database"></i> DBC
-            </a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a class="navbar-brand" href="{{path('dashboard')}}">
+                    <i class="fas fa-database"></i> DBC
+                </a>
+            {% else %}
+                <span class="navbar-brand">
+                    <i class="fas fa-database"></i> DBC
+                </span>
+            {% endif %}
             <button class="navbar-toggler" 
                     type="button" 
                     data-toggle="collapse" 
-                    data-target="#navbarSupportedContent" 
-                    aria-controls="navbarSupportedContent" 
+                    data-target="#navbar" 
+                    aria-controls="navbar" 
                     aria-expanded="false" 
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'file_index') ? 'active' }}">
-                        <a class="nav-link" href="{{ path('file_index') }}">
-                            Files
-                        </a>                           
-                    </li>
-                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
-                        <a class="nav-link" href="{{ path('transfer_index') }}">
-                            Transfers
-                        </a>                           
-                    </li>                    
-                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">
-                        <a class="nav-link" href="{{ path('customer_index') }}">
-                            Customers
-                        </a>                         
-                    </li>
-                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'fee_index') ? 'active' }}">
-                        <a class="nav-link" href="{{ path('fee_index') }}">
-                            Fees
-                        </a>                         
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Log
-                        </a>                         
-                    </li>                    
-                </ul>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {{ (app.request.attributes.get('_route') == 'file_index') ? 'active' }}">
+                            <a class="nav-link" href="{{ path('file_index') }}">
+                                Files
+                            </a>                           
+                        </li>
+                        <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
+                            <a class="nav-link" href="{{ path('transfer_index') }}">
+                                Transfers
+                            </a>                           
+                        </li>                    
+                        <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">
+                            <a class="nav-link" href="{{ path('customer_index') }}">
+                                Customers
+                            </a>                         
+                        </li>
+                        <li class="nav-item {{ (app.request.attributes.get('_route') == 'fee_index') ? 'active' }}">
+                            <a class="nav-link" href="{{ path('fee_index') }}">
+                                Fees
+                            </a>                         
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Log
+                            </a>                         
+                        </li>                    
+                    </ul>
+                {% else %}
+                    <span class="mr-auto"></span>
+                {% endif %}
                 <ul class="navbar-nav">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <span class="navbar-text pl-2">
+                        <span class="navbar-brand">
                             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                         </span>
                         <li class="nav-item pl-2">

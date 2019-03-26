@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @Route("file")
+ * @Route("admin/file")
  */
 class FileController extends Controller 
 {

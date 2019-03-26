@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Fee;
 
 /**
- * @Route("fee")
+ * @Route("admin/fee")
  */
 class FeeController extends Controller 
 {
