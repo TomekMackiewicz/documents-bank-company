@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Customer;
 use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,8 +18,7 @@ class CustomerController extends Controller
     /**
      * Lists all customer entities
      * 
-     * @Route("/", name="customer_index")
-     * @Method("GET")
+     * @Route("/", name="customer_index", methods={"GET"})
      */
     public function indexAction() 
     {
@@ -34,10 +32,10 @@ class CustomerController extends Controller
 
     /**
      * Creates new customer entity
+     * 
      * @param Request $request
      * 
-     * @Route("/new", name="customer_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="customer_new", methods={"GET","POST"})
      */
     public function newAction(Request $request) 
     {
@@ -63,8 +61,7 @@ class CustomerController extends Controller
      * Displays customer
      * 
      * @param Request $request
-     * @Route("/{id}", name="customer_show")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", name="customer_show", methods={"GET","POST"})
      */
     public function showAction(Request $request, Customer $customer) 
     {
@@ -97,8 +94,7 @@ class CustomerController extends Controller
      * 
      * @param Request $request
      * @param Customer $customer
-     * @Route("/{id}/edit", name="customer_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, Customer $customer) 
     {
@@ -121,8 +117,9 @@ class CustomerController extends Controller
     /**
      * Delete customer entity
      * 
-     * @Route("/{id}", name="customer_delete")
-     * @Method("DELETE")
+     * @param Request $request
+     * @param Customer $customer
+     * @Route("/{id}", name="customer_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Customer $customer) 
     {

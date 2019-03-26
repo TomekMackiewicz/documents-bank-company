@@ -21,8 +21,7 @@ class TransferController extends Controller
      * List of transfers
      * 
      * @param Request $request
-     * @Route("/", name="transfer_index")
-     * @Method({"GET", "POST"})
+     * @Route("/", name="transfer_index", methods={"GET","POST"})
      * @return array
      */
     public function indexAction(Request $request)
@@ -47,8 +46,7 @@ class TransferController extends Controller
      * New transfer
      * 
      * @param Request $request
-     * @Route("/new", name="transfer_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="transfer_new", methods={"GET","POST"})
      * @return array
      */
     public function newAction(Request $request) 
@@ -88,12 +86,10 @@ class TransferController extends Controller
     /**
      * Show transfer
      * 
-     * @param Request $request
      * @param Transfer $transfer
-     * @Route("/{id}", name="transfer_show")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", name="transfer_show", methods={"GET","POST"})
      */
-    public function showAction(Request $request, Transfer $transfer) 
+    public function showAction(Transfer $transfer) 
     {
         
         return $this->render('transfer/show.html.twig', [
@@ -105,8 +101,9 @@ class TransferController extends Controller
     /**
      * Edit transfer
      * 
-     * @Route("/{id}/edit", name="transfer_edit")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Transfer $transfer
+     * @Route("/{id}/edit", name="transfer_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, Transfer $transfer) 
     {
@@ -147,8 +144,7 @@ class TransferController extends Controller
      * 
      * @param Request $request
      * @param Transfer $transfer
-     * @Route("/{id}", name="transfer_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="transfer_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Transfer $transfer) 
     {

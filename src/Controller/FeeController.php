@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Fee;
 
@@ -18,8 +16,8 @@ class FeeController extends Controller
     /**
      * Calculate fee
      * 
-     * @Route("/calculate", name="fee_calculate")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @Route("/calculate", name="fee_calculate", methods={"GET","POST"})
      */    
     public function calculateAction(Request $request)
     {        
@@ -46,9 +44,7 @@ class FeeController extends Controller
     /**
      * Lists all fees
      * 
-     * @Route("/", name="fee_index")
-     * @Method({"GET", "POST"})
-     * @Template("fee/index.html.twig")
+     * @Route("/", name="fee_index", methods={"GET"})
      */
     public function indexAction() 
     {
@@ -63,8 +59,8 @@ class FeeController extends Controller
     /**
      * Create new fee
      * 
-     * @Route("/new", name="fee_new")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @Route("/new", name="fee_new", methods={"GET","POST"})
      */
     public function newAction(Request $request) 
     {
@@ -90,25 +86,25 @@ class FeeController extends Controller
     /**
      * Show fee entity
      * 
-     * @Route("/{id}", name="fee_show")
-     * @Method({"GET", "POST"})
-     * @Template("fee/show.html.twig")
+     * @param Fee $fee
+     * @Route("/{id}", name="fee_show", methods={"GET","POST"})
      */
-    public function showAction(Request $request, Fee $fee) 
+    public function showAction(Fee $fee) 
     {
         $deleteForm = $this->createDeleteForm($fee); 
 
-        return [
+        return $this->render('fee/show.html.twig', [
             'fee' => $fee,
             'delete_form' => $deleteForm->createView()
-        ];
+        ]);
     }
 
     /**
      * Edit fee
      * 
-     * @Route("/{id}/edit", name="fee_edit")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Fee $fee
+     * @Route("/{id}/edit", name="fee_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, Fee $fee) 
     {
@@ -134,8 +130,9 @@ class FeeController extends Controller
     /**
      * Deletes fee
      * 
-     * @Route("/{id}", name="fee_delete")
-     * @Method("DELETE")
+     * @param Request $request
+     * @param Fee $fee
+     * @Route("/{id}", name="fee_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Fee $fee) 
     {

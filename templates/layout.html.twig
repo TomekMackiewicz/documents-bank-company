@@ -17,22 +17,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'file_index') ? 'active' }}">
                         <a class="nav-link" href="{{ path('file_index') }}">
                             Files
                         </a>                           
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
                         <a class="nav-link" href="{{ path('transfer_index') }}">
                             Transfers
                         </a>                           
                     </li>                    
-                    <li class="nav-item">
+                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">
                         <a class="nav-link" href="{{ path('customer_index') }}">
                             Customers
                         </a>                         
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ (app.request.attributes.get('_route') == 'fee_index') ? 'active' }}">
                         <a class="nav-link" href="{{ path('fee_index') }}">
                             Fees
                         </a>                         

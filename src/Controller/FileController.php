@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\File;
 use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -19,9 +18,8 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
-     * @Route("/api/{text}", name="files_api")
+     * @Route("/api/{text}", name="files_api", methods={"GET"})
      * @param string
-     * @Method({"GET"})
      * 
      */
     public function filesAction($text)
@@ -36,8 +34,7 @@ class FileController extends Controller
      * Lists files entities
      * 
      * @param Request $request
-     * @Route("/", name="file_index")
-     * @Method({"GET", "POST"})
+     * @Route("/", name="file_index", methods={"GET","POST"})
      * @return array
      */
     public function indexAction(Request $request) 
@@ -62,8 +59,7 @@ class FileController extends Controller
      * New file entity
      * 
      * @param Request $request
-     * @Route("/new", name="file_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="file_new", methods={"GET","POST"})
      * @return array
      */
     public function newAction(Request $request) 
@@ -118,8 +114,7 @@ class FileController extends Controller
      * 
      * @param Request $request
      * @param File $file
-     * @Route("/{id}", name="file_show")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", name="file_show", methods={"GET","POST"})
      * @return array
      */
     public function showAction(Request $request, File $file) 
@@ -128,7 +123,7 @@ class FileController extends Controller
         $em = $this->getDoctrine()->getManager();
         $transfersForm = $this->createForm('App\Form\ActionType');
         $transfersForm->handleRequest($request);
-$dateFrom = null;
+
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
@@ -144,16 +139,17 @@ $dateFrom = null;
             'file' => $file,
             'transfersForm' => $transfersForm->createView(),
             'transfersFromTo' => $transfersFromTo,            
-            'delete_form' => $this->createDeleteForm($file)->createView(),
-            'date' => $dateFrom
+            'delete_form' => $this->createDeleteForm($file)->createView()
         ]);
     }
 
     /**
      * Edit file
      * 
-     * @Route("/{id}/edit", name="file_edit")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param File $file
+     * @Route("/{id}/edit", name="file_edit", methods={"GET","POST"})
+     * @return array
      */
     public function editAction(Request $request, File $file) 
     {
@@ -188,8 +184,7 @@ $dateFrom = null;
      * 
      * @param Request $request
      * @param File $file
-     * @Route("/{id}", name="file_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="file_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, File $file) 
     {
@@ -200,6 +195,8 @@ $dateFrom = null;
             $em = $this->getDoctrine()->getManager();
             $em->remove($file);
             $em->flush($file);
+            
+            $this->addFlash('success', 'File deleted');
         }
 
         return $this->redirectToRoute('file_index');
