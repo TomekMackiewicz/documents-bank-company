@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  * @Route("admin/customer")
  */
 class CustomerController extends Controller 
-{  
+{
     /**
      * Lists all customer entities
      * 
@@ -40,11 +40,15 @@ class CustomerController extends Controller
     public function newAction(Request $request) 
     {
         $customer = new Customer();
+        $customer->setEnabled(true);
         $form = $this->createForm('App\Form\CustomerType', $customer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $password = $form['password']->getData();
+            $customer->setPlainPassword($password);
+            
             $em->persist($customer);
             $em->flush($customer);
             
