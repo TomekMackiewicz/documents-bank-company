@@ -18,14 +18,14 @@ class CustomerController extends Controller
     /**
      * Lists all user entities
      * 
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/", name="customer_index", methods={"GET"})
      */
     public function indexAction() 
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->excludeAdmin();
 
-        return $this->render('user/index.html.twig', array(
+        return $this->render('customer/index.html.twig', array(
             'users' => $users
         ));
     }
@@ -35,13 +35,13 @@ class CustomerController extends Controller
      * 
      * @param Request $request
      * 
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/new", name="customer_new", methods={"GET","POST"})
      */
     public function newAction(Request $request) 
     {
         $user = new User();
         $user->setEnabled(true);
-        $form = $this->createForm('App\Form\UserType', $user);
+        $form = $this->createForm('App\Form\CustomerType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,12 +52,12 @@ class CustomerController extends Controller
             $em->persist($user);
             $em->flush($user);
             
-            $this->addFlash('success', 'User created');
+            $this->addFlash('success', 'Customer created');
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $user->getId()));
         }
         
-        return $this->render('user/new.html.twig', array(
+        return $this->render('customer/new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -67,7 +67,7 @@ class CustomerController extends Controller
      * Displays user
      * 
      * @param Request $request
-     * @Route("/{id}", name="user_show", methods={"GET","POST"})
+     * @Route("/{id}", name="customer_show", methods={"GET","POST"})
      */
     public function showAction(Request $request, User $user) 
     {
@@ -85,7 +85,7 @@ class CustomerController extends Controller
             $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
         }
 
-        return $this->render('user/show.html.twig', [
+        return $this->render('customer/show.html.twig', [
             'user' => $user,
             'delete_form' => $this->createDeleteForm($user)->createView(),
             'filesIn' =>$filesIn,
@@ -100,22 +100,22 @@ class CustomerController extends Controller
      * 
      * @param Request $request
      * @param User $user
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, User $user) 
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('App\Form\UserType', $user);
+        $editForm = $this->createForm('App\Form\CustomerType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'User edited');
+            $this->addFlash('success', 'Customer edited');
             
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $user->getId()));
         }
 
-        return $this->render('user/edit.html.twig', array(
+        return $this->render('customer/edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView()
@@ -127,7 +127,7 @@ class CustomerController extends Controller
      * 
      * @param Request $request
      * @param User $user
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="customer_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, User $user) 
     {
@@ -139,10 +139,10 @@ class CustomerController extends Controller
             $em->remove($user);
             $em->flush($user);
             
-            $this->addFlash('success', 'User deleted');
+            $this->addFlash('success', 'Customer deleted');
         }
         
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('customer_index');
     }
 
     /**
@@ -188,7 +188,7 @@ class CustomerController extends Controller
     private function createDeleteForm(User $user) 
     {
         return $this->createFormBuilder()
-          ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
+          ->setAction($this->generateUrl('customer_delete', array('id' => $user->getId())))
           ->setMethod('DELETE')
           ->getForm();
     }

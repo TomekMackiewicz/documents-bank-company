@@ -61,7 +61,7 @@
                     <td>Box price:</td>
                     <th>{{ fee.boxPrice }}</th>
                     <td>Customer:</td>
-                    <th><a href="{{ path('user_show', {'id':fee.user.id}) }}">{{ fee.user.company }}</a></th>
+                    <th><a href="{{ path('customer_show', {'id':fee.user.id}) }}">{{ fee.user.company }}</a></th>
                 </tr>
             </tbody>
         </table>         

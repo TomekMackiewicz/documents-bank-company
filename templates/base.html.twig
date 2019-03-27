@@ -116,7 +116,7 @@
                             source: function( request, response ) {
                                 var lastIndex = request.term.lastIndexOf(",");
                                 var term = request.term.substring(lastIndex + 1);
-                                $.getJSON( "http://localhost:8000/file/api/"+term.trim(), {}, response );
+                                $.getJSON( "http://localhost:8000/admin/file/api/"+term.trim(), {}, response );
                             },
                             search: function() {
                                 var term = extractLast( this.value );

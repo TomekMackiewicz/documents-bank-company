@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th><a href="{{ path('user_show', {'id':transfer.user.id}) }}">{{ transfer.user.company }}</a></th>
+                            <th><a href="{{ path('customer_show', {'id':transfer.user.id}) }}">{{ transfer.user.company }}</a></th>
                             <td>Type:</td>
                             <th>
                                 {% if transfer.type == 1 %}

@@ -13,8 +13,8 @@
     <div class="col-sm-6">               
         <ul class="nav float-right">
           <li class="nav-item pl-2">
-            <a class="btn btn-light" href="{{ path('user_new') }}">
-                <i class="fas fa-plus"></i> New user
+            <a class="btn btn-light" href="{{ path('customer_new') }}">
+                <i class="fas fa-plus"></i> New customer
             </a>
           </li>        
         </ul>
@@ -34,7 +34,7 @@
                     {% for user in users %}
                         <tr>
                             <td>
-                                <a href="{{ path('user_show', { 'id': user.id }) }}">
+                                <a href="{{ path('customer_show', { 'id': user.id }) }}">
                                     {{ user.company }}
                                 </a>
                             </td>
