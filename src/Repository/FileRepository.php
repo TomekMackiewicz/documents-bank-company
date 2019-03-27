@@ -33,11 +33,11 @@ class FileRepository extends EntityRepository
     
     public function searchFiles($searchCriteria)
     {
-        $customers = $searchCriteria['customer']->toArray();
+        $users = $searchCriteria['user']->toArray();
         
         $ids = [];
-        foreach ($customers as $customer) {
-            $ids[] = $customer->getId();
+        foreach ($users as $user) {
+            $ids[] = $user->getId();
         }
 
         $qb = $this->_em->createQueryBuilder();
@@ -52,8 +52,8 @@ class FileRepository extends EntityRepository
                ->setParameter(":statuses", $searchCriteria['status']);
         }
         if (!empty($ids)) {
-            $qb->andWhere('f.customer IN(:customers)')
-               ->setParameter(":customers", $ids);
+            $qb->andWhere('f.user IN(:users)')
+               ->setParameter(":users", $ids);
         }
         
         return $qb->getQuery()->getResult();           

@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th>{{ customer.company }}</th>                         
+                            <th>{{ user.company }}</th>                         
                         </tr>
                     </tbody>
                 </table> 
@@ -20,7 +20,7 @@
     <div class="col-sm-6">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-light" href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> Edit
                 </a>
             </li>  
@@ -30,7 +30,7 @@
               </button>        
             </li>
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_index') }}" class="btn btn-default inline">
+                <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> Back
                 </a>
             </li>
@@ -57,9 +57,9 @@
             <tbody>
                 <tr>
                     <td>Address:</td>
-                    <th>{{ customer.address }}</th>
+                    <th>{{ user.address }}</th>
                     <td>Number of files</td>
-                    <th>{{ customer.files|length }}</th>
+                    <th>{{ user.files|length }}</th>
                     <td>Number of files in</td>
                     <th>
                         {% if filesIn.0.filesCount is defined %}
@@ -148,7 +148,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.company }}</td>
+                            <td>{{ transfer.user.company }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show

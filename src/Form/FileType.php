@@ -34,8 +34,8 @@ class FileType extends AbstractType
             ->add('note', TextareaType::class, [
                 'label' => false
             ])                
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')

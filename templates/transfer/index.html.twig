@@ -25,7 +25,7 @@
           <li class="nav-item pl-2">
             <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                     Combined search of inventory transfers for given dates.<br>
-                    You can also get combined results for multiple types (in, out...) and/or customers.<br>
+                    You can also get combined results for multiple types (in, out...) and/or users.<br>
                     Search results are limited to 100 records.
             ">
                 <i class="fas fa-info-circle"></i> Info
@@ -65,11 +65,11 @@
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(searchForm.customer) }}
+                {{ form_errors(searchForm.user) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+                {{ form_widget(searchForm.user, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
             </div>                     
         </div>
         <div class="col-auto">
@@ -105,7 +105,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.company }}</td>
+                            <td>{{ transfer.user.company }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show

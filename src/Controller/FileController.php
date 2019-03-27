@@ -76,7 +76,7 @@ class FileController extends Controller
             $signatures = explode(',', $data->getSignature());
             $transfer->setDate(new \DateTime());
             $transfer->setType(Transfer::$transferAdjustment);
-            $transfer->setCustomer($data->getCustomer());
+            $transfer->setUser($data->getUser());
             
             foreach ($signatures as $signature) {
                 if (empty($signature)) {
@@ -89,7 +89,7 @@ class FileController extends Controller
                 $file->setSignature(trim($signature));
                 $file->setStatus($data->getStatus());
                 $file->setNote($data->getNote());
-                $file->setCustomer($data->getCustomer());
+                $file->setUser($data->getUser());
                 $file->addTransfer($transfer);
                 $em->persist($file);
                 
@@ -161,7 +161,7 @@ class FileController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $transfer->addFile($file);
-            $transfer->setCustomer($file->getCustomer());
+            $transfer->setUser($file->getUser());
             $transfer->setDate(new \DateTime());
             $transfer->setType(Transfer::$transferAdjustment);
             $em->persist($file);
@@ -240,8 +240,8 @@ class FileController extends Controller
                 'multiple' => true,
                 'label' => false
             ])
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')

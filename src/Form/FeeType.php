@@ -27,8 +27,8 @@ class FeeType extends AbstractType {
       ->add('boxPrice', TextType::class, array(
         'label' => false
       ))
-      ->add('customer', EntityType::class,[
-        'class' => 'App:Customer',
+      ->add('user', EntityType::class,[
+        'class' => 'App:User',
         'choice_label' => 'company',
         'query_builder' => function (EntityRepository $er) {
           return $er->createQueryBuilder('c')

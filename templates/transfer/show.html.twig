@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th><a href="{{ path('customer_show', {'id':transfer.customer.id}) }}">{{ transfer.customer.company }}</a></th>
+                            <th><a href="{{ path('user_show', {'id':transfer.user.id}) }}">{{ transfer.user.company }}</a></th>
                             <td>Type:</td>
                             <th>
                                 {% if transfer.type == 1 %}
@@ -96,7 +96,7 @@
                                 Unknown
                             {% endif %}
                         </td>
-                        <td>{{ file.customer.company }}</td>
+                        <td>{{ file.user.company }}</td>
                         <td>{{ file.note }}</td>
                     </tr>
                 {% endfor %}

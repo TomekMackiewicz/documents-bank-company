@@ -4,60 +4,60 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class CustomerRepository extends EntityRepository 
+class UserRepository extends EntityRepository 
 {
-    public function filesInCountByCustomers() 
+    public function filesInCountByUsers() 
     {
-        $filesCountByCustomers = $this->getEntityManager()->createQuery(
+        $filesCountByUsers = $this->getEntityManager()->createQuery(
             "SELECT c.company, count(f.id) as fileCount 
-             FROM App:Customer c 
+             FROM App:User c 
              LEFT JOIN c.files f
              WHERE f.status=1
              GROUP BY c.company"
         )->getResult();
         
-        return $filesCountByCustomers;
+        return $filesCountByUsers;
     }
 
-    public function filesOutCountByCustomers() 
+    public function filesOutCountByUsers() 
     {
-        $filesCountByCustomers = $this->getEntityManager()->createQuery(
+        $filesCountByUsers = $this->getEntityManager()->createQuery(
             "SELECT c.company, count(f.id) as filesCount 
-             FROM App:Customer c 
+             FROM App:User c 
              LEFT JOIN c.files f
              WHERE f.status=2
              GROUP BY c.company"
         )->getResult();
         
-        return $filesCountByCustomers;
+        return $filesCountByUsers;
     }
    
-    public function filesInCountByCustomer($id) 
+    public function filesInCountByUser($id) 
     {
-        $filesCountByCustomers = $this->getEntityManager()->createQuery(
+        $filesCountByUsers = $this->getEntityManager()->createQuery(
             "SELECT c.company, count(f.id) as filesCount 
-             FROM App:Customer c 
+             FROM App:User c 
              LEFT JOIN c.files f
              WHERE f.status=1
              AND c.id=:id
              GROUP BY c.company"
         )->setParameter(':id', $id)->getResult();
         
-        return $filesCountByCustomers;
+        return $filesCountByUsers;
     }
 
-    public function filesOutCountByCustomer($id) 
+    public function filesOutCountByUser($id) 
     {
-        $filesCountByCustomers = $this->getEntityManager()->createQuery(
+        $filesCountByUsers = $this->getEntityManager()->createQuery(
             "SELECT c.company, count(f.id) as filesCount 
-             FROM App:Customer c 
+             FROM App:User c 
              LEFT JOIN c.files f
              WHERE f.status=2
              AND c.id=:id
              GROUP BY c.company"
         )->setParameter(':id', $id)->getResult();
         
-        return $filesCountByCustomers;
+        return $filesCountByUsers;
     }
 
     /**
@@ -68,7 +68,7 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('c')
-            ->from('App:Customer', 'c')
+            ->from('App:User', 'c')
             ->where('c.roles NOT LIKE :roles')
             ->setParameter('roles', '%ADMIN%');
 

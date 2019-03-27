@@ -64,7 +64,7 @@ class TransferController extends Controller
                 $em->persist($file);               
             }
             
-            $transfer->setCustomer($data->getCustomer());
+            $transfer->setUser($data->getUser());
             $transfer->setDate(new \DateTime());
             $transfer->setType($data->getType());
 
@@ -118,7 +118,7 @@ class TransferController extends Controller
                 $em->persist($file);               
             }
             
-            $transfer->setCustomer($data->getCustomer());
+            $transfer->setUser($data->getUser());
             $transfer->setDate(new \DateTime());
             $transfer->setType($data->getType());
 
@@ -205,8 +205,8 @@ class TransferController extends Controller
                 'multiple' => true,
                 'label' => false
             ])                               
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')

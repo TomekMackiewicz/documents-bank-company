@@ -27,8 +27,8 @@ class FeeCountType extends AbstractType
                 'label' => false,
                 'html5' => false
             ))                
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')

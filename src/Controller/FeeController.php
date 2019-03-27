@@ -31,8 +31,8 @@ class FeeController extends Controller
             
             $dateFrom = $data["dateFrom"]->format('Y-m-d');
             $dateTo = $data["dateTo"]->format('Y-m-d');
-            $customer = $data['customer']->getId();
-            $calculation = $em->getRepository('App:Fee')->actionsToCalculate($customer, $dateFrom, $dateTo);
+            $user = $data['user']->getId();
+            $calculation = $em->getRepository('App:Fee')->actionsToCalculate($user, $dateFrom, $dateTo);
         }
         
         return $this->render('fee/calculate.html.twig', array(

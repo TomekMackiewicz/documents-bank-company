@@ -40,10 +40,10 @@ class Transfer
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="transfers")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="transfers")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $customer;
+    private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity="File", inversedBy="transfers", cascade={"persist"}, indexBy="signature", fetch="EXTRA_LAZY")
@@ -107,21 +107,21 @@ class Transfer
     }
 
     /**
-     * @param Customer $customer
+     * @param User $user
      * @return Action
      */
-    public function setCustomer(Customer $customer = null) 
+    public function setUser(User $user = null) 
     {
-        $this->customer = $customer;
+        $this->user = $user;
         return $this;
     }
 
     /**
-     * @return Customer 
+     * @return User 
      */
-    public function getCustomer() 
+    public function getUser() 
     {
-        return $this->customer;
+        return $this->user;
     }
 
     /**
