@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use App\Entity\File;
 
 class FileRepository extends EntityRepository 
 {
@@ -19,12 +20,12 @@ class FileRepository extends EntityRepository
          ->setMaxResults(10)
          ->getArrayResult();        
     }
-    
+
     public function filesIn() 
     {
         $filesIn = $this->getEntityManager()->createQuery(
-            "SELECT count(f.id) FROM App:File f WHERE f.status='In'"
-        )->getSingleScalarResult();
+            "SELECT count(f.id) FROM App:File f WHERE f.status=:status"
+        )->setParameter(":status", File::$statusIn)->getSingleScalarResult();
         
         return $filesIn;
     }
@@ -32,8 +33,8 @@ class FileRepository extends EntityRepository
     public function filesOut() 
     {
         $filesOut = $this->getEntityManager()->createQuery(
-            "SELECT count(f.id) FROM App:File f WHERE f.status='Out'"
-        )->getSingleScalarResult();
+            "SELECT count(f.id) FROM App:File f WHERE f.status=:status"
+        )->setParameter(":status", File::$statusIn)->getSingleScalarResult();
         
         return $filesOut;
     }

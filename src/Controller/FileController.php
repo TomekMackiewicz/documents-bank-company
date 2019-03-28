@@ -179,7 +179,7 @@ class FileController extends Controller
             $em = $this->getDoctrine()->getManager();
             $transfer->addFile($file);
             $transfer->setUser($file->getUser());
-            $transfer->setDate(new \DateTime());
+            $transfer->setDate(new \DateTime()); // new transfer only if file status not equal form status!!!
             $transfer->setType(Transfer::$transferAdjustment);
             $em->persist($file);
             $em->persist($transfer);
