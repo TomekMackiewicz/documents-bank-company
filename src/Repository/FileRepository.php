@@ -12,7 +12,7 @@ class FileRepository extends EntityRepository
             "SELECT f.signature
              FROM App:File f 
              WHERE f.signature LIKE :signature 
-             AND f.customer = :customer
+             AND f.user = :customer
              ORDER BY f.signature"
         )->setParameter(":signature", '%'.$term.'%')
          ->setParameter(":customer", $customer)
@@ -71,7 +71,7 @@ class FileRepository extends EntityRepository
     public function checkFileAlreadyExists($signature, $customer)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.customer = :customer"
+            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.user = :customer"
         )->setParameter(":signature", $signature)
          ->setParameter(":customer", $customer)
          ->getOneOrNullResult();        

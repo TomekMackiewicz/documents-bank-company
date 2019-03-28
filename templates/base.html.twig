@@ -106,7 +106,7 @@
                       return split( term ).pop();
                     }
                     
-                    $("#app_transfer_customer")
+                    $("#app_transfer_user")
                         .on( "change", function( event ) {
                             $("#app_transfer_files").val('');
                         });
@@ -121,7 +121,7 @@
                             source: function( request, response ) {
                                 var lastIndex = request.term.lastIndexOf(",");
                                 var term = request.term.substring(lastIndex + 1);
-                                var customer = $( "#app_transfer_customer" ).val();
+                                var customer = $( "#app_transfer_user" ).val();
                                 $.getJSON( "http://localhost:8000/admin/file/api/"+term.trim()+"/"+customer, {}, response );
                             },
                             search: function() {
