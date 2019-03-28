@@ -72,7 +72,7 @@ class TransferController extends Controller
             }
             
             $transfer->setUser($data->getUser());
-            $transfer->setDate(new \DateTime());
+            $transfer->setDate($data->getDate());
             $transfer->setType($data->getType());
 
             $em->persist($transfer);
@@ -126,7 +126,7 @@ class TransferController extends Controller
             }
             
             $transfer->setUser($data->getUser());
-            $transfer->setDate(new \DateTime());
+            $transfer->setDate($data->getDate());
             $transfer->setType($data->getType());
 
             $em->persist($transfer);
