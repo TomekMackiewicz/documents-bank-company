@@ -6,11 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 class FileRepository extends EntityRepository 
 {
-    public function getAllFiles($term)
+    public function getAllFiles($term, $customer)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT f.signature FROM App:File f WHERE f.signature LIKE :signature"
-        )->setParameter(":signature", '%'.$term.'%')->setMaxResults(10)->getArrayResult();        
+            "SELECT f.signature
+             FROM App:File f 
+             WHERE f.signature LIKE :signature 
+             AND f.customer = :customer
+             ORDER BY f.signature"
+        )->setParameter(":signature", '%'.$term.'%')
+         ->setParameter(":customer", $customer)
+         ->setMaxResults(10)
+         ->getArrayResult();        
     }
     
     public function filesIn() 
@@ -49,19 +56,26 @@ class FileRepository extends EntityRepository
         }
         if (!empty($searchCriteria['status'])) {
             $qb->andWhere('f.status IN(:statuses)')
-               ->setParameter(":statuses", $searchCriteria['status']);
+                ->setParameter(":statuses", $searchCriteria['status']);
         }
         if (!empty($ids)) {
             $qb->andWhere('f.user IN(:users)')
                ->setParameter(":users", $ids);
         }
         
+        $qb->orderBy('f.signature', 'ASC');
+        
         return $qb->getQuery()->getResult();           
     }
     
-//    public function countFiles()
-//    {
-//        return $this->_em->createQuery("SELECT COUNT(f.id) FROM App:File f")->getSingleScalarResult();
-//    }      
+    public function checkFileAlreadyExists($signature, $customer)
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.customer = :customer"
+        )->setParameter(":signature", $signature)
+         ->setParameter(":customer", $customer)
+         ->getOneOrNullResult();        
+    }
+     
 }
  

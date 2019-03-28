@@ -27,12 +27,14 @@ class FileType extends AbstractType
                 'choices'  => [
                     'In' => File::$statusIn,
                     'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown
+                    'Unknown' => File::$statusUnknown,
+                    'Disposed' => File::$statusDisposed
                 ],
                 'label' => false
             ])
             ->add('note', TextareaType::class, [
-                'label' => false
+                'label' => false,
+                'required' => false
             ])                
             ->add('user', EntityType::class, [
                 'class' => 'App:User',

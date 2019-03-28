@@ -18,15 +18,17 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
-     * @Route("/api/{text}", name="files_api", methods={"GET"})
-     * @param string
+     * API to autocomplete
      * 
+     * @Route("/api/{text}/{customer}", name="files_api", methods={"GET"})
+     * @param string
+     * @return JSON
      */
-    public function filesAction($text)
+    public function filesAction($text, $customer)
     {
-        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text);
+        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer);
         $files = array_column($data, 'signature');
-        
+
         return $this->json($files);
     }
     
@@ -78,15 +80,22 @@ class FileController extends Controller
             $transfer->setType(Transfer::$transferAdjustment);
             $transfer->setUser($data->getUser());
             
+            $filesAlreadyIn = [];
             foreach ($signatures as $signature) {
                 if (empty($signature)) {
                     continue;
                 }
                 
-                $signature = strtoupper($signature);
+                $signature = trim(strtoupper($signature));
+                
+                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
+                if ($fileToCheck) {
+                    $filesAlreadyIn[] = $signature;
+                    continue;
+                }
                 
                 $file = new File();
-                $file->setSignature(trim($signature));
+                $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
                 $file->setNote($data->getNote());
                 $file->setUser($data->getUser());
@@ -94,6 +103,14 @@ class FileController extends Controller
                 $em->persist($file);
                 
                 $transfer->addFile($file);
+            }
+            
+            if (!empty($filesAlreadyIn)) {
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getCompany().' already exists');
+                return $this->render('file/new.html.twig', array(
+                    'file' => $file,
+                    'form' => $form->createView()
+                ));
             }
             
             $em->persist($transfer);
@@ -233,7 +250,8 @@ class FileController extends Controller
                 'choices'  => [
                     'In' => File::$statusIn,
                     'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown
+                    'Unknown' => File::$statusUnknown,
+                    'Disposed' => File::$statusDisposed
                 ],
                 'required' => false,
                 'expanded' => false,

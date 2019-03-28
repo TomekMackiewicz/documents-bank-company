@@ -10,10 +10,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table(name="files")
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
- * @UniqueEntity("signature")
+ * @UniqueEntity(
+ *     fields={"signature", "customer"},
+ *     message="File with this signature already exists"
+ * )
  */
 class File 
-{ 
+{
+    static $statusDisposed = 0;
     static $statusIn = 1;
     static $statusOut = 2;
     static $statusUnknown = 3;
@@ -47,7 +51,7 @@ class File
      *   message = "Status cannot be empty."
      * )
      * @Assert\Choice(
-     *   choices = { 1, 2, 3 },
+     *   choices = { 0, 1, 2, 3 },
      *   message = "Choose a valid value."
      * )        
      */
