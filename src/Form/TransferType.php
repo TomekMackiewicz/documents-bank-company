@@ -38,6 +38,9 @@ class TransferType extends AbstractType
             ->add('files', TextType::class, [
                 'label' => false
             ])
+            ->add('boxes', TextType::class, [
+                'label' => false
+            ])
             ->add('user', EntityType::class, [
                 'class' => 'App:User',
                 'choice_label' => 'company',
