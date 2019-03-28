@@ -94,12 +94,14 @@
                                 </a>
                             </td>
                             <td>
-                                {% if file.status == 1 %}
-                                    In
+                                {% if file.status == 0 %}
+                                    <span class="text-warning">Disposed</span>
+                                {% elseif file.status == 1 %}
+                                    In                                    
                                 {% elseif file.status == 2 %}
                                     Out
                                 {% else %}
-                                    Unknown
+                                    <span class="text-danger">Unknown</span>
                                 {% endif %}
                             </td>
                             <td>{{ file.customer.company }}</td>

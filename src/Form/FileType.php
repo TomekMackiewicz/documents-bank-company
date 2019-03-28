@@ -27,7 +27,8 @@ class FileType extends AbstractType
                 'choices'  => [
                     'In' => File::$statusIn,
                     'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown
+                    'Unknown' => File::$statusUnknown,
+                    'Disposed' => File::$statusDisposed
                 ],
                 'label' => false
             ])

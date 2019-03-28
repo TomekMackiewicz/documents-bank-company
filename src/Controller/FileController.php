@@ -104,7 +104,7 @@ class FileController extends Controller
             }
             
             if (!empty($filesAlreadyIn)) {
-                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer().' already exists');
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getCompany().' already exists');
                 return $this->render('file/new.html.twig', array(
                     'file' => $file,
                     'form' => $form->createView()
@@ -248,7 +248,8 @@ class FileController extends Controller
                 'choices'  => [
                     'In' => File::$statusIn,
                     'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown
+                    'Unknown' => File::$statusUnknown,
+                    'Disposed' => File::$statusDisposed
                 ],
                 'required' => false,
                 'expanded' => false,

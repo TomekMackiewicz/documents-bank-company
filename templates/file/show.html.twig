@@ -15,12 +15,14 @@
                             <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.company }}</a></th>
                             <td>Status:</td>
                             <th>
-                                {% if file.status == 1 %}
-                                    In
+                                {% if file.status == 0 %}
+                                    <span class="text-warning">Disposed</span>
+                                {% elseif file.status == 1 %}
+                                    In                                    
                                 {% elseif file.status == 2 %}
                                     Out
                                 {% else %}
-                                    Unknown
+                                    <span class="text-danger">Unknown</span>
                                 {% endif %}
                             </th>
                         </tr>
