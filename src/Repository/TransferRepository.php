@@ -51,11 +51,11 @@ class TransferRepository extends EntityRepository
                ->setParameter(":types", $searchCriteria['type']);
         }
         if (!empty($searchCriteria['dateFrom'])) {
-            $qb->andWhere('t.date > :dateFrom')
+            $qb->andWhere('t.date >= :dateFrom')
                ->setParameter(":dateFrom", $searchCriteria['dateFrom']);
         }
         if (!empty($searchCriteria['dateTo'])) {
-            $qb->andWhere('t.date < :dateTo')
+            $qb->andWhere('t.date <= :dateTo')
                ->setParameter(":dateTo", $searchCriteria['dateTo']);
         }        
         if (!empty($ids)) {

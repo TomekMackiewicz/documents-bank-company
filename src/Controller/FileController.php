@@ -145,7 +145,7 @@ class FileController extends Controller
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
-            if( strtotime($dateFrom) < strtotime($dateTo) ) {
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $transfersFromTo = $em->getRepository('App:Transfer')
                     ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo);
             } else { 

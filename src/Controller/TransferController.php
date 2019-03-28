@@ -31,8 +31,15 @@ class TransferController extends Controller
        
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchCriteria = $searchForm->getData();
-            $em = $this->getDoctrine()->getManager();
-            $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria);  
+            
+            $dateFrom = $searchCriteria["dateFrom"]->format('Y-m-d');
+            $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $em = $this->getDoctrine()->getManager();
+                $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }
         }
 
         return $this->render('transfer/index.html.twig', array(
