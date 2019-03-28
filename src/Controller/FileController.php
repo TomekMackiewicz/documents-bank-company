@@ -171,18 +171,26 @@ class FileController extends Controller
      */
     public function editAction(Request $request, File $file) 
     {
-        $transfer = new Transfer();
+        $fileStatus = $file->getStatus();
         $editForm = $this->createForm('App\Form\FileType', $file);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            
+            $data[] = $editForm['status']->getData();
             $em = $this->getDoctrine()->getManager();
-            $transfer->addFile($file);
-            $transfer->setUser($file->getUser());
-            $transfer->setDate(new \DateTime()); // new transfer only if file status not equal form status!!!
-            $transfer->setType(Transfer::$transferAdjustment);
             $em->persist($file);
-            $em->persist($transfer);
+            
+            // Add new transfer only if file status changed
+            if ($fileStatus !== $editForm['status']->getData()) {
+                $transfer = new Transfer();
+                $transfer->addFile($file);
+                $transfer->setUser($file->getUser());
+                $transfer->setDate(new \DateTime());
+                $transfer->setType(Transfer::$transferAdjustment); 
+                $em->persist($transfer);
+            }            
+            
             $em->flush();
             
             $this->addFlash('success', 'File edited successfully');
