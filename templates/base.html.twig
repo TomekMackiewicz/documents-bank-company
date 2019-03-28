@@ -140,7 +140,13 @@
                                 terms.push( "" );
                                 this.value = terms.join( ", " );
                                 return false;
-                            }
+                            },
+                            response: function(event, ui) {
+                                if (!ui.content.length) {
+                                    var noResult = { value: "", label: "No results" };
+                                    ui.content.push(noResult);
+                                }
+                            }                            
                         });
                         
                     $('.multiple').multiselect({

@@ -18,15 +18,17 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
+     * API to autocomplete
+     * 
      * @Route("/api/{text}/{customer}", name="files_api", methods={"GET"})
      * @param string
-     * 
+     * @return JSON
      */
     public function filesAction($text, $customer)
     {
         $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer);
         $files = array_column($data, 'signature');
-        
+
         return $this->json($files);
     }
     
