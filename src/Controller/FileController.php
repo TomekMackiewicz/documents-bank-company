@@ -18,13 +18,13 @@ use Doctrine\ORM\EntityRepository;
 class FileController extends Controller 
 {
     /**
-     * @Route("/api/{text}", name="files_api", methods={"GET"})
+     * @Route("/api/{text}/{customer}", name="files_api", methods={"GET"})
      * @param string
      * 
      */
-    public function filesAction($text)
+    public function filesAction($text, $customer)
     {
-        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text);
+        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer);
         $files = array_column($data, 'signature');
         
         return $this->json($files);

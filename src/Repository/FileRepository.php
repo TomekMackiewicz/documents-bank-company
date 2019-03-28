@@ -6,11 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 class FileRepository extends EntityRepository 
 {
-    public function getAllFiles($term)
+    public function getAllFiles($term, $customer)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT f.signature FROM App:File f WHERE f.signature LIKE :signature"
-        )->setParameter(":signature", '%'.$term.'%')->setMaxResults(10)->getArrayResult();        
+            "SELECT f.signature
+             FROM App:File f 
+             WHERE f.signature LIKE :signature 
+             AND f.customer = :customer
+             ORDER BY f.signature"
+        )->setParameter(":signature", '%'.$term.'%')
+         ->setParameter(":customer", $customer)
+         ->setMaxResults(10)
+         ->getArrayResult();        
     }
     
     public function filesIn() 
