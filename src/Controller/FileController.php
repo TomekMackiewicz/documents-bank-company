@@ -88,7 +88,7 @@ class FileController extends Controller
                 
                 $signature = trim(strtoupper($signature));
                 
-                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
+                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getUser());
                 if ($fileToCheck) {
                     $filesAlreadyIn[] = $signature;
                     continue;
@@ -106,7 +106,7 @@ class FileController extends Controller
             }
             
             if (!empty($filesAlreadyIn)) {
-                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getCompany().' already exists');
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getUser()->getCompany().' already exists');
                 return $this->render('file/new.html.twig', array(
                     'file' => $file,
                     'form' => $form->createView()

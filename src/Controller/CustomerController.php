@@ -74,22 +74,26 @@ class CustomerController extends Controller
         $searchResults = [];
 
         $em = $this->getDoctrine()->getManager();
-        $filesIn  = $em->getRepository('App:User')->filesInCountByUser($user->getId());
-        $filesOut = $em->getRepository('App:User')->filesOutCountByUser($user->getId());
+        $files = $em->getRepository('App:User')->customerFilesByType($user->getId());
         $transfersForm = $this->createSearchForm();
         $transfersForm->handleRequest($request);
 
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $searchCriteria = $transfersForm->getData();
-            $searchCriteria['user'] = $user;
-            $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            $searchCriteria['user'] = $user;            
+            $dateFrom = $searchCriteria["dateFrom"]->format('Y-m-d');
+            $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }           
         }
 
         return $this->render('customer/show.html.twig', [
             'user' => $user,
             'delete_form' => $this->createDeleteForm($user)->createView(),
-            'filesIn' =>$filesIn,
-            'filesOut' =>$filesOut,
+            'files' =>$files,
             'transfersForm' => $transfersForm->createView(),
             'transfersFromTo' => $searchResults
         ]);
