@@ -49,19 +49,24 @@ class FileRepository extends EntityRepository
         }
         if (!empty($searchCriteria['status'])) {
             $qb->andWhere('f.status IN(:statuses)')
-               ->setParameter(":statuses", $searchCriteria['status']);
+                ->setParameter(":statuses", $searchCriteria['status']);
         }
         if (!empty($ids)) {
             $qb->andWhere('f.customer IN(:customers)')
-               ->setParameter(":customers", $ids);
+                ->setParameter(":customers", $ids);
         }
         
         return $qb->getQuery()->getResult();           
     }
     
-//    public function countFiles()
-//    {
-//        return $this->_em->createQuery("SELECT COUNT(f.id) FROM App:File f")->getSingleScalarResult();
-//    }      
+    public function checkFileAlreadyExists($signature, $customer)
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.customer = :customer"
+        )->setParameter(":signature", $signature)
+         ->setParameter(":customer", $customer)
+         ->getOneOrNullResult();        
+    }
+     
 }
  

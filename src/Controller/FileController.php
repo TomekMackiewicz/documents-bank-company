@@ -78,15 +78,22 @@ class FileController extends Controller
             $transfer->setType(Transfer::$transferAdjustment);
             $transfer->setCustomer($data->getCustomer());
             
+            $filesAlreadyIn = [];
             foreach ($signatures as $signature) {
                 if (empty($signature)) {
                     continue;
                 }
                 
-                $signature = strtoupper($signature);
+                $signature = trim(strtoupper($signature));
+                
+                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
+                if ($fileToCheck) {
+                    $filesAlreadyIn[] = $signature;
+                    continue;
+                }
                 
                 $file = new File();
-                $file->setSignature(trim($signature));
+                $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
                 $file->setNote($data->getNote());
                 $file->setCustomer($data->getCustomer());
@@ -94,6 +101,14 @@ class FileController extends Controller
                 $em->persist($file);
                 
                 $transfer->addFile($file);
+            }
+            
+            if (!empty($filesAlreadyIn)) {
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer().' already exists');
+                return $this->render('file/new.html.twig', array(
+                    'file' => $file,
+                    'form' => $form->createView()
+                ));
             }
             
             $em->persist($transfer);

@@ -10,7 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table(name="files")
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
- * @UniqueEntity("signature")
+ * @UniqueEntity(
+ *     fields={"signature", "customer"},
+ *     message="File with this signature already exists"
+ * )
  */
 class File 
 { 

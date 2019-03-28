@@ -32,7 +32,8 @@ class FileType extends AbstractType
                 'label' => false
             ])
             ->add('note', TextareaType::class, [
-                'label' => false
+                'label' => false,
+                'required' => false
             ])                
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
