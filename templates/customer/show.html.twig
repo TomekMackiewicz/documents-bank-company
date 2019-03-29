@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th>{{ customer.company }}</th>                         
+                            <th>{{ user.company }}</th>                         
                         </tr>
                     </tbody>
                 </table> 
@@ -20,7 +20,7 @@
     <div class="col-sm-6">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': user.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> Edit
                 </a>
             </li>  
@@ -56,26 +56,12 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td>Address:</td>
-                    <th>{{ customer.address }}</th>
-                    <td>Number of files</td>
-                    <th>{{ customer.files|length }}</th>
-                    <td>Number of files in</td>
-                    <th>
-                        {% if filesIn.0.filesCount is defined %}
-                            {{ filesIn.0.filesCount }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    </th>
-                    <td>Number of files out</td>
-                    <th>
-                        {% if filesOut.0.filesCount is defined %}
-                            {{ filesOut.0.filesCount }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    </th>                          
+                    <td>Address: {{ user.address }}</td>
+                    <td>Number of files: <strong>{{ user.files|length }}</strong></td>
+                    <td>Files in: <strong>{{ files.0.in }}</strong></td>
+                    <td>Files out: <strong>{{ files.0.out }}</strong></td>
+                    <td>Files missing: <strong>{{ files.0.unknown }}</strong></td>
+                    <td>Files disposed: <strong>{{ files.0.disposed }}</strong></td>                
                 </tr>
             </tbody>
         </table>        
@@ -148,7 +134,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.company }}</td>
+                            <td>{{ transfer.user.company }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show

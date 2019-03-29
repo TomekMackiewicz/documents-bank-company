@@ -11,8 +11,7 @@ use App\Entity\Fee;
  * @Route("admin/fee")
  */
 class FeeController extends Controller 
-{
-    
+{    
     /**
      * Calculate fee
      * 
@@ -31,8 +30,13 @@ class FeeController extends Controller
             
             $dateFrom = $data["dateFrom"]->format('Y-m-d');
             $dateTo = $data["dateTo"]->format('Y-m-d');
-            $customer = $data['customer']->getId();
-            $calculation = $em->getRepository('App:Fee')->actionsToCalculate($customer, $dateFrom, $dateTo);
+            $user = $data['user']->getId();
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $calculation = $em->getRepository('App:Fee')->actionsToCalculate($user, $dateFrom, $dateTo);
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }            
+            
         }
         
         return $this->render('fee/calculate.html.twig', array(

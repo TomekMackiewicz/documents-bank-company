@@ -24,9 +24,9 @@
           </li>
           <li class="nav-item pl-2">
             <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                    Combined search by file signature, status and / or customer.<br>
+                    Combined search by file signature, status and / or user.<br>
                     You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
-                    You can also get combined results for multiple statuses or customers.<br>
+                    You can also get combined results for multiple statuses or users.<br>
                     Search results are limited to 100 records.
             ">
                 <i class="fas fa-info-circle"></i> Info
@@ -58,11 +58,11 @@
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(searchForm.customer) }}
+                {{ form_errors(searchForm.user) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
+                {{ form_widget(searchForm.user, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
             </div>                     
         </div>
         <div class="col-auto">
@@ -104,7 +104,7 @@
                                     <span class="text-danger">Unknown</span>
                                 {% endif %}
                             </td>
-                            <td>{{ file.customer.company }}</td>
+                            <td>{{ file.user.company }}</td>
                             <td>{{ file.note }}</td>
                         </tr>
                     {% endfor %}

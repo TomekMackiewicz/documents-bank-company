@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use App\Entity\File;
 
 class FileRepository extends EntityRepository 
 {
@@ -12,19 +13,19 @@ class FileRepository extends EntityRepository
             "SELECT f.signature
              FROM App:File f 
              WHERE f.signature LIKE :signature 
-             AND f.customer = :customer
+             AND f.user = :customer
              ORDER BY f.signature"
         )->setParameter(":signature", '%'.$term.'%')
          ->setParameter(":customer", $customer)
          ->setMaxResults(10)
          ->getArrayResult();        
     }
-    
+
     public function filesIn() 
     {
         $filesIn = $this->getEntityManager()->createQuery(
-            "SELECT count(f.id) FROM App:File f WHERE f.status='In'"
-        )->getSingleScalarResult();
+            "SELECT count(f.id) FROM App:File f WHERE f.status=:status"
+        )->setParameter(":status", File::$statusIn)->getSingleScalarResult();
         
         return $filesIn;
     }
@@ -32,19 +33,19 @@ class FileRepository extends EntityRepository
     public function filesOut() 
     {
         $filesOut = $this->getEntityManager()->createQuery(
-            "SELECT count(f.id) FROM App:File f WHERE f.status='Out'"
-        )->getSingleScalarResult();
+            "SELECT count(f.id) FROM App:File f WHERE f.status=:status"
+        )->setParameter(":status", File::$statusIn)->getSingleScalarResult();
         
         return $filesOut;
     }
     
     public function searchFiles($searchCriteria)
     {
-        $customers = $searchCriteria['customer']->toArray();
+        $users = $searchCriteria['user']->toArray();
         
         $ids = [];
-        foreach ($customers as $customer) {
-            $ids[] = $customer->getId();
+        foreach ($users as $user) {
+            $ids[] = $user->getId();
         }
 
         $qb = $this->_em->createQueryBuilder();
@@ -59,8 +60,8 @@ class FileRepository extends EntityRepository
                 ->setParameter(":statuses", $searchCriteria['status']);
         }
         if (!empty($ids)) {
-            $qb->andWhere('f.customer IN(:customers)')
-                ->setParameter(":customers", $ids);
+            $qb->andWhere('f.user IN(:users)')
+               ->setParameter(":users", $ids);
         }
         
         $qb->orderBy('f.signature', 'ASC');
@@ -71,7 +72,7 @@ class FileRepository extends EntityRepository
     public function checkFileAlreadyExists($signature, $customer)
     {
         return $this->getEntityManager()->createQuery(
-            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.customer = :customer"
+            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.user = :customer"
         )->setParameter(":signature", $signature)
          ->setParameter(":customer", $customer)
          ->getOneOrNullResult();        

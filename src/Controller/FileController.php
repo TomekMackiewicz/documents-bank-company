@@ -78,7 +78,7 @@ class FileController extends Controller
             $signatures = explode(',', $data->getSignature());
             $transfer->setDate(new \DateTime());
             $transfer->setType(Transfer::$transferAdjustment);
-            $transfer->setCustomer($data->getCustomer());
+            $transfer->setUser($data->getUser());
             
             $filesAlreadyIn = [];
             foreach ($signatures as $signature) {
@@ -88,7 +88,7 @@ class FileController extends Controller
                 
                 $signature = trim(strtoupper($signature));
                 
-                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
+                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getUser());
                 if ($fileToCheck) {
                     $filesAlreadyIn[] = $signature;
                     continue;
@@ -98,7 +98,7 @@ class FileController extends Controller
                 $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
                 $file->setNote($data->getNote());
-                $file->setCustomer($data->getCustomer());
+                $file->setUser($data->getUser());
                 $file->addTransfer($transfer);
                 $em->persist($file);
                 
@@ -106,7 +106,7 @@ class FileController extends Controller
             }
             
             if (!empty($filesAlreadyIn)) {
-                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getCompany().' already exists');
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getUser()->getCompany().' already exists');
                 return $this->render('file/new.html.twig', array(
                     'file' => $file,
                     'form' => $form->createView()
@@ -145,7 +145,7 @@ class FileController extends Controller
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
-            if( strtotime($dateFrom) < strtotime($dateTo) ) {
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $transfersFromTo = $em->getRepository('App:Transfer')
                     ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo);
             } else { 
@@ -171,18 +171,26 @@ class FileController extends Controller
      */
     public function editAction(Request $request, File $file) 
     {
-        $transfer = new Transfer();
+        $fileStatus = $file->getStatus();
         $editForm = $this->createForm('App\Form\FileType', $file);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            
+            $data[] = $editForm['status']->getData();
             $em = $this->getDoctrine()->getManager();
-            $transfer->addFile($file);
-            $transfer->setCustomer($file->getCustomer());
-            $transfer->setDate(new \DateTime());
-            $transfer->setType(Transfer::$transferAdjustment);
             $em->persist($file);
-            $em->persist($transfer);
+            
+            // Add new transfer only if file status changed
+            if ($fileStatus !== $editForm['status']->getData()) {
+                $transfer = new Transfer();
+                $transfer->addFile($file);
+                $transfer->setUser($file->getUser());
+                $transfer->setDate(new \DateTime());
+                $transfer->setType(Transfer::$transferAdjustment); 
+                $em->persist($transfer);
+            }            
+            
             $em->flush();
             
             $this->addFlash('success', 'File edited successfully');
@@ -258,13 +266,13 @@ class FileController extends Controller
                 'multiple' => true,
                 'label' => false
             ])
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.company', 'ASC')
-                        ->where('c.roles NOT LIKE :roles')
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.company', 'ASC')
+                        ->where('u.roles NOT LIKE :roles')
                         ->setParameter('roles', '%ADMIN%');
                 },
                 'required' => false,

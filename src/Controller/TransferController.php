@@ -31,8 +31,15 @@ class TransferController extends Controller
        
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchCriteria = $searchForm->getData();
-            $em = $this->getDoctrine()->getManager();
-            $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria);  
+            
+            $dateFrom = $searchCriteria["dateFrom"]->format('Y-m-d');
+            $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $em = $this->getDoctrine()->getManager();
+                $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }
         }
 
         return $this->render('transfer/index.html.twig', array(
@@ -64,7 +71,7 @@ class TransferController extends Controller
                 $em->persist($file);               
             }
             
-            $transfer->setCustomer($data->getCustomer());
+            $transfer->setUser($data->getUser());
             $transfer->setDate($data->getDate());
             $transfer->setType($data->getType());
 
@@ -118,7 +125,11 @@ class TransferController extends Controller
                 $em->persist($file);               
             }
             
+<<<<<<< HEAD
             $transfer->setCustomer($data->getCustomer());
+=======
+            $transfer->setUser($data->getUser());
+>>>>>>> d7f6745fcb0b8e63d49dc89ea96947ee7dffeaf7
             $transfer->setDate($data->getDate());
             $transfer->setType($data->getType());
 
@@ -205,13 +216,13 @@ class TransferController extends Controller
                 'multiple' => true,
                 'label' => false
             ])                               
-            ->add('customer', EntityType::class, [
-                'class' => 'App:Customer',
+            ->add('user', EntityType::class, [
+                'class' => 'App:User',
                 'choice_label' => 'company',
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.company', 'ASC')
-                        ->where('c.roles NOT LIKE :roles')
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.company', 'ASC')
+                        ->where('u.roles NOT LIKE :roles')
                         ->setParameter('roles', '%ADMIN%');
                 },
                 'required' => false,

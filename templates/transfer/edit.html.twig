@@ -31,7 +31,7 @@
 </div>
 {{ form_start(edit_form) }}            
     <div class="row pb-4">    
-        <div class="col-auto">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(edit_form.type) }}
             <div class="input-group-prepend">
@@ -40,7 +40,9 @@
                 {{ form_widget(edit_form.type) }}
             </div>
         </div>
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(edit_form.files) }}
             <div class="input-group-prepend">
@@ -48,17 +50,32 @@
             </div>    
                 {{ form_widget(edit_form.files) }}
             </div>
-        </div> 
-        <div class="col-auto">
+        </div>
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
-                {{ form_errors(edit_form.customer) }}
+                {{ form_errors(edit_form.boxes) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Boxes</div>
+            </div>    
+                {{ form_widget(edit_form.boxes) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.user) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(edit_form.customer) }}
+                {{ form_widget(edit_form.user) }}
             </div>
         </div>
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(edit_form.date) }}
             <div class="input-group-prepend">
@@ -66,7 +83,9 @@
             </div>    
                 {{ form_widget(edit_form.date, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
-        </div>             
+        </div> 
+    </div>
+    <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
                 <i class="far fa-edit"></i> Edit

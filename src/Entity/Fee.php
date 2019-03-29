@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * 
  * @ORM\Table(name="fees")
  * @ORM\Entity(repositoryClass="App\Repository\FeeRepository")
- * @UniqueEntity("customer")
+ * @UniqueEntity("user")
  */
 class Fee 
 {
@@ -67,10 +67,10 @@ class Fee
     private $boxPrice;    
     
     /**
-     * @ORM\OneToOne(targetEntity="Customer", inversedBy="fee")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="fee")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $customer;
+    private $user;
 
     /**
      * @return integer 
@@ -153,21 +153,21 @@ class Fee
     }
 
     /**
-     * @param Customer $customer
+     * @param User $user
      * @return Fee
      */
-    public function setCustomer(Customer $customer = null)
+    public function setUser(User $user = null)
     {
-        $this->customer = $customer;
+        $this->user = $user;
         return $this;
     }
 
     /**
-     * @return Customer 
+     * @return User 
      */
-    public function getCustomer() 
+    public function getUser() 
     {
-        return $this->customer;
+        return $this->user;
     }
   
 }

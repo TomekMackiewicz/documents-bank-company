@@ -9,13 +9,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Customer
+ * User
  *
- * @ORM\Table(name="customers")
- * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("username")
  */
-class Customer extends BaseUser 
+class User extends BaseUser 
 {
     /**
      * @ORM\Id
@@ -43,17 +43,17 @@ class Customer extends BaseUser
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity="File", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="File", mappedBy="user")
      */
     private $files;
 
     /**
-     * @ORM\OneToMany(targetEntity="Transfer", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="Transfer", mappedBy="user")
      */
     private $transfers;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fee", mappedBy="customer")
+     * @ORM\OneToOne(targetEntity="Fee", mappedBy="user")
      */
     private $fee;
 
@@ -74,7 +74,7 @@ class Customer extends BaseUser
 
     /**
      * @param string $company
-     * @return Customer
+     * @return User
      */
     public function setCompany($company) 
     {
@@ -92,7 +92,7 @@ class Customer extends BaseUser
 
     /**
      * @param string $address
-     * @return Customer
+     * @return User
      */
     public function setAddress($address) 
     {
@@ -110,7 +110,7 @@ class Customer extends BaseUser
 
     /**
      * @param File $file
-     * @return Customer
+     * @return User
      */
     public function addFile(File $file) 
     {
@@ -136,7 +136,7 @@ class Customer extends BaseUser
 
     /**
      * @param Transfer $transfer
-     * @return Customer
+     * @return User
      */
     public function addTransfer(Transfer $transfer) 
     {
@@ -162,7 +162,7 @@ class Customer extends BaseUser
 
     /**
      * @param Fee $fee
-     * @return Customer
+     * @return User
      */
     public function setFee(Fee $fee = null) 
     {

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Customer;
+use App\Entity\User;
 use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,24 +14,24 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  * @Route("admin/customer")
  */
 class CustomerController extends Controller 
-{  
+{
     /**
-     * Lists all customer entities
+     * Lists all user entities
      * 
      * @Route("/", name="customer_index", methods={"GET"})
      */
     public function indexAction() 
     {
         $em = $this->getDoctrine()->getManager();
-        $customers = $em->getRepository('App:Customer')->excludeAdmin();
+        $users = $em->getRepository('App:User')->excludeAdmin();
 
         return $this->render('customer/index.html.twig', array(
-            'customers' => $customers
+            'users' => $users
         ));
     }
 
     /**
-     * Creates new customer entity
+     * Creates new user entity
      * 
      * @param Request $request
      * 
@@ -39,101 +39,109 @@ class CustomerController extends Controller
      */
     public function newAction(Request $request) 
     {
-        $customer = new Customer();
-        $form = $this->createForm('App\Form\CustomerType', $customer);
+        $user = new User();
+        $user->setEnabled(true);
+        $form = $this->createForm('App\Form\CustomerType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
-            $em->flush($customer);
+            $password = $form['password']->getData();
+            $user->setPlainPassword($password);
+            
+            $em->persist($user);
+            $em->flush($user);
             
             $this->addFlash('success', 'Customer created');
 
-            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $user->getId()));
         }
         
         return $this->render('customer/new.html.twig', array(
-            'customer' => $customer,
+            'user' => $user,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Displays customer
+     * Displays user
      * 
      * @param Request $request
      * @Route("/{id}", name="customer_show", methods={"GET","POST"})
      */
-    public function showAction(Request $request, Customer $customer) 
+    public function showAction(Request $request, User $user) 
     {
         $searchResults = [];
 
         $em = $this->getDoctrine()->getManager();
-        $filesIn  = $em->getRepository('App:Customer')->filesInCountByCustomer($customer->getId());
-        $filesOut = $em->getRepository('App:Customer')->filesOutCountByCustomer($customer->getId());
+        $files = $em->getRepository('App:User')->customerFilesByType($user->getId());
         $transfersForm = $this->createSearchForm();
         $transfersForm->handleRequest($request);
 
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $searchCriteria = $transfersForm->getData();
-            $searchCriteria['customer'] = $customer;
-            $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            $searchCriteria['user'] = $user;            
+            $dateFrom = $searchCriteria["dateFrom"]->format('Y-m-d');
+            $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }           
         }
 
         return $this->render('customer/show.html.twig', [
-            'customer' => $customer,
-            'delete_form' => $this->createDeleteForm($customer)->createView(),
-            'filesIn' =>$filesIn,
-            'filesOut' =>$filesOut,
+            'user' => $user,
+            'delete_form' => $this->createDeleteForm($user)->createView(),
+            'files' =>$files,
             'transfersForm' => $transfersForm->createView(),
             'transfersFromTo' => $searchResults
         ]);
     }
 
     /**
-     * Displays a form to edit customer
+     * Displays a form to edit user
      * 
      * @param Request $request
-     * @param Customer $customer
+     * @param User $user
      * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Customer $customer) 
+    public function editAction(Request $request, User $user) 
     {
-        $deleteForm = $this->createDeleteForm($customer);
-        $editForm = $this->createForm('App\Form\CustomerType', $customer);
+        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->createForm('App\Form\CustomerType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Customer edited');
             
-            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $user->getId()));
         }
 
         return $this->render('customer/edit.html.twig', array(
-            'customer' => $customer,
+            'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView()
         ));
     }
 
     /**
-     * Delete customer entity
+     * Delete user entity
      * 
      * @param Request $request
-     * @param Customer $customer
+     * @param User $user
      * @Route("/{id}", name="customer_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Customer $customer) 
+    public function deleteAction(Request $request, User $user) 
     {
-        $form = $this->createDeleteForm($customer);
+        $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($customer);
-            $em->flush($customer);
+            $em->remove($user);
+            $em->flush($user);
             
             $this->addFlash('success', 'Customer deleted');
         }
@@ -176,15 +184,15 @@ class CustomerController extends Controller
     }      
     
     /**
-     * Form to delete a customer entity
+     * Form to delete a user entity
      * 
-     * @param Customer
+     * @param User
      * @return Form
      */
-    private function createDeleteForm(Customer $customer) 
+    private function createDeleteForm(User $user) 
     {
         return $this->createFormBuilder()
-          ->setAction($this->generateUrl('customer_delete', array('id' => $customer->getId())))
+          ->setAction($this->generateUrl('customer_delete', array('id' => $user->getId())))
           ->setMethod('DELETE')
           ->getForm();
     }

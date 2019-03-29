@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="files")
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @UniqueEntity(
- *     fields={"signature", "customer"},
+ *     fields={"signature", "user"},
  *     message="File with this signature already exists"
  * )
  */
@@ -64,13 +64,13 @@ class File
     private $note;    
     
     /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="files")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="files")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank(
-     *   message = "Customer field cannot be empty."
+     *   message = "User field cannot be empty."
      * )    
      */
-    private $customer;
+    private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity="Transfer", mappedBy="files")
@@ -145,21 +145,21 @@ class File
     }    
     
     /**
-     * @param Customer $customer
+     * @param User $user
      * @return File
      */
-    public function setCustomer(Customer $customer = null) 
+    public function setUser(User $user = null) 
     {
-        $this->customer = $customer;
+        $this->user = $user;
         return $this;
     }
 
     /**
-     * @return Customer 
+     * @return User 
      */
-    public function getCustomer() 
+    public function getUser() 
     {
-        return $this->customer;
+        return $this->user;
     }
 
     /**

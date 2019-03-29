@@ -39,28 +39,34 @@
 </div>
 <div class="row pb-4">
     <div class="col-sm-12">
-        <table class="table table-striped">
-          <thead class="thead-light">
-            <tr>
-              <th>Delivery</th>
-              <th>Import</th>
-              <th>Storage</th>
-              <th>Customer</th>
-              <th>Show</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for fee in fees %}
-            <tr>
-              <td>{{ fee.delivery }}</td>
-              <td>{{ fee.import }}</td>
-              <td>{{ fee.storage }}</td>
-              <td>{{ fee.customer.company }}</td>
-              <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">Show</a></td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+        {% if fees is not empty %}
+            <table class="table table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <th>Delivery</th>
+                  <th>Import</th>
+                  <th>Storage</th>
+                  <th>Customer</th>
+                  <th>Show</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for fee in fees %}
+                <tr>
+                  <td>{{ fee.delivery }}</td>
+                  <td>{{ fee.import }}</td>
+                  <td>{{ fee.storage }}</td>
+                  <td>{{ fee.user.company }}</td>
+                  <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">Show</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-light" role="alert">
+                No results
+            </div>
+        {% endif %}          
     </div>
 </div>
           

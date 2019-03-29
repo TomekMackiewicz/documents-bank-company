@@ -32,7 +32,7 @@
 </div>
 {{ form_start(form) }}            
     <div class="row pb-4">    
-        <div class="col-auto">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.type) }}
             <div class="input-group-prepend">
@@ -41,7 +41,9 @@
                 {{ form_widget(form.type) }}
             </div>
         </div>
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.files) }}
             <div class="input-group-prepend">
@@ -49,17 +51,32 @@
             </div>    
                 {{ form_widget(form.files) }}
             </div>
-        </div> 
-        <div class="col-auto">
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
-                {{ form_errors(form.customer) }}
+                {{ form_errors(form.boxes) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Boxes</div>
+            </div>    
+                {{ form_widget(form.boxes) }}
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.user) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(form.customer) }}
+                {{ form_widget(form.user) }}
             </div>
         </div>
-        <div class="col-auto">
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.date) }}
             <div class="input-group-prepend">
@@ -67,7 +84,9 @@
             </div>    
                 {{ form_widget(form.date, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
-        </div>             
+        </div> 
+    </div>
+    <div class="row pb-4">            
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
                 <i class="far fa-edit"></i> Create

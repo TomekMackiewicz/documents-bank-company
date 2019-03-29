@@ -12,7 +12,7 @@
                             <td>Signature:</td>
                             <th>{{ file.signature }}</th>
                             <td>Customer:</td>
-                            <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.company }}</a></th>
+                            <th><a href="{{ path('customer_show', {'id':file.user.id}) }}">{{ file.user.company }}</a></th>
                             <td>Status:</td>
                             <th>
                                 {% if file.status == 0 %}

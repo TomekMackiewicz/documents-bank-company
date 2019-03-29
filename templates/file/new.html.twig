@@ -33,7 +33,7 @@
 </div>
 {{ form_start(form) }}            
     <div class="row pb-4">    
-        <div class="col-sm-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.signature) }}
             <div class="input-group-prepend">
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="row pb-4"> 
-        <div class="col-sm-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.status) }}
             <div class="input-group-prepend">
@@ -55,7 +55,7 @@
         </div> 
     </div>
     <div class="row pb-4"> 
-        <div class="col-sm-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
                 {{ form_errors(form.note) }}
             <div class="input-group-prepend">
@@ -66,13 +66,13 @@
         </div> 
     </div>
     <div class="row pb-4"> 
-        <div class="col-sm-4">
+        <div class="col-md-8 col-lg-4">
             <div class="input-group">
-                {{ form_errors(form.customer) }}
+                {{ form_errors(form.user) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Customer</div>
             </div>    
-                {{ form_widget(form.customer) }}
+                {{ form_widget(form.user) }}
             </div>
         </div> 
     </div>
