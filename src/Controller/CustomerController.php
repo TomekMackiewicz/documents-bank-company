@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Transfer;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 /**
  * @Route("admin/customer")
  */
-class CustomerController extends Controller 
+class CustomerController extends AbstractController 
 {
     /**
      * Lists all user entities

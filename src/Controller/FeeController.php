@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Fee;
@@ -10,7 +10,7 @@ use App\Entity\Fee;
 /**
  * @Route("admin/fee")
  */
-class FeeController extends Controller 
+class FeeController extends AbstractController 
 {    
     /**
      * Calculate fee

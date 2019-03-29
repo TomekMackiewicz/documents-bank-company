@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Transfer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 /**
  * @Route("admin/transfer")
  */
-class TransferController extends Controller 
+class TransferController extends AbstractController 
 {
     /**
      * List of transfers
