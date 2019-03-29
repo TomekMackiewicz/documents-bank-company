@@ -3,7 +3,11 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-</p>
+    <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="jumbotron">
+            <p>
+                {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+            </p>
+        </div>
+    </div>
 {% endblock %}

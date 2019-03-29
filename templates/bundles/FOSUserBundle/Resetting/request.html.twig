@@ -1,5 +1,7 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-{% include "@FOSUser/Resetting/request_content.html.twig" %}
+    <div class="col-sm-12 col-md-6 offset-md-3">
+        {% include "@FOSUser/Resetting/request_content.html.twig" %}
+    </div>
 {% endblock fos_user_content %}
