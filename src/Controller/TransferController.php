@@ -125,11 +125,7 @@ class TransferController extends Controller
                 $em->persist($file);               
             }
             
-<<<<<<< HEAD
-            $transfer->setCustomer($data->getCustomer());
-=======
             $transfer->setUser($data->getUser());
->>>>>>> d7f6745fcb0b8e63d49dc89ea96947ee7dffeaf7
             $transfer->setDate($data->getDate());
             $transfer->setType($data->getType());
 
