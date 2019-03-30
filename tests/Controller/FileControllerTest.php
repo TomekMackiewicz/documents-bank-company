@@ -3,79 +3,56 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class FileControllerTest extends WebTestCase
-{
-    
-    public function testShowFilesIfNotLoggedAsAdmin()
+{   
+    public static function setUpBeforeClass(): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/admin/file/');
-
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-    }
-    
-    public function testShowFilesIfLoggedAsAdmin()
-    {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
-        ]);
-
-        $client->request('GET', '/admin/file/');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }       
-    
-    public function testShowFileIfNotLoggedAsAdmin()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/admin/file/1');
-
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-    }
-    
-    public function testShowFileIfLoggedAsAdmin()
-    {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
-        ]);
-
-        $client->request('GET', '/admin/file/1');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::buildDb();
     }
 
-    public function testAddNewFileIfNotLoggedAsAdmin()
+    public function testAddNewFileIfNotLoggedIn()
     {
         $client = static::createClient();
 
         $client->request('GET', '/admin/file/new');
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());       
-    }    
-    
-    public function testAddNewFileIfLoggedAsAdmin()
+    }
+
+    public function testAddNewFileIfNotLoggedInAsAdmin()
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
+            'PHP_AUTH_USER' => 'user',
+            'PHP_AUTH_PW'   => 'user',
+        ]);
+
+        $client->request('GET', '/admin/file/new');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode()); 
+    }
+    
+    public function testAddNewFileIfLoggedInAsAdmin()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
         
-        $client->followRedirects(true);
         $crawler = $client->request('GET', '/admin/file/new');
         
         $form = $crawler->selectButton('Create')->form();
-        $form['app_file[signature]'] = $this->generateRandomString();
+        $form['app_file[signature]'] = 'A1';
         $form['app_file[status]'] = 1;
         $form['app_file[note]'] = 'Sample note';
         $form['app_file[user]'] = 2;
         
         $client->submit($form);
+        
+        $client->followRedirect();
         
 	$this->assertContains(
     	    'New file(s) created',
@@ -86,35 +63,79 @@ class FileControllerTest extends WebTestCase
     public function testEditNewFileIfLoggedAsAdmin()
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
         
-        $client->followRedirects(true);
-        $crawler = $client->request('GET', '/admin/file/2/edit');
+        $client->request('POST', '/admin/file/new');
+        
+        $crawler = $client->request('GET', '/admin/file/1/edit');
         
         $form = $crawler->selectButton('Edit')->form();
-        $form['app_file[signature]'] = $this->generateRandomString();
-        $form['app_file[status]'] = 1;
-        $form['app_file[note]'] = 'Sample note';
+        $form['app_file[signature]'] = 'A2';
+        $form['app_file[status]'] = 2;
+        $form['app_file[note]'] = 'Sample edited note';
         $form['app_file[user]'] = 2;
         
         $client->submit($form);
+        
+        $client->followRedirect();
         
 	$this->assertContains(
     	    'File edited successfully',
     	    $client->getResponse()->getContent()
 	);
-    }    
+    }        
+    
+    public function testShowFilesIfNotLoggedAsAdmin()
+    {
+        $client = static::createClient();
+    
+        $client->request('GET', '/admin/file/');
+    
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
+    
+    public function testShowFilesIfLoggedInAsAdmin()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
+        ]);
+
+        $client->request('GET', '/admin/file/');
+    
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }       
+    
+    public function testShowFileIfNotLoggedInAsAdmin()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/admin/file/1');
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());       
+    } 
+    
+    public function testShowFileIfLoggedInAsAdmin()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
+        ]);
+
+        $client->request('GET', '/admin/file/1');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
     
     public function testInvalidSignature()
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
         
-        $client->followRedirects(true);
         $crawler = $client->request('GET', '/admin/file/new');
         
         $form = $crawler->selectButton('Create')->form();
@@ -134,11 +155,10 @@ class FileControllerTest extends WebTestCase
     public function testEmptySignature()
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
         
-        $client->followRedirects(true);
         $crawler = $client->request('GET', '/admin/file/new');
         
         $form = $crawler->selectButton('Create')->form();
@@ -147,7 +167,7 @@ class FileControllerTest extends WebTestCase
         $form['app_file[note]'] = 'Sample note';
         $form['app_file[user]'] = 2;
         
-        $client->submit($form); 
+        $client->submit($form);
         
 	$this->assertContains(
     	    'Signature cannot be empty',
@@ -158,15 +178,14 @@ class FileControllerTest extends WebTestCase
     public function testUniqueSignature()
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Tomek',
-            'PHP_AUTH_PW'   => 'tompo',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
         
-        $client->followRedirects(true);
         $crawler = $client->request('GET', '/admin/file/new');
         
         $form = $crawler->selectButton('Create')->form();
-        $form['app_file[signature]'] = 'A1';
+        $form['app_file[signature]'] = 'A2';
         $form['app_file[status]'] = 1;
         $form['app_file[note]'] = 'Sample note';
         $form['app_file[user]'] = 2;
@@ -178,17 +197,39 @@ class FileControllerTest extends WebTestCase
     	    $client->getResponse()->getContent()
 	);
     }
-    
-    private function generateRandomString($length = 10) 
+
+    private function buildDb()
     {
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        
-        return $randomString;
-    }
-}
+        $kernel = new Kernel('test', true);
+        $kernel->boot();
+
+        $application = new Application($kernel);
+
+        $application->setAutoExit(false);    
+
+        $application->run(new ArrayInput(array(
+            'doctrine:schema:drop',
+            '--force' => true
+        )));
+
+        $application->run(new ArrayInput(array(
+            'doctrine:schema:create'
+        )));
+
+        $application->run(new ArrayInput(array(
+            'fos:user:create', 
+            'username' => 'admin', 
+            'email' => 'admin@test.com', 
+            'password' => 'admin', 
+            '--super-admin' =>true
+        )));    
+
+        $application->run(new ArrayInput(array(
+            'fos:user:create', 
+            'username' => 'user', 
+            'email' => 'user@test.com', 
+            'password' => 'user'
+        )));    
+
+    }   
+}       
