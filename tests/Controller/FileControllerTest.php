@@ -1,9 +1,11 @@
 <?php
 
+// ./bin/phpunit
+
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 
@@ -14,6 +16,10 @@ class FileControllerTest extends WebTestCase
         self::buildDb();
     }
 
+    //-----------------------------------------------------
+    // ADD NEW FILE
+    //-----------------------------------------------------    
+    
     public function testAddNewFileIfNotLoggedIn()
     {
         $client = static::createClient();
@@ -60,7 +66,11 @@ class FileControllerTest extends WebTestCase
 	);
     }
 
-    public function testEditNewFileIfLoggedAsAdmin()
+    //-----------------------------------------------------
+    // EDIT FILE
+    //-----------------------------------------------------     
+    
+    public function testEditNewFileIfLoggedInAsAdmin()
     {
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'admin',
@@ -86,14 +96,30 @@ class FileControllerTest extends WebTestCase
     	    $client->getResponse()->getContent()
 	);
     }        
+
+    //-----------------------------------------------------
+    // SHOW FILES (INDEX)
+    //----------------------------------------------------- 
     
-    public function testShowFilesIfNotLoggedAsAdmin()
+    public function testShowFilesIfNotLoggedIn()
     {
         $client = static::createClient();
     
         $client->request('GET', '/admin/file/');
     
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
+
+    public function testShowFilesIfNotLoggedInAsAdmin()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'user',
+            'PHP_AUTH_PW'   => 'user',
+        ]);
+    
+        $client->request('GET', '/admin/file/');
+    
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testShowFilesIfLoggedInAsAdmin()
@@ -107,14 +133,30 @@ class FileControllerTest extends WebTestCase
     
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }       
+
+    //-----------------------------------------------------
+    // SHOW FILE
+    //----------------------------------------------------- 
     
-    public function testShowFileIfNotLoggedInAsAdmin()
+    public function testShowFileIfNotLoggedIn()
     {
         $client = static::createClient();
 
         $client->request('GET', '/admin/file/1');
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());       
+    } 
+
+    public function testShowFileIfNotLoggedInAsAdmin()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'user',
+            'PHP_AUTH_PW'   => 'user',
+        ]);
+
+        $client->request('GET', '/admin/file/1');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());       
     } 
     
     public function testShowFileIfLoggedInAsAdmin()
@@ -128,6 +170,10 @@ class FileControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    //-----------------------------------------------------
+    // VALIDATE SIGNATURE
+    //-----------------------------------------------------
     
     public function testInvalidSignature()
     {
@@ -198,7 +244,69 @@ class FileControllerTest extends WebTestCase
 	);
     }
 
-    private function buildDb()
+    //-----------------------------------------------------
+    // FILE TRANSFERS SEARCH FORM
+    //-----------------------------------------------------
+    
+    public function testShowFileTransfers()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
+        ]);
+        
+        $crawler = $client->request('GET', '/admin/file/1');
+        
+        $dateFrom = new \DateTime();
+        $dateTo = new \DateTime();        
+        
+        $form = $crawler->selectButton('Search')->form();
+        $form['action[dateFrom]'] = $dateFrom->modify("-1 day")->format("Y-m-d");
+        $form['action[dateTo]'] = $dateTo->modify("+1 day")->format("Y-m-d");
+        
+        $client->submit($form);
+        
+	$this->assertContains(
+    	    'A2',
+    	    $client->getResponse()->getContent()
+	);        
+    }
+
+    //-----------------------------------------------------
+    // FILE TRANSFERS WITH TYPE ADJUSTMENT
+    //-----------------------------------------------------    
+
+    public function testFileTransferAfterAddNewFile()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
+        ]);
+
+        $client->request('GET', '/admin/transfer/1');
+    
+	$this->assertContains(
+    	    'Adjustment',
+    	    $client->getResponse()->getContent()
+	); 
+    }
+
+    public function testFileTransferAfterEditFile()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
+        ]);
+
+        $client->request('GET', '/admin/transfer/2');
+    
+	$this->assertContains(
+    	    'Adjustment',
+    	    $client->getResponse()->getContent()
+	); 
+    }
+    
+    private static function buildDb()
     {
         $kernel = new Kernel('test', true);
         $kernel->boot();
