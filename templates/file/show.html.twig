@@ -39,9 +39,9 @@
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light">
+              <button class="btn btn-light" id="print">
                   <i class="fas fa-print"></i> Print
-              </button>        
+              </button>                  
             </li>
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
@@ -99,7 +99,7 @@
 {{ form_end(transfersForm) }}                    
 
 <div class="row pb-4">
-    <div class="col-auto">         
+    <div class="col-auto printable">         
         {% if transfersFromTo is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
