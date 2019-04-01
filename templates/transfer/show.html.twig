@@ -37,8 +37,8 @@
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light">
-                  <i class="fas fa-print"></i> Print
+              <button class="btn btn-light" id="print">
+                  <i class="fas fa-print"></i> PDF
               </button>        
             </li>
             <li class="nav-item pl-2">
@@ -70,13 +70,18 @@
         </div>
     </div>
 {% endif %}
+
+{% if transfer.files is not empty %}
+    <div class="row pb-4">
+        <div class="col-sm-12">
+            <h4>Files</h4>
+        </div>
+    </div>    
+{% endif %}
+
 <div class="row pb-4">
-    <div class="col-sm-12">
-        <h4>Files</h4>
-    </div>
-</div>            
-<div class="row pb-4">
-    <div class="col-sm-12">
+    <div class="col-sm-12 printable">
+        {% if transfer.files is not empty %}
         <table class="table table-striped">
             <thead class="thead-light">
                 <tr>
@@ -110,9 +115,39 @@
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>        
+        </table>
+        {% else %}
+            <div class="alert alert-light" role="alert">
+                No files
+            </div>            
+        {% endif %}
     </div>
 </div>
-        
+
+{% if transfer.files is not empty %}
+    <div id="metadata" hidden>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>Transfer date:</td>
+                    <th>{{ transfer.date|date('Y-m-d') }}</th> 
+                    <td>Customer:</td>
+                    <th><a href="{{ path('customer_show', {'id':transfer.user.id}) }}">{{ transfer.user.company }}</a></th>
+                    <td>Type:</td>
+                    <th>
+                        {% if transfer.type == 1 %}
+                            In
+                        {% elseif transfer.type == 2 %}
+                            Out
+                        {% else %}
+                            Adjustment
+                        {% endif %}
+                    </th>                           
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
 {% endblock %}
  

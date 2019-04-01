@@ -41,12 +41,17 @@ class IndexController extends AbstractController
      * @Route("admin/print", name="print")
      */    
     public function printData(Request $request)
-    {   
+    { 
+        $output = '<link rel="stylesheet" 
+                  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+                  crossorigin="anonymous">';
+        $output .= $request->request->get('metadata');
+        $output .= $request->request->get('content');
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Times-Roman');
         
         $dompdf = new Dompdf($pdfOptions);        
-        $dompdf->loadHtml($request->request->get('content'));      
+        $dompdf->loadHtml($output);      
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 

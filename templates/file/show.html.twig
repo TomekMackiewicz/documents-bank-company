@@ -40,7 +40,7 @@
             </li>  
             <li class="nav-item pl-2">
               <button class="btn btn-light" id="print">
-                  <i class="fas fa-print"></i> Print
+                  <i class="fas fa-print"></i> PDF
               </button>                  
             </li>
             <li class="nav-item pl-2">
@@ -138,5 +138,14 @@
         {% endif %}        
     </div>
 </div>
+
+{% if transfersFromTo is not empty %}
+    <div id="metadata" hidden>
+        <p>
+            File {{ file.signature }} transfers 
+            ({{ transfersForm.vars.value.dateFrom|date('d-m-Y') }} - {{ transfersForm.vars.value.dateTo|date('d-m-Y') }})
+        </p>
+    </div>
+{% endif %}
         
 {% endblock %}

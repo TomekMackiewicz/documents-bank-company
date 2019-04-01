@@ -170,7 +170,7 @@
                     $("[data-toggle=popover]").popover();
                     
                     $('.popover-dismiss').popover({
-                      trigger: 'focus'
+                        trigger: 'focus'
                     });
                     
                     $(function() {
@@ -180,14 +180,16 @@
                             changeYear: true                            
                         });
                     });
-                    
+
                     $("#print").click(function() {
                         var content = $(".printable").html();
+                        var metadata = $("#metadata").html();
+                        metadata.replace('hidden', '');
          
                         $.ajax({
                             url: 'http://localhost:8000/admin/print',
                             method: 'POST',
-                            data: { content: content },
+                            data: { content: content, metadata: metadata },
                             xhrFields: {
                                 responseType: 'blob'
                             },

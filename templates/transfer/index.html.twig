@@ -18,8 +18,8 @@
             </a>
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light">
-                <i class="fas fa-print"></i> Print
+            <button class="btn btn-light" id="print">
+                <i class="fas fa-print"></i> PDF
             </button>        
           </li>
           <li class="nav-item pl-2">
@@ -81,7 +81,7 @@
 {{ form_end(searchForm) }}
 
 <div class="row pb-4">  
-    <div class="col-sm-12">
+    <div class="col-sm-12 printable">
         {% if searchResults is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
@@ -123,4 +123,54 @@
     </div>
 </div>
 
+{% if searchResults is not empty %}
+    <div id="metadata" hidden>
+        <h4>Transfers</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>                   
+                    <td>Type:</td>
+                    <th>
+                        {% if searchForm.vars.value.type is not empty %}
+                            {% for type in searchForm.vars.value.type %}
+                                {% if type == 1 %}
+                                    In                       
+                                {% elseif type == 2 %}
+                                    Out
+                                {% else %}
+                                    Adjustment
+                                {% endif %}
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            All
+                        {% endif %}                        
+                    </th>
+                    <td>Customers:</td>
+                    <th>
+                        {% if searchForm.vars.value.user is not empty %}
+                            {% for user in searchForm.vars.value.user %}
+                                {{ user.company }}
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            All
+                        {% endif %}                        
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>From:</td>
+                    <th>{{ searchForm.vars.value.dateFrom|date('d-m-Y') }}</th>
+                    <td>To:</td>
+                    <th>{{ searchForm.vars.value.dateTo|date('d-m-Y') }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}        
+        
 {% endblock %}

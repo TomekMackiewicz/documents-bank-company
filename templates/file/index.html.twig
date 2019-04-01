@@ -18,8 +18,8 @@
             </a>
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light">
-                <i class="fas fa-print"></i> Print
+            <button class="btn btn-light" id="print">
+                <i class="fas fa-print"></i> PDF
             </button>        
           </li>
           <li class="nav-item pl-2">
@@ -74,7 +74,7 @@
 {{ form_end(searchForm) }}         
    
 <div class="row pb-4">   
-    <div class="col-sm-12">
+    <div class="col-sm-12 printable">
         {% if searchResults is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
@@ -117,5 +117,47 @@
         {% endif %}        
     </div>
 </div>
+
+{% if searchResults is not empty %}
+    <div id="metadata" hidden>
+        <h4>Files</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr> 
+                    <td>Status:</td>
+                    <th>
+                        {% if searchForm.vars.value.status is not empty %}
+                            {% for status in searchForm.vars.value.status %}
+                                {% if status == 0 %}
+                                    <span class="text-warning">Disposed</span>
+                                {% elseif status == 1 %}
+                                    In                                    
+                                {% elseif status == 2 %}
+                                    Out
+                                {% else %}
+                                    <span class="text-danger">Unknown</span>
+                                {% endif %}
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            All
+                        {% endif %}                        
+                    </th>
+                    <td>Customers:</td>
+                    <th>
+                        {% if searchForm.vars.value.user is not empty %}
+                            {% for user in searchForm.vars.value.user %}
+                                {{ user.company }}
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            All
+                        {% endif %}                        
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
         
 {% endblock %}

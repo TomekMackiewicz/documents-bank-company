@@ -18,8 +18,8 @@
                 </a>
             </li>
             <li class="nav-item pl-2">
-                <button class="btn btn-light">
-                    <i class="fas fa-print"></i> Print
+                <button class="btn btn-light" id="print">
+                    <i class="fas fa-print"></i> PDF
                 </button>        
             </li>
             <li class="nav-item pl-2">
@@ -71,49 +71,58 @@
 {{ form_end(form) }}
  
 {% if calculation is not null %}
-    <table class="table table-striped">
-        <thead class="thead-light">
-            <tr>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Rate</th>
-                <th>Sum</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Transfers (in)</th> 
-                <td>{{ calculation.transfers.import }}</td>
-                <td>{{ calculation.fees.import }}</td>
-                <td>{{ calculation.subtotals.0 }}</td>
-            </tr>
-            <tr>
-                <th>Transfers (out)</th> 
-                <td>{{ calculation.transfers.delivery }}</td>
-                <td>{{ calculation.fees.delivery }}</td>
-                <td>{{ calculation.subtotals.1 }}</td>
-            </tr>
-            <tr>
-                <th>Storage</th> 
-                <td>---</td>
-                <td>{{ calculation.fees.storage }}</td>
-                <td>{{ calculation.subtotals.2 }}</td>
-            </tr> 
-            <tr>
-                <th>Boxes</th> 
-                <td>{{ calculation.transfers.boxes }}</td>
-                <td>{{ calculation.fees.boxes }}</td>
-                <td>{{ calculation.subtotals.3 }}</td>
-            </tr> 
-            <tr>
-                <th colspan='3'>Sum</th>
-                <th>{{ calculation.total }}</th>
-            </tr>            
-        </tbody>
-        
-                                       
-    </table>
+    <div class="row pb-4">    
+        <div class="col-sm-12 printable">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Sum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Transfers (in)</th> 
+                        <td>{{ calculation.transfers.import }}</td>
+                        <td>{{ calculation.fees.import }}</td>
+                        <td>{{ calculation.subtotals.0 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Transfers (out)</th> 
+                        <td>{{ calculation.transfers.delivery }}</td>
+                        <td>{{ calculation.fees.delivery }}</td>
+                        <td>{{ calculation.subtotals.1 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Storage</th> 
+                        <td>---</td>
+                        <td>{{ calculation.fees.storage }}</td>
+                        <td>{{ calculation.subtotals.2 }}</td>
+                    </tr> 
+                    <tr>
+                        <th>Boxes</th> 
+                        <td>{{ calculation.transfers.boxes }}</td>
+                        <td>{{ calculation.fees.boxes }}</td>
+                        <td>{{ calculation.subtotals.3 }}</td>
+                    </tr> 
+                    <tr>
+                        <th colspan='3'>Sum</th>
+                        <th>{{ calculation.total }}</th>
+                    </tr>            
+                </tbody>                             
+            </table>
+        </div>
+    </div>
 {% endif %}     
-    
+
+{% if calculation is not null %}
+    <div id="metadata" hidden>
+        <p>Calculation for {{ form.vars.value.user.company }}
+            ({{ form.vars.value.dateFrom|date('d-m-Y') }} - {{ form.vars.value.dateTo|date('d-m-Y') }})
+        </p>
+    </div>
+{% endif %}
     
 {% endblock %}
