@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\File;
 use App\Entity\Transfer;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * @Route("admin/file")
  */
-class FileController extends Controller 
+class FileController extends AbstractController 
 {
     /**
      * API to autocomplete
@@ -78,7 +78,7 @@ class FileController extends Controller
             $signatures = explode(',', $data->getSignature());
             $transfer->setDate(new \DateTime());
             $transfer->setType(Transfer::$transferAdjustment);
-            $transfer->setUser($data->getUser());
+            $transfer->setCustomer($data->getCustomer());
             
             $filesAlreadyIn = [];
             foreach ($signatures as $signature) {
@@ -88,7 +88,7 @@ class FileController extends Controller
                 
                 $signature = trim(strtoupper($signature));
                 
-                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getUser());
+                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
                 if ($fileToCheck) {
                     $filesAlreadyIn[] = $signature;
                     continue;
@@ -98,7 +98,7 @@ class FileController extends Controller
                 $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
                 $file->setNote($data->getNote());
-                $file->setUser($data->getUser());
+                $file->setCustomer($data->getCustomer());
                 $file->addTransfer($transfer);
                 $em->persist($file);
                 
@@ -106,7 +106,7 @@ class FileController extends Controller
             }
             
             if (!empty($filesAlreadyIn)) {
-                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getUser()->getCompany().' already exists');
+                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getName().' already exists');
                 return $this->render('file/new.html.twig', array(
                     'file' => $file,
                     'form' => $form->createView()
@@ -138,7 +138,7 @@ class FileController extends Controller
     public function showAction(Request $request, File $file) 
     {
         $transfersFromTo = null;
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();        
         $transfersForm = $this->createForm('App\Form\ActionType');
         $transfersForm->handleRequest($request);
 
@@ -149,7 +149,7 @@ class FileController extends Controller
                 $transfersFromTo = $em->getRepository('App:Transfer')
                     ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo);
             } else { 
-                $this->addFlash('error', "Start value can't be higher than end date");
+                $this->addFlash('error', "Start value cannot be higher than end date");
             }
         }
         
@@ -225,6 +225,9 @@ class FileController extends Controller
             $this->addFlash('success', 'File deleted');
         }
 
+        // Dla każdego transferu tego file sprawdzić, czy ma jakieś files.
+        // Jeśli nie - usunąć
+        
         return $this->redirectToRoute('file_index');
     }
 
@@ -266,14 +269,12 @@ class FileController extends Controller
                 'multiple' => true,
                 'label' => false
             ])
-            ->add('user', EntityType::class, [
-                'class' => 'App:User',
-                'choice_label' => 'company',
+            ->add('customer', EntityType::class, [
+                'class' => 'App:Customer',
+                'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.company', 'ASC')
-                        ->where('u.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ADMIN%');
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
                 },
                 'required' => false,
                 'expanded' => false,

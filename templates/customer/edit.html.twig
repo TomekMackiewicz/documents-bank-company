@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Edit customer: {{ user.username }} ({{ user.company }})</h2>
+                    <h2>Edit customer: {{ customer.name }}</h2>
                 </a>
             </li>
         </ul>
@@ -34,24 +34,13 @@
     <div class="row pb-4">    
         <div class="col-md-8 col-lg-4">
             <div class="input-group">
-                {{ form_errors(edit_form.company) }}
+                {{ form_errors(edit_form.name) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Company</div>
+                    <div class="input-group-text">Name</div>
                 </div>    
-                {{ form_widget(edit_form.company) }}
+                {{ form_widget(edit_form.name) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(edit_form.username) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Username</div>
-                </div>    
-                {{ form_widget(edit_form.username) }}
-            </div>
-        </div> 
     </div>
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
@@ -63,40 +52,7 @@
                 {{ form_widget(edit_form.address) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(edit_form.email) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Email</div>
-                </div>    
-                {{ form_widget(edit_form.email) }}
-            </div>
-        </div>
     </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(edit_form.password.first) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Password</div>
-                </div>    
-                {{ form_widget(edit_form.password.first) }}
-            </div>
-        </div>
-    </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(edit_form.password.second) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Repeat password</div>
-                </div>    
-                {{ form_widget(edit_form.password.second) }}
-            </div>
-        </div>
-    </div>             
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">

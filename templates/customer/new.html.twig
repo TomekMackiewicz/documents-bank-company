@@ -33,24 +33,13 @@
     <div class="row pb-4">    
         <div class="col-md-8 col-lg-4">
             <div class="input-group">
-                {{ form_errors(form.company) }}
+                {{ form_errors(form.name) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Company</div>
+                    <div class="input-group-text">Name</div>
                 </div>    
-                {{ form_widget(form.company) }}
+                {{ form_widget(form.name) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.username) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Username</div>
-                </div>    
-                {{ form_widget(form.username) }}
-            </div>
-        </div> 
     </div>
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
@@ -60,39 +49,6 @@
                     <div class="input-group-text">Address</div>
                 </div>    
                 {{ form_widget(form.address) }}
-            </div>
-        </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.email) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Email</div>
-                </div>    
-                {{ form_widget(form.email) }}
-            </div>
-        </div>
-    </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.password.first) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Password</div>
-                </div>    
-                {{ form_widget(form.password.first) }}
-            </div>
-        </div>
-    </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.password.second) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Repeat password</div>
-                </div>    
-                {{ form_widget(form.password.second) }}
             </div>
         </div>
     </div>             

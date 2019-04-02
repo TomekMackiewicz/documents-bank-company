@@ -39,16 +39,15 @@ class TransferType extends AbstractType
                 'label' => false
             ])
             ->add('boxes', TextType::class, [
-                'label' => false
+                'label' => false,
+                'required' => false
             ])
-            ->add('user', EntityType::class, [
-                'class' => 'App:User',
-                'choice_label' => 'company',
+            ->add('customer', EntityType::class, [
+                'class' => 'App:Customer',
+                'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.company', 'ASC')
-                        ->where('u.roles NOT LIKE :roles')
-                        ->setParameter('roles', '%ADMIN%');
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
                 },
                 'label' => false
             ])

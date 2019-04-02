@@ -1,0 +1,97 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a>
+                    <h2>Add user</h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Todo
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>
+        </ul>
+    </div>
+</div>    
+{{ form_start(form) }}            
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.username) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Username</div>
+                </div>    
+                {{ form_widget(form.username) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.email) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Email</div>
+                </div>    
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+    </div>  
+    <div class="row pb-4">    
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.customer) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Customer</div>
+                </div>    
+                {{ form_widget(form.customer) }}
+            </div>
+        </div>
+    </div>            
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.password.first) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Password</div>
+                </div>    
+                {{ form_widget(form.password.first) }}
+            </div>
+        </div>
+    </div>            
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.password.second) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Repeat password</div>
+                </div>    
+                {{ form_widget(form.password.second) }}
+            </div>
+        </div>
+    </div>             
+    <div class="row pb-4"> 
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="far fa-edit"></i> Create
+            </button>
+        </div>            
+    </div>
+{{ form_end(form) }}
+
+{% endblock %}

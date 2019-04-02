@@ -33,14 +33,14 @@ class TransferRepository extends EntityRepository
     {
         $ids = [];
         
-        if ($searchCriteria['user'] instanceof ArrayCollection) {
-            $users = $searchCriteria['user']->toArray();
+        if ($searchCriteria['customer'] instanceof ArrayCollection) {
+            $customers = $searchCriteria['customer']->toArray();
             
-            foreach ($users as $user) {
-                $ids[] = $user->getId();
+            foreach ($customers as $customer) {
+                $ids[] = $customer->getId();
             }            
         } else {
-            $ids[] = $searchCriteria['user']->getId();
+            $ids[] = $searchCriteria['customer']->getId();
         }
         
         $qb = $this->_em->createQueryBuilder();
@@ -59,8 +59,8 @@ class TransferRepository extends EntityRepository
                ->setParameter(":dateTo", $searchCriteria['dateTo']);
         }        
         if (!empty($ids)) {
-            $qb->andWhere('t.user IN(:users)')
-               ->setParameter(":users", $ids);
+            $qb->andWhere('t.customer IN(:customers)')
+               ->setParameter(":customers", $ids);
         }
         
         $qb->orderBy('t.date', 'DESC');

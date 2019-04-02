@@ -6,9 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class CustomerType extends AbstractType 
 {
@@ -18,28 +15,12 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) 
     {
         $builder
-            ->add('company', TextType::class, array(
-                'label' => false
-            ))
-            ->add('username', TextType::class, array(
+            ->add('name', TextType::class, array(
                 'label' => false
             ))
             ->add('address', TextType::class, array(
                 'label' => false
-            ))
-            ->add('email', EmailType::class, array(
-                'label' => false
-            ))
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
-                'label' => false,
-                'first_options'  => ['label' => false],
-                'second_options' => ['label' => false],
-            ]);                
-                
+            ));                 
     }
 
     /**
@@ -48,7 +29,7 @@ class CustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver) 
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\User'
+            'data_class' => 'App\Entity\Customer'
         ));
     }
 
@@ -57,7 +38,7 @@ class CustomerType extends AbstractType
      */
     public function getBlockPrefix() 
     {
-        return 'app_user';
+        return 'app_customer';
     }
 
 }

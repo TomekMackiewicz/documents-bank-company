@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td>User:</td>
+                            <th>{{ user.username }}</th>                         
+                        </tr>
+                    </tbody>
+                </table> 
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-default inline">
+                    <i class="far fa-edit"></i> Edit
+                </a>
+            </li>  
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" id="print">
+                  <i class="fas fa-print"></i> PDF
+              </button>        
+            </li>
+            <li class="nav-item pl-2">
+                <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
+                    <i class="fas fa-undo"></i> Back
+                </a>
+            </li>
+            <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      Todo.
+              ">
+                  <i class="fas fa-info-circle"></i> Info
+              </button>        
+            </li>             
+            <li class="nav-item pl-2">
+                {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete
+                    </button>
+                {{ form_end(delete_form) }}
+            </li> 
+        </ul>
+    </div>
+</div>     
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <tbody>
+                <tr> 
+                    <td>Email: {{ user.email }}</td>  
+                </tr>
+            </tbody>
+        </table>        
+    </div>
+</div>   
+        
+{% endblock %}

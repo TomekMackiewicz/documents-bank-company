@@ -10,7 +10,7 @@
                     <tbody>
                         <tr>
                             <td>Customer:</td>
-                            <th>{{ user.company }}</th>                         
+                            <th>{{ customer.name }}</th>                         
                         </tr>
                     </tbody>
                 </table> 
@@ -20,7 +20,7 @@
     <div class="col-sm-6">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': user.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> Edit
                 </a>
             </li>  
@@ -56,8 +56,8 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td>Address: {{ user.address }}</td>
-                    <td>Number of files: <strong>{{ user.files|length }}</strong></td>
+                    <td>Address: {{ customer.address }}</td>
+                    <td>Number of files: <strong>{{ customer.files|length }}</strong></td>
                     <td>Files in: <strong>{{ files.0.in }}</strong></td>
                     <td>Files out: <strong>{{ files.0.out }}</strong></td>
                     <td>Files missing: <strong>{{ files.0.unknown }}</strong></td>
@@ -134,7 +134,7 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.user.company }}</td>
+                            <td>{{ transfer.customer.name }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     Show
@@ -154,7 +154,7 @@
 
 {% if transfersFromTo is not empty %}
     <div id="metadata" hidden>
-        <p>{{ user.company }} transfers</p>
+        <p>{{ customer.name }} transfers</p>
         <table class="table table-borderless">
             <tbody>
                 <tr>

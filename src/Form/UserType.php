@@ -6,13 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Doctrine\ORM\EntityRepository;
-use App\Entity\File;
 
-class FileType extends AbstractType 
+class UserType extends AbstractType 
 {
     /**
      * {@inheritdoc}
@@ -20,22 +20,12 @@ class FileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) 
     {
         $builder
-            ->add('signature', TextType::class, [
+            ->add('username', TextType::class, array(
                 'label' => false
-            ])
-            ->add('status', ChoiceType::class, [
-                'choices'  => [
-                    'In' => File::$statusIn,
-                    'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown,
-                    'Disposed' => File::$statusDisposed
-                ],
+            ))
+            ->add('email', EmailType::class, array(
                 'label' => false
-            ])
-            ->add('note', TextareaType::class, [
-                'label' => false,
-                'required' => false
-            ])                
+            ))
             ->add('customer', EntityType::class, [
                 'class' => 'App:Customer',
                 'choice_label' => 'name',
@@ -44,7 +34,17 @@ class FileType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 },
                 'label' => false
-            ]);
+            ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'label' => false,
+                'first_options'  => ['label' => false],
+                'second_options' => ['label' => false],
+            ]);                
+                
     }
 
     /**
@@ -52,9 +52,9 @@ class FileType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver) 
     {
-        $resolver->setDefaults([
-            'data_class' => 'App\Entity\File'
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => 'App\Entity\User'
+        ));
     }
 
     /**
@@ -62,7 +62,7 @@ class FileType extends AbstractType
      */
     public function getBlockPrefix() 
     {
-        return 'app_file';
+        return 'app_user';
     }
 
 }

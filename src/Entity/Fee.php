@@ -67,10 +67,10 @@ class Fee
     private $boxPrice;    
     
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="fee")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="Customer", inversedBy="fee")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $user;
+    private $customer;
 
     /**
      * @return integer 
@@ -153,21 +153,21 @@ class Fee
     }
 
     /**
-     * @param User $user
+     * @param Customer $customer
      * @return Fee
      */
-    public function setUser(User $user = null)
+    public function setUser(Customer $customer = null)
     {
-        $this->user = $user;
+        $this->customer = $customer;
         return $this;
     }
 
     /**
-     * @return User 
+     * @return Customer 
      */
-    public function getUser() 
+    public function getCustomer() 
     {
-        return $this->user;
+        return $this->customer;
     }
   
 }
