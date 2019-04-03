@@ -57,11 +57,11 @@
             <tbody>
                 <tr>
                     <td>Address: {{ customer.address }}</td>
-                    <td>Number of files: <strong>{{ customer.files|length }}</strong></td>
-                    <td>Files in: <strong>{{ files.0.in }}</strong></td>
-                    <td>Files out: <strong>{{ files.0.out }}</strong></td>
-                    <td>Files missing: <strong>{{ files.0.unknown }}</strong></td>
-                    <td>Files disposed: <strong>{{ files.0.disposed }}</strong></td>                
+                    <td>Number of files: <strong>{{ files.all }}</strong></td>
+                    <td>Files in: <strong>{{ files.in }}</strong></td>
+                    <td>Files out: <strong>{{ files.out }}</strong></td>
+                    <td>Files missing: <strong>{{ files.unknown }}</strong></td>
+                    <td>Files disposed: <strong>{{ files.disposed }}</strong></td>                
                 </tr>
             </tbody>
         </table>        

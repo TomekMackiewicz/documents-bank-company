@@ -90,7 +90,7 @@ class CustomerController extends AbstractController
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
             'delete_form' => $this->createDeleteForm($customer)->createView(),
-            'files' =>$files,
+            'files' => $files,
             'transfersForm' => $transfersForm->createView(),
             'transfersFromTo' => $searchResults
         ]);

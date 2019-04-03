@@ -38,7 +38,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("admin/print", name="print")
+     * @Route("print", name="print")
      */    
     public function printData(Request $request)
     { 

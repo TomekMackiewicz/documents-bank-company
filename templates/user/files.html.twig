@@ -1,0 +1,150 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Files</h2></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+          <li class="nav-item pl-2">
+            <button class="btn btn-light" id="print">
+                <i class="fas fa-print"></i> PDF
+            </button>        
+          </li>
+          <li class="nav-item pl-2">
+            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                    Combined search by file signature, status and / or customer.<br>
+                    You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
+                    You can also get combined results for multiple statuses or customers.<br>
+                    Search results are limited to 100 records.
+            ">
+                <i class="fas fa-info-circle"></i> Info
+            </button>        
+          </li>          
+        </ul>
+    </div>
+</div>
+
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Number of files: <strong>{{ filesCount.all }}</strong></td>
+                    <td>Files in: <strong>{{ filesCount.in }}</strong></td>
+                    <td>Files out: <strong>{{ filesCount.out }}</strong></td>
+                    <td>Files missing: <strong>{{ filesCount.unknown }}</strong></td>
+                    <td>Files disposed: <strong>{{ filesCount.disposed }}</strong></td>                
+                </tr>
+            </tbody>
+        </table>        
+    </div>
+</div>                 
+                
+{{ form_start(filesSearchForm) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_errors(filesSearchForm.signature) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Signature</div>
+            </div>    
+                {{ form_widget(filesSearchForm.signature) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(filesSearchForm.status) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Status</div>
+            </div>    
+                {{ form_widget(filesSearchForm.status, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(filesSearchForm) }}
+
+<div class="row pb-4">   
+    <div class="col-sm-12 printable">
+        {% if filesSearchResults is not empty %}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Signature</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in filesSearchResults %}
+                        <tr>
+                            <td>
+                                {{ file.signature }}
+                            </td>
+                            <td>
+                                {% if file.status == 0 %}
+                                    <span class="text-warning">Disposed</span>
+                                {% elseif file.status == 1 %}
+                                    In                                    
+                                {% elseif file.status == 2 %}
+                                    Out
+                                {% else %}
+                                    <span class="text-danger">Unknown</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ file.note }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elseif app.request.method is same as('POST') %}
+            <div class="alert alert-light" role="alert">
+                No results
+            </div>
+        {% endif %}        
+    </div>
+</div>
+
+{% if filesSearchResults is not empty %}
+    <div id="metadata" hidden>
+        <h4>Files</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr> 
+                    <td>Status:</td>
+                    <th>
+                        {% if filesSearchForm.vars.value.status is not empty %}
+                            {% for status in filesSearchForm.vars.value.status %}
+                                {% if status == 0 %}
+                                    <span class="text-warning">Disposed</span>
+                                {% elseif status == 1 %}
+                                    In                                    
+                                {% elseif status == 2 %}
+                                    Out
+                                {% else %}
+                                    <span class="text-danger">Unknown</span>
+                                {% endif %}
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            All
+                        {% endif %}                        
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% endblock %}

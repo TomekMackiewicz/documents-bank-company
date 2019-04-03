@@ -1,5 +1,9 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-{% include "@FOSUser/Profile/show_content.html.twig" %}
+    <div class="row pb-4">
+        <div class="col-sm-12">
+            {% include "@FOSUser/Profile/show_content.html.twig" %}
+        </div>
+    </div>
 {% endblock fos_user_content %}

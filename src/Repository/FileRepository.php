@@ -38,16 +38,20 @@ class FileRepository extends EntityRepository
         
         return $filesOut;
     }
-    
+
     public function searchFiles($searchCriteria)
     {
-        $customers = $searchCriteria['customer']->toArray();
-        
         $ids = [];
-        foreach ($customers as $customer) {
-            $ids[] = $customer->getId();
-        }
-
+        
+        if ($searchCriteria['customer'] instanceof ArrayCollection) {
+            $customers = $searchCriteria['customer']->toArray();            
+            foreach ($customers as $customer) {
+                $ids[] = $customer->getId();
+            }            
+        } else {
+            $ids[] = $searchCriteria['customer']->getId();
+        }     
+        
         $qb = $this->_em->createQueryBuilder();
         $qb->select('f')->from('App:File', 'f');
 

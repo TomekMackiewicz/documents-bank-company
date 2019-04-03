@@ -1,4 +1,4 @@
-{% extends "layout.html.twig" %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
 
@@ -12,11 +12,6 @@
     </div>
     <div class="col-sm-6">               
         <ul class="nav float-right">
-          <li class="nav-item pl-2">
-            <a class="btn btn-light" href="{{ path('transfer_new') }}">
-                <i class="fas fa-plus"></i> New transfer
-            </a>
-          </li>
           <li class="nav-item pl-2">
             <button class="btn btn-light" id="print">
                 <i class="fas fa-print"></i> PDF
@@ -33,45 +28,36 @@
           </li>          
         </ul>
     </div>
-</div>
-            
-{{ form_start(searchForm) }}
+</div>    
+    
+{{ form_start(transfersSearchForm) }}
     <div class="row pb-4">            
         <div class="col-auto">                    
             <div class="input-group">
-                {{ form_errors(searchForm.dateFrom) }}
+                {{ form_errors(transfersSearchForm.dateFrom) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Date from</div>
             </div>    
-                {{ form_widget(searchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
+                {{ form_widget(transfersSearchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(searchForm.dateTo) }}
+                {{ form_errors(transfersSearchForm.dateTo) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Date to</div>
             </div>    
-                {{ form_widget(searchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
+                {{ form_widget(transfersSearchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(searchForm.type) }}
+                {{ form_errors(transfersSearchForm.type) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">Type</div>
             </div>    
-                {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+                {{ form_widget(transfersSearchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
             </div>                    
-        </div>
-        <div class="col-auto">
-            <div class="input-group">
-                {{ form_errors(searchForm.customer) }}
-            <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
-            </div>    
-                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
-            </div>                     
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
@@ -79,22 +65,21 @@
             </button>
         </div>
     </div>
-{{ form_end(searchForm) }}
+{{ form_end(transfersSearchForm) }}
 
 <div class="row pb-4">  
     <div class="col-sm-12 printable">
-        {% if searchResults is not empty %}
+        {% if transfersSearchResults is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Date</th>
                         <th scope="col">Type</th>
-                        <th scope="col">Customer</th>
                         <th scope="col">Show</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for transfer in searchResults %}
+                    {% for transfer in transfersSearchResults %}
                         <tr>
                             <td>{{ transfer.date|date('d-m-Y') }}</td>
                             <td>
@@ -106,9 +91,8 @@
                                     Adjustment
                                 {% endif %}
                             </td>
-                            <td>{{ transfer.customer.name }}</td>
                             <td>
-                                <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
+                                <a href="{{ path('user_transfer', { 'id': transfer.id }) }}">
                                     Show
                                 </a>
                             </td>                            
@@ -124,7 +108,7 @@
     </div>
 </div>
 
-{% if searchResults is not empty %}
+{% if transfersSearchResults is not empty %}
     <div id="metadata" hidden>
         <h4>Transfers</h4>
         <table class="table table-borderless">
@@ -132,8 +116,8 @@
                 <tr>                   
                     <td>Type:</td>
                     <th>
-                        {% if searchForm.vars.value.type is not empty %}
-                            {% for type in searchForm.vars.value.type %}
+                        {% if transfersSearchForm.vars.value.type is not empty %}
+                            {% for type in transfersSearchForm.vars.value.type %}
                                 {% if type == 1 %}
                                     In                       
                                 {% elseif type == 2 %}
@@ -147,17 +131,6 @@
                             All
                         {% endif %}                        
                     </th>
-                    <td>Customers:</td>
-                    <th>
-                        {% if searchForm.vars.value.customer is not empty %}
-                            {% for customer in searchForm.vars.value.customer %}
-                                {{ customer.name }}
-                                {% if not loop.last %},{% endif %}
-                            {% endfor %}
-                        {% else %}
-                            All
-                        {% endif %}                        
-                    </th>
                 </tr>
             </tbody>
         </table>
@@ -165,9 +138,9 @@
             <tbody>
                 <tr>
                     <td>From:</td>
-                    <th>{{ searchForm.vars.value.dateFrom|date('d-m-Y') }}</th>
+                    <th>{{ transfersSearchForm.vars.value.dateFrom|date('d-m-Y') }}</th>
                     <td>To:</td>
-                    <th>{{ searchForm.vars.value.dateTo|date('d-m-Y') }}</th>
+                    <th>{{ transfersSearchForm.vars.value.dateTo|date('d-m-Y') }}</th>
                 </tr>
             </tbody>
         </table>

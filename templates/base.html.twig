@@ -187,7 +187,7 @@
                         metadata.replace('hidden', '');
          
                         $.ajax({
-                            url: 'http://localhost:8000/admin/print',
+                            url: 'http://localhost:8000/print',
                             method: 'POST',
                             data: { content: content, metadata: metadata },
                             xhrFields: {

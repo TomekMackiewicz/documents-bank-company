@@ -3,22 +3,92 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\File;
 use App\Entity\Transfer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-/**
- * @Route("admin/user")
- */
 class UserController extends AbstractController 
 {
     /**
+     * User files
+     * 
+     * @Route("profile/files", name="user_files", methods={"GET", "POST"})
+     */
+    public function filesAction(Request $request) 
+    {
+        $user = $this->getUser();
+        $filesSearchResults = [];
+        $filesSearchForm = $this->filesSearchForm();
+        $filesSearchForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $filesCount = $em->getRepository('App:Customer')->customerFilesByType($user->getCustomer()->getId());
+
+        if ($filesSearchForm->isSubmitted() && $filesSearchForm->isValid()) {
+            $filesSearchCriteria = $filesSearchForm->getData();
+            $filesSearchCriteria['customer'] = $user->getCustomer();
+            $filesSearchResults = $em->getRepository('App:File')->searchFiles($filesSearchCriteria);
+        }       
+        
+        return $this->render('user/files.html.twig', array(
+            'filesCount' => $filesCount,
+            'filesSearchForm' => $filesSearchForm->createView(),
+            'filesSearchResults' => $filesSearchResults           
+        ));
+    }
+
+    /**
+     * User transfers
+     * 
+     * @Route("profile/transfers", name="user_transfers", methods={"GET", "POST"})
+     */
+    public function transfersAction(Request $request) 
+    {
+        $user = $this->getUser();
+        $transfersSearchResults = [];
+        $transfersSearchForm = $this->transfersSearchForm();
+        $transfersSearchForm->handleRequest($request);        
+        
+        if ($transfersSearchForm->isSubmitted() && $transfersSearchForm->isValid()) {
+            $transfersSearchCriteria = $transfersSearchForm->getData(); 
+            $transfersSearchCriteria['customer'] = $user->getCustomer();
+            $dateFrom = $transfersSearchCriteria["dateFrom"]->format('Y-m-d');
+            $dateTo = $transfersSearchCriteria["dateTo"]->format('Y-m-d');
+            if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $em = $this->getDoctrine()->getManager();
+                $transfersSearchResults = $em->getRepository('App:Transfer')->searchTransfers($transfersSearchCriteria); 
+            } else { 
+                $this->addFlash('error', "Start value can't be higher than end date");
+            }
+        }        
+        
+        return $this->render('user/transfers.html.twig', array(
+            'transfersSearchForm' => $transfersSearchForm->createView(),
+            'transfersSearchResults' => $transfersSearchResults            
+        ));
+    }    
+
+    /**
+     * Show customer transfer
+     * 
+     * @param Transfer $transfer
+     * @Route("profile/transfers/{id}", name="user_transfer", methods={"GET"})
+     */
+    public function transferAction(Transfer $transfer) 
+    {        
+        return $this->render('user/transfer.html.twig', [
+            'transfer' => $transfer
+        ]);
+    }
+    
+    /**
      * Lists all user entities
      * 
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("admin/user/", name="user_index", methods={"GET"})
      */
     public function indexAction() 
     {
@@ -35,13 +105,13 @@ class UserController extends AbstractController
      * 
      * @param Request $request
      * 
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("admin/user/new", name="user_new", methods={"GET","POST"})
      */
     public function newAction(Request $request) 
     {
         $user = new User();
         $user->setEnabled(true);
-        $user->addRole('ROLE_CUSTOMER');
+        $user->addRole('ROLE_CUSTOMER'); // choice
         $form = $this->createForm('App\Form\UserType', $user);
         $form->handleRequest($request);
 
@@ -68,7 +138,7 @@ class UserController extends AbstractController
      * Displays user
      * 
      * @param User $user
-     * @Route("/{id}", name="user_show", methods={"GET","POST"})
+     * @Route("admin/user/{id}", name="user_show", methods={"GET","POST"})
      */
     public function showAction(User $user) 
     {
@@ -83,7 +153,7 @@ class UserController extends AbstractController
      * 
      * @param Request $request
      * @param User $user
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("admin/user/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, User $user) 
     {
@@ -110,7 +180,7 @@ class UserController extends AbstractController
      * 
      * @param Request $request
      * @param User $user
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("admin/user/{id}", name="user_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, User $user) 
     {
@@ -127,41 +197,7 @@ class UserController extends AbstractController
         
         return $this->redirectToRoute('user_index');
     }
-//
-//    /**
-//     * Create search form
-//     * 
-//     * @return Form
-//     */
-//    private function createSearchForm()
-//    {
-//        return $this->createFormBuilder(null)
-//            ->add('dateFrom', DateType::class, array(
-//                'label' => false,
-//                'widget' => 'single_text',
-//                'format' => 'dd-MM-yyyy',
-//                'html5' => false                
-//            ))
-//            ->add('dateTo', DateType::class, array(
-//                'label' => false,
-//                'widget' => 'single_text',
-//                'format' => 'dd-MM-yyyy',
-//                'html5' => false                
-//            ))                 
-//            ->add('type', ChoiceType::class, [
-//                'choices'  => [
-//                    'In' => Transfer::$transferIn,
-//                    'Out' => Transfer::$transferOut,
-//                    'Adjustment' => Transfer::$transferAdjustment
-//                ],
-//                'required' => false,
-//                'expanded' => false,
-//                'multiple' => true,
-//                'label' => false
-//            ])
-//            ->getForm();        
-//    }      
-//    
+
     /**
      * Form to delete a user entity
      * 
@@ -176,4 +212,65 @@ class UserController extends AbstractController
           ->getForm();
     }
 
+    /**
+     * Create search form
+     * 
+     * @return Form
+     */
+    private function filesSearchForm()
+    {
+        return $this->createFormBuilder(null)
+            ->add('signature', SearchType::class, [
+                'required' => false,
+                'label' => false
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices'  => [
+                    'In' => File::$statusIn,
+                    'Out' => File::$statusOut,
+                    'Unknown' => File::$statusUnknown,
+                    'Disposed' => File::$statusDisposed
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
+            ])
+            ->getForm();        
+    }     
+
+    /**
+     * Create search form
+     * 
+     * @return Form
+     */
+    private function transfersSearchForm()
+    {
+        return $this->createFormBuilder(null)
+            ->add('dateFrom', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false                
+            ))
+            ->add('dateTo', DateType::class, array(
+                'label' => false,
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false                
+            ))                 
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'In' => Transfer::$transferIn,
+                    'Out' => Transfer::$transferOut,
+                    'Adjustment' => Transfer::$transferAdjustment
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => true,
+                'label' => false
+            ])
+            ->getForm();        
+    } 
+    
 }
