@@ -32,9 +32,13 @@ class IndexController extends AbstractController
     public function dashboardAction() 
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        $em = $this->getDoctrine()->getManager();
+        $files = $em->getRepository('App:File')->filesByType();
   
-        $number=4;
-        return $this->render('index/dashboard.html.twig', ['number' => $number]);
+        return $this->render('index/dashboard.html.twig', [
+            'files' => $files
+        ]);
     }
 
     /**

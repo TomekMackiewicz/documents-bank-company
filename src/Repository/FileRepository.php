@@ -21,6 +21,25 @@ class FileRepository extends EntityRepository
          ->getArrayResult();        
     }
 
+    public function filesByType()
+    {
+        return $this->getEntityManager()->createQuery("
+            SELECT
+             SUM(CASE WHEN f.status = :in THEN 1 ELSE 0 END) AS in,
+             SUM(CASE WHEN f.status = :out THEN 1 ELSE 0 END) AS out,
+             SUM(CASE WHEN f.status = :disposed THEN 1 ELSE 0 END) AS disposed,
+             SUM(CASE WHEN f.status = :unknown THEN 1 ELSE 0 END) AS unknown,
+             COUNT(f.id) AS all
+             FROM App:File f
+        ")
+        ->setParameter(":in", File::$statusIn)
+        ->setParameter(":out", File::$statusOut)
+        ->setParameter(":unknown", File::$statusUnknown)
+        ->setParameter(":disposed", File::$statusDisposed)
+        ->getSingleResult()
+        ;
+    }     
+    
     public function filesIn() 
     {
         $filesIn = $this->getEntityManager()->createQuery(

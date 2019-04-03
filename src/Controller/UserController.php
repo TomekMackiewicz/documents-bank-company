@@ -213,7 +213,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Create search form
+     * Create files search form
      * 
      * @return Form
      */
@@ -240,7 +240,7 @@ class UserController extends AbstractController
     }     
 
     /**
-     * Create search form
+     * Create transfers search form
      * 
      * @return Form
      */

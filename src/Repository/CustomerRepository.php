@@ -26,19 +26,5 @@ class CustomerRepository extends EntityRepository
         ->setParameter(':customer', $customer)->getSingleResult()
         ;
     }
-
-//    /**
-//     * @param string $role
-//     * @return array
-//     */
-//    public function excludeAdmin()
-//    {
-//        $qb = $this->_em->createQueryBuilder();
-//        $qb->select('u')
-//            ->from('App:User', 'u')
-//            ->where('u.roles NOT LIKE :roles')
-//            ->setParameter('roles', '%ADMIN%');
-//
-//        return $qb->getQuery()->getResult();
-//    }
+  
 }
