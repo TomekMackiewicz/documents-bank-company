@@ -111,13 +111,15 @@ class UserController extends AbstractController
     {
         $user = new User();
         $user->setEnabled(true);
-        $user->addRole('ROLE_CUSTOMER'); // choice
         $form = $this->createForm('App\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $password = $form['password']->getData();
+            foreach ($form['roles']->getData() as $role) {
+                $user->addRole($role);
+            }            
             $user->setPlainPassword($password);
             
             $em->persist($user);

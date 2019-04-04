@@ -63,7 +63,18 @@
                 {{ form_widget(edit_form.customer) }}
             </div>
         </div>
-    </div>            
+    </div>
+    <div class="row pb-4">    
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.roles) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Roles</div>
+                </div>    
+                {{ form_widget(edit_form.roles) }}
+            </div>
+        </div>
+    </div>              
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
             <div class="input-group">

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Doctrine\ORM\EntityRepository;
@@ -35,6 +36,15 @@ class UserType extends AbstractType
                 },
                 'label' => false
             ])
+            ->add('roles', ChoiceType::class, [
+                'choices'  => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'Customer' => 'ROLE_CUSTOMER'
+                ],
+                'label' => false,
+                'multiple' => true,
+                'expanded' => false
+            ]) 
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
