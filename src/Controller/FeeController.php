@@ -30,7 +30,7 @@ class FeeController extends AbstractController
             
             $dateFrom = $data["dateFrom"]->format('Y-m-d');
             $dateTo = $data["dateTo"]->format('Y-m-d');
-            $user = $data['user']->getId();
+            $user = $data['customer']->getId();
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $calculation = $em->getRepository('App:Fee')->actionsToCalculate($user, $dateFrom, $dateTo);
             } else { 

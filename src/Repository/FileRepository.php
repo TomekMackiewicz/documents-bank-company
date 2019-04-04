@@ -62,7 +62,7 @@ class FileRepository extends EntityRepository
     {
         $ids = [];
         
-        if ($searchCriteria['customer'] instanceof ArrayCollection) {
+        if ($searchCriteria['customer'] instanceof \Doctrine\Common\Collections\ArrayCollection) {
             $customers = $searchCriteria['customer']->toArray();            
             foreach ($customers as $customer) {
                 $ids[] = $customer->getId();

@@ -20,7 +20,7 @@ class IndexController extends AbstractController
         }
         
         if(!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('fos_user_profile_show');
+            return $this->redirectToRoute('user_files');
         } 
         
         return $this->redirectToRoute('dashboard');
@@ -59,7 +59,7 @@ class IndexController extends AbstractController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        $dompdf->stream("mypdf.pdf", [
+        $dompdf->stream("document.pdf", [
             "Attachment" => true
         ]);
 
