@@ -34,7 +34,9 @@ class UserType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 },
-                'label' => false
+                'label' => false,
+                'required' => false,
+                'placeholder' => 'None'
             ])
             ->add('roles', ChoiceType::class, [
                 'choices'  => [

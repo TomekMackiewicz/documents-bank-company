@@ -28,6 +28,7 @@
                     <tr>
                         <th scope="col">Company name</th>
                         <th scope="col">Address</th>
+                        <th scope="col">Role</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,17 @@
                                 </a>
                             </td>
                             <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    {% if role is same as('ROLE_SUPER_ADMIN') %}
+                                        Super Admin
+                                    {% elseif role is same as('ROLE_ADMIN') %}
+                                        Admin    
+                                    {% elseif role is same as('ROLE_CUSTOMER') %}
+                                        Customer
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
