@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 /**
  * @Route("admin/transfer")
  */
-class TransferController extends AbstractController 
+class TransferController extends AbstractController implements LogManagerInterface
 {
     /**
      * List of transfers

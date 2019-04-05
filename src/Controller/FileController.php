@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * @Route("admin/file")
  */
-class FileController extends AbstractController 
+class FileController extends AbstractController implements LogManagerInterface 
 {
     /**
      * API to autocomplete
@@ -176,8 +176,6 @@ class FileController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            
-            $data[] = $editForm['status']->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             
@@ -185,7 +183,7 @@ class FileController extends AbstractController
             if ($fileStatus !== $editForm['status']->getData()) {
                 $transfer = new Transfer();
                 $transfer->addFile($file);
-                $transfer->setUser($file->getUser());
+                $transfer->setCustomer($file->getCustomer()); // setCustomer getCustomer
                 $transfer->setDate(new \DateTime());
                 $transfer->setType(Transfer::$transferAdjustment); 
                 $em->persist($transfer);

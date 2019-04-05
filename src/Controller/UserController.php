@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class UserController extends AbstractController 
+class UserController extends AbstractController implements LogManagerInterface 
 {
     /**
      * User files

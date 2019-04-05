@@ -1,0 +1,99 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="nav">
+            <li class="nav-item">
+                <a><h2>Log</h2></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">               
+        <ul class="nav float-right">
+          <li class="nav-item pl-2">
+            <button class="btn btn-light" id="print">
+                <i class="fas fa-print"></i> PDF
+            </button>        
+          </li>         
+        </ul>
+    </div>
+</div>
+                    
+{{ form_start(form) }}
+    <div class="row pb-4">            
+        <div class="col-auto">                    
+            <div class="input-group">
+                {{ form_errors(form.dateFrom) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date from</div>
+            </div>    
+                {{ form_widget(form.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(form.dateTo) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">Date to</div>
+            </div>    
+                {{ form_widget(form.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-light">
+                <i class="fab fa-searchengin"></i> Search
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+<div class="row pb-4">  
+    <div class="col-sm-12 printable">
+        {% if searchResults is not empty %}
+            <table class="table table-striped table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Action</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in searchResults %}
+                        <tr>
+                            <td>{{ log.action }}</td>
+                            <td>{{ log.user }}</td>
+                            <td>{{ log.content }}</td>
+                            <td>{{ log.date|date('d-m-Y H:i:s') }}</td>                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>               
+        {% elseif app.request.method is same as('POST') %}
+            <div class="alert alert-light" role="alert">
+                No results
+            </div>
+        {% endif %}         
+    </div>
+</div>
+
+{% if searchResults is not empty %}
+    <div id="metadata" hidden>
+        <h4>Log</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>From:</td>
+                    <th>{{ form.vars.value.dateFrom|date('d-m-Y') }}</th>
+                    <td>To:</td>
+                    <th>{{ form.vars.value.dateTo|date('d-m-Y') }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}     
+    
+{% endblock %}

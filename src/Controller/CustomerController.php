@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 /**
  * @Route("admin/customer")
  */
-class CustomerController extends AbstractController 
+class CustomerController extends AbstractController implements LogManagerInterface
 {
     /**
      * Lists all customer entities
