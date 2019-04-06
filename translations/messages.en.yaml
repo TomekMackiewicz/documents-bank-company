@@ -1,29 +1,51 @@
 all: all
 all_male: all
+back: back
 change_password: change password
+create: create
 customer: customer
 customers: customers
+date: date
+date_from: date from
+date_to: date to
+delete: delete
+edit: edit
 edit_profile: edit profile
 fees: fees
+file: file
 files: files
-file_new: New file
+file_edit: edit file
+file_new: new file
+files_new: new file(s)
 file_status_disposed: disposed
 file_status_in: in
 file_status_out: out
 file_status_unknown: unknown
 import: import
 info: info
+
 info_file_index: Combined search by file signature, status and / or customer.<br>
                  You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
-                 You can also get combined results for multiple statuses or customers.<br>
-                 Search results are limited to 100 records.
+                 You can also get combined results for multiple statuses or customers.<br>Search results are limited to 100 records.
+info_file_new: Add one or multiple files (comma separated).<br>
+               Form is case insesitive, meaning that you don't need to use shift or capslock ;)<br>
+               Signature should be <u>unique for given customer</u>.
+info_file_show: Here you can see file details and also check inventory in's and out's for given period.<br>
+                Search results are limited to 100 records.
 
 log: log
 no_results: no results
 note: note
 pdf: pdf
 search: search
+show: show
 signature: signature
 status: status
+transfer: transfer
 transfers: transfers
+transfer_adjustment: adjustment
+transfer_in: in
+transfer_out: out
+transfers_show: show transfers
+type: type
 users: users

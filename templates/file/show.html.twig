@@ -9,20 +9,20 @@
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td>Signature:</td>
+                            <td>{{ 'signature'|trans|capitalize }}:</td>
                             <th>{{ file.signature }}</th>
-                            <td>Customer:</td>
+                            <td>{{ 'customer'|trans|capitalize }}:</td>
                             <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></th>
-                            <td>Status:</td>
+                            <td>{{ 'status'|trans|capitalize }}:</td>
                             <th>
                                 {% if file.status == 0 %}
-                                    <span class="text-warning">Disposed</span>
+                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
                                 {% elseif file.status == 1 %}
-                                    In                                    
+                                    {{ 'file_status_in'|trans|capitalize }}                                    
                                 {% elseif file.status == 2 %}
-                                    Out
+                                    {{ 'file_status_out'|trans|capitalize }}
                                 {% else %}
-                                    <span class="text-danger">Unknown</span>
+                                    <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
                                 {% endif %}
                             </th>
                         </tr>
@@ -35,31 +35,28 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_edit', { 'id': file.id }) }}" class="btn btn-default inline">
-                    <i class="far fa-edit"></i> Edit
+                    <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
               <button class="btn btn-light" id="print">
-                  <i class="fas fa-print"></i> PDF
+                  <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
               </button>                  
             </li>
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Here you can see file details and also check inventory in's and out's for given period.<br>
-                      Search results are limited to 100 records.
-              ">
-                  <i class="fas fa-info-circle"></i> Info
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_show'|trans|capitalize }}">
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -68,7 +65,7 @@
 </div>    
 <div class="row pb-4">
     <div class="col-sm-12">
-        <h4>Show transfers</h4>
+        <h4>{{ 'transfers_show'|trans|capitalize }}</h4>
     </div>
 </div>
 {{ form_start(transfersForm) }}
@@ -77,7 +74,7 @@
             <div class="input-group">
                 {{ form_errors(transfersForm.dateFrom) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date from:</div>
+                <div class="input-group-text">{{ 'date_from'|trans|capitalize }}:</div>
             </div>    
                 {{ form_widget(transfersForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -86,14 +83,14 @@
             <div class="input-group">
                 {{ form_errors(transfersForm.dateTo) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date to:</div>
+                <div class="input-group-text">{{ 'date_to'|trans|capitalize }}:</div>
             </div>    
                 {{ form_widget(transfersForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-light float-right">
-                <i class="fab fa-searchengin"></i> Search
+                <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>
     </div>
@@ -105,9 +102,9 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Show transfer</th>
+                        <th>{{ 'type'|trans|capitalize }}</th>
+                        <th>{{ 'date'|trans|capitalize }}</th>
+                        <th>{{ 'transfer'|trans|capitalize }}</th>
                     </tr>  
                 </thead>         
                 <tbody>
@@ -115,17 +112,17 @@
                     <tr>
                         <td>
                             {% if transfer.type == 1 %}
-                                In
+                                {{ 'transfer_in'|trans|capitalize }}
                             {% elseif transfer.type == 2 %}
-                                Out
+                                {{ 'transfer_out'|trans|capitalize }}
                             {% else %}
-                                Adjustment
+                                {{ 'transfer_adjustment'|trans|capitalize }}
                             {% endif %}                            
                         </td>
                         <td>{{ transfer.date|date('Y-m-d') }}</td>
                         <td>
                             <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
-                                Show
+                                {{ 'show'|trans|capitalize }}
                             </a>                            
                         </td>
                     </tr>                
@@ -134,7 +131,7 @@
             </table>
         {% elseif app.request.method is same as('POST') %}
             <div class="alert alert-light" role="alert">
-                No results
+                {{ 'no_results'|trans|capitalize }}
             </div>
         {% endif %}        
     </div>
@@ -143,8 +140,8 @@
 {% if transfersFromTo is not empty %}
     <div id="metadata" hidden>
         <p>
-            File {{ file.signature }} transfers 
-            ({{ transfersForm.vars.value.dateFrom|date('d-m-Y') }} - {{ transfersForm.vars.value.dateTo|date('d-m-Y') }})
+            {{ 'file'|trans|capitalize }} {{ file.signature }}
+            ({{ 'transfers'|trans }}: {{ transfersForm.vars.value.dateFrom|date('d-m-Y') }} - {{ transfersForm.vars.value.dateTo|date('d-m-Y') }})
         </p>
     </div>
 {% endif %}

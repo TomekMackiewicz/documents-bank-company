@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Edit file {{ file.signature }}</h2>
+                    <h2>{{ 'file_edit'|trans|capitalize }} {{ file.signature }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,13 +16,13 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -35,7 +35,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.signature) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Signature</div>
+                <div class="input-group-text">{{ 'signature'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.signature) }}
             </div>
@@ -46,7 +46,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.status) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Status</div>
+                <div class="input-group-text">{{ 'status'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.status) }}
             </div>
@@ -57,7 +57,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.note) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Note</div>
+                <div class="input-group-text">{{ 'note'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.note) }}
             </div>
@@ -68,7 +68,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.customer) }}
             </div>
@@ -77,7 +77,7 @@
     <div class="row pb-4">
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Edit
+                <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
             </button>
         </div>            
     </div>

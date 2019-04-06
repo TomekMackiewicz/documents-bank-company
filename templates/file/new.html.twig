@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Add new file(s)</h2>
+                    <h2>{{ 'files_new'|trans|capitalize }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,16 +16,12 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Add one or multiple files (comma separated).<br>
-                      Form is case insesitive, meaning that you don't need to use shift or capslock ;)<br>
-                      Signature should be <u>unique for given customer</u>. 
-              ">
-                  <i class="fas fa-info-circle"></i> Info
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_new'|trans }}">
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>
         </ul>
@@ -37,7 +33,7 @@
             <div class="input-group">
                 {{ form_errors(form.signature) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Signature</div>
+                <div class="input-group-text">{{ 'signature'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.signature) }}
             </div>
@@ -48,7 +44,7 @@
             <div class="input-group">
                 {{ form_errors(form.status) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Status</div>
+                <div class="input-group-text">{{ 'status'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.status) }}
             </div>
@@ -59,7 +55,7 @@
             <div class="input-group">
                 {{ form_errors(form.note) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Note</div>
+                <div class="input-group-text">{{ 'note'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.note) }}
             </div>
@@ -70,7 +66,7 @@
             <div class="input-group">
                 {{ form_errors(form.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.customer) }}
             </div>
@@ -79,7 +75,7 @@
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Create
+                <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}
             </button>
         </div>            
     </div>
