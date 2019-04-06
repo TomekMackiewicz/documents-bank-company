@@ -9,4 +9,4 @@
 /phpunit.xml
 /.web-server-pid
 
-/nb-project/private/
+/nb-project/private/*

@@ -26,38 +26,38 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'file_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('file_index') }}">
-                                Files
+                                {{ 'files'|trans|capitalize }}
                             </a>                           
                         </li>
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('transfer_index') }}">
-                                Transfers
+                                {{ 'transfers'|trans|capitalize }}
                             </a>                           
                         </li>                    
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('customer_index') }}">
-                                Customers
+                                {{ 'customers'|trans|capitalize }}
                             </a>                         
                         </li>
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'fee_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('fee_index') }}">
-                                Fees
+                                {{ 'fees'|trans|capitalize }}
                             </a>                         
                         </li>
                         {% if is_granted("ROLE_SUPER_ADMIN") %}
                             <li class="nav-item {{ (app.request.attributes.get('_route') == 'user_index') ? 'active' }}">
                                 <a class="nav-link" href="{{ path('user_index') }}">
-                                    Users
+                                    {{ 'users'|trans|capitalize }}
                                 </a>                         
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('log_index') }}">
-                                    Log
+                                    {{ 'log'|trans|capitalize }}
                                 </a>                         
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Import
+                                    {{ 'import'|trans|capitalize }}
                                 </a>                         
                             </li>
                         {% endif %}
@@ -66,12 +66,12 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'user_files') ? 'active' }}">
                             <a class="nav-link" href="{{ path('user_files') }}">
-                                Files
+                                {{ 'files'|trans|capitalize }}
                             </a>                           
                         </li>
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'user_transfers') ? 'active' }}">
                             <a class="nav-link" href="{{ path('user_transfers') }}">
-                                Transfers
+                                {{ 'transfers'|trans|capitalize }}
                             </a>                           
                         </li>                   
                     </ul>
@@ -81,24 +81,24 @@
                         <span class="navbar-brand">
                             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                         </span>
-<div class="btn-group" role="group" aria-label="Basic example">
-    {% if app.request.locale is same as('en') %}
-        <li class="nav-item">
-            <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
-        </li>
-    {% elseif app.request.locale is same as('pl') %}
-        <li class="nav-item">
-            <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
-        </li>
-    {% endif %}
-</div>                         
+                        <div class="btn-group" role="group">
+                            {% if app.request.locale is same as('en') %}
+                                <li class="nav-item">
+                                    <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
+                                </li>
+                            {% elseif app.request.locale is same as('pl') %}
+                                <li class="nav-item">
+                                    <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
+                                </li>
+                            {% endif %}
+                        </div>                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ path('fos_user_profile_edit') }}">Edit profile</a>
-                                <a class="dropdown-item" href="{{ path('fos_user_change_password') }}">Change password</a>
+                                <a class="dropdown-item" href="{{ path('fos_user_profile_edit') }}">{{ 'edit_profile'|trans|capitalize }}</a>
+                                <a class="dropdown-item" href="{{ path('fos_user_change_password') }}">{{ 'change_password'|trans|capitalize }}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
                                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
