@@ -138,7 +138,7 @@ class FileController extends AbstractController implements LogManagerInterface
     public function showAction(Request $request, File $file) 
     {
         $transfersFromTo = null;
-        $em = $this->getDoctrine()->getManager();        
+        $em = $this->getDoctrine()->getManager();
         $transfersForm = $this->createForm('App\Form\ActionType');
         $transfersForm->handleRequest($request);
 
@@ -183,7 +183,7 @@ class FileController extends AbstractController implements LogManagerInterface
             if ($fileStatus !== $editForm['status']->getData()) {
                 $transfer = new Transfer();
                 $transfer->addFile($file);
-                $transfer->setCustomer($file->getCustomer()); // setCustomer getCustomer
+                $transfer->setCustomer($file->getCustomer());
                 $transfer->setDate(new \DateTime());
                 $transfer->setType(Transfer::$transferAdjustment); 
                 $em->persist($transfer);
@@ -217,14 +217,18 @@ class FileController extends AbstractController implements LogManagerInterface
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $orphanedTransfers = $em->getRepository('App:File')->getOrphanedTransfers($file);
+            
             $em->remove($file);
             $em->flush($file);
-            
+
+            foreach ($orphanedTransfers as $orphan) {
+                $em->remove($orphan);
+                $em->flush($orphan);
+            }
+
             $this->addFlash('success', 'File deleted');
         }
-
-        // Dla każdego transferu tego file sprawdzić, czy ma jakieś files.
-        // Jeśli nie - usunąć
         
         return $this->redirectToRoute('file_index');
     }

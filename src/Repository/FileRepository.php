@@ -101,42 +101,17 @@ class FileRepository extends EntityRepository
          ->getOneOrNullResult();        
     }
 
-    public function checkEmptyTransfers($fileId)
+    public function getOrphanedTransfers($file)
     {
-        //$qb = $this->_em->createQueryBuilder();
-        //$qb->select('t')->from('App:Transfer', 't')->where('t.files is empty');
-        //return $qb->getQuery()->getResult();
-
-//Select binaryid from binarycollection group by binaryid having count(*)=1
-        
-
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('IDENTITY(t.id)')->from('App:Transfer', 't')->groupby('t.id')->having('t.files =1');
+        $qb->select('t')
+            ->from('App:Transfer', 't')
+            ->Where(':file MEMBER OF t.files')
+            ->andWhere('SIZE(t.files)=1')
+            ->groupBy('t.id')
+            ->setParameter(":file", $file);
+        
         return $qb->getQuery()->getResult();
-        
-//        return $this->getEntityManager()->createQuery("
-//            SELECT t FROM App:Transfer t
-//            WHERE COUNT(t.files) = 1
-//            GROUP BY t.id
-//        ")
-//         ->getResult();        
-        
-//        return $this->getEntityManager()->createQuery("
-//            SELECT t FROM App:Transfer t
-//            LEFT JOIN t.files f
-//            WHERE :id MEMBER OF t.files
-//            AND COUNT(t.files) = 1
-//            GROUP BY t.id
-//        ")->setParameter(":id", $fileId)
-//         ->getResult();         
     }
 
-
-//$query = 'SELECT o FROM IndexBundle:Offer o '.
-//'LEFT JOIN o.areas a '.
-//'WHERE a.id = :areaId '.
-//'ORDER BY o.startDate ASC'; 
-    
-   
 }
- 
