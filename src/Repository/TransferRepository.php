@@ -26,6 +26,7 @@ class TransferRepository extends EntityRepository
         )->setParameter(':id', $id)
          ->setParameter(':from', $from)
          ->setParameter(':to', $to)
+         ->setMaxResults(100)
          ->getResult();
     }
 
@@ -63,7 +64,7 @@ class TransferRepository extends EntityRepository
                ->setParameter(":customers", $ids);
         }
         
-        $qb->orderBy('t.date', 'DESC');
+        $qb->orderBy('t.date', 'DESC')->setMaxResults(100);
         
         return $qb->getQuery()->getResult();           
     }     

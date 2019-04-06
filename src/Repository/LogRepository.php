@@ -20,7 +20,7 @@ class LogRepository extends EntityRepository
                ->setParameter(":dateTo", $searchCriteria['dateTo']->modify('+1 day'));
         }        
         
-        $qb->orderBy('l.date', 'DESC');
+        $qb->orderBy('l.date', 'DESC')->setMaxResults(100);
         
         return $qb->getQuery()->getResult();           
     }   

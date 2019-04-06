@@ -87,7 +87,7 @@ class FileRepository extends EntityRepository
                ->setParameter(":customers", $ids);
         }
         
-        $qb->orderBy('f.signature', 'ASC');
+        $qb->orderBy('f.signature', 'ASC')->setMaxResults(100);
         
         return $qb->getQuery()->getResult();           
     }
