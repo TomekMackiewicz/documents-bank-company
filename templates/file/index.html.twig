@@ -1,12 +1,12 @@
 {% extends "layout.html.twig" %}
 
 {% block body %}
-    
+   
 <div class="row pb-4">
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Files</h2></a>
+                <a><h2>{{ 'files'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,22 +14,17 @@
         <ul class="nav float-right">
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('file_new') }}">
-                <i class="fas fa-plus"></i> New file
+                <i class="fas fa-plus"></i> {{ 'file_new'|trans|capitalize }}
             </a>
           </li>
           <li class="nav-item pl-2">
             <button class="btn btn-light" id="print">
-                <i class="fas fa-print"></i> PDF
+                <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
             </button>        
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                    Combined search by file signature, status and / or customer.<br>
-                    You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
-                    You can also get combined results for multiple statuses or customers.<br>
-                    Search results are limited to 100 records.
-            ">
-                <i class="fas fa-info-circle"></i> Info
+            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_index'|trans }}">
+                <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
             </button>        
           </li>          
         </ul>
@@ -42,7 +37,7 @@
             <div class="input-group">
                 {{ form_errors(searchForm.signature) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Signature</div>
+                <div class="input-group-text">{{ 'signature'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(searchForm.signature) }}
             </div>
@@ -51,7 +46,7 @@
             <div class="input-group">
                 {{ form_errors(searchForm.status) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Status</div>
+                <div class="input-group-text">{{ 'status'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(searchForm.status, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
             </div>
@@ -60,14 +55,14 @@
             <div class="input-group">
                 {{ form_errors(searchForm.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
-                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple' }}) }}
+                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple-male' }}) }}
             </div>                     
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="fab fa-searchengin"></i> Search
+                <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>
     </div>
@@ -79,10 +74,10 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Signature</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Note</th>
+                        <th scope="col">{{ 'signature'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'customer'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'note'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,13 +90,13 @@
                             </td>
                             <td>
                                 {% if file.status == 0 %}
-                                    <span class="text-warning">Disposed</span>
+                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
                                 {% elseif file.status == 1 %}
-                                    In                                    
+                                    {{ 'file_status_in'|trans|capitalize }}                                    
                                 {% elseif file.status == 2 %}
-                                    Out
+                                    {{ 'file_status_out'|trans|capitalize }}
                                 {% else %}
-                                    <span class="text-danger">Unknown</span>
+                                    <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
                                 {% endif %}
                             </td>
                             <td>{{ file.customer.name }}</td>
@@ -112,7 +107,7 @@
             </table>
         {% elseif app.request.method is same as('POST') %}
             <div class="alert alert-light" role="alert">
-                No results
+                {{ 'no_results'|trans|capitalize }}
             </div>
         {% endif %}        
     </div>
@@ -120,30 +115,30 @@
 
 {% if searchResults is not empty %}
     <div id="metadata" hidden>
-        <h4>Files</h4>
+        <h4>{{ 'files'|trans|capitalize }}</h4>
         <table class="table table-borderless">
             <tbody>
                 <tr> 
-                    <td>Status:</td>
+                    <td>{{ 'status'|trans|capitalize }}:</td>
                     <th>
                         {% if searchForm.vars.value.status is not empty %}
                             {% for status in searchForm.vars.value.status %}
                                 {% if status == 0 %}
-                                    <span class="text-warning">Disposed</span>
+                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
                                 {% elseif status == 1 %}
-                                    In                                    
+                                    {{ 'file_status_in'|trans|capitalize }}                                     
                                 {% elseif status == 2 %}
-                                    Out
+                                    {{ 'file_status_out'|trans|capitalize }}
                                 {% else %}
-                                    <span class="text-danger">Unknown</span>
+                                    <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
                                 {% endif %}
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         {% else %}
-                            All
+                            {{ 'all'|trans|capitalize }}
                         {% endif %}                        
                     </th>
-                    <td>Customers:</td>
+                    <td>{{ 'customers'|trans|capitalize }}:</td>
                     <th>
                         {% if searchForm.vars.value.customer is not empty %}
                             {% for customer in searchForm.vars.value.customer %}
@@ -151,7 +146,7 @@
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         {% else %}
-                            All
+                            {{ 'all_male'|trans|capitalize }}
                         {% endif %}                        
                     </th>
                 </tr>

@@ -152,7 +152,8 @@
                     $('.multiple').multiselect({
                         buttonText: function(options, select) {
                             if (options.length === 0) {
-                                return 'All';
+                                var all = "{{ 'all'|trans|capitalize }}";
+                                return all;
                             } else {
                                 var labels = [];
                                 options.each(function() {
@@ -166,7 +167,26 @@
                             }                            
                         }
                     });
-                    
+
+                    $('.multiple-male').multiselect({
+                        buttonText: function(options, select) {
+                            if (options.length === 0) {
+                                var all = "{{ 'all_male'|trans|capitalize }}";
+                                return all;
+                            } else {
+                                var labels = [];
+                                options.each(function() {
+                                    if ($(this).attr('label') !== undefined) {
+                                        labels.push($(this).attr('label'));
+                                    } else {
+                                        labels.push($(this).html());
+                                    }
+                                });
+                                return labels.join(', ') + '';
+                            }                            
+                        }
+                    });
+
                     $("[data-toggle=popover]").popover();
                     
                     $('.popover-dismiss').popover({

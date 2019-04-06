@@ -1,0 +1,23 @@
+all: all
+all_male: all
+customer: customer
+customers: customers
+files: files
+file_new: New file
+file_status_disposed: disposed
+file_status_in: in
+file_status_out: out
+file_status_unknown: unknown
+
+info: info
+info_file_index: Combined search by file signature, status and / or customer.<br>
+                 You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
+                 You can also get combined results for multiple statuses or customers.<br>
+                 Search results are limited to 100 records.
+
+no_results: no results
+note: note
+pdf: pdf
+search: search
+signature: signature
+status: status

@@ -76,11 +76,22 @@
                         </li>                   
                     </ul>
                 {% endif %}
-                <ul class="navbar-nav">
+                <ul class="navbar-nav">                   
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <span class="navbar-brand">
                             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                         </span>
+<div class="btn-group" role="group" aria-label="Basic example">
+    {% if app.request.locale is same as('en') %}
+        <li class="nav-item">
+            <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
+        </li>
+    {% elseif app.request.locale is same as('pl') %}
+        <li class="nav-item">
+            <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
+        </li>
+    {% endif %}
+</div>                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user"></i>
@@ -95,7 +106,7 @@
                             </div>
                         </li>                                              
                     {% else %}
-                      <li class="nav-item"><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                        <li class="nav-item"><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
                     {% endif %}
                 </ul>                              
             </div>                          

@@ -64,4 +64,18 @@ class IndexController extends AbstractController
         ]);
 
     }
+    
+    /**
+     * Switch language
+     * 
+     * @param Request $request
+     * @param string $language
+     * @param string $route
+     * @Route("language/{language}/{route}", name="set_language", methods={"GET"})
+     */
+    public function setLanguage(Request $request, $language, $route)
+    {
+        $request->getSession()->set('_locale', $language);
+        return $this->redirectToRoute($route);        
+    }
 }

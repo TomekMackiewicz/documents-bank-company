@@ -261,10 +261,10 @@ class FileController extends AbstractController implements LogManagerInterface
             ])
             ->add('status', ChoiceType::class, [
                 'choices'  => [
-                    'In' => File::$statusIn,
-                    'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown,
-                    'Disposed' => File::$statusDisposed
+                    'file_status_in' => File::$statusIn,
+                    'file_status_out' => File::$statusOut,
+                    'file_status_unknown' => File::$statusUnknown,
+                    'file_status_disposed' => File::$statusDisposed
                 ],
                 'required' => false,
                 'expanded' => false,
