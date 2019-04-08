@@ -4,19 +4,24 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use App\Entity\File;
+use App\Entity\Transfer;
 
 class FileRepository extends EntityRepository 
 {
-    public function getAllFiles($term, $customer)
+    public function getAllFiles($term, $customer, $type)
     {
+        $status = $type == Transfer::$transferIn ? File::$statusOut : File::$statusIn;
+        
         return $this->getEntityManager()->createQuery(
             "SELECT f.signature
              FROM App:File f 
              WHERE f.signature LIKE :signature 
              AND f.customer = :customer
+             AND f.status = :status
              ORDER BY f.signature"
         )->setParameter(":signature", '%'.$term.'%')
          ->setParameter(":customer", $customer)
+         ->setParameter(":status", $status)
          ->setMaxResults(10)
          ->getArrayResult();        
     }

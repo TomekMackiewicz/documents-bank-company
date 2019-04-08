@@ -110,7 +110,12 @@
                         .on( "change", function( event ) {
                             $("#app_transfer_files").val('');
                         });
-                        
+
+                    $("#app_transfer_type")
+                        .on( "change", function( event ) {
+                            $("#app_transfer_files").val('');
+                        });        
+        
                     $("#app_transfer_files")
                         .on( "keydown", function( event ) {
                             if ( event.keyCode === $.ui.keyCode.TAB && $( this ).autocomplete( "instance" ).menu.active ) {
@@ -122,7 +127,8 @@
                                 var lastIndex = request.term.lastIndexOf(",");
                                 var term = request.term.substring(lastIndex + 1);
                                 var customer = $( "#app_transfer_customer" ).val();
-                                $.getJSON( "http://localhost:8000/admin/file/api/"+term.trim()+"/"+customer, {}, response );
+                                var type = $( "#app_transfer_type" ).val();
+                                $.getJSON( "http://localhost:8000/admin/file/api/"+term.trim()+"/"+customer+"/"+type, {}, response );
                             },
                             search: function() {
                                 var term = extractLast( this.value );
