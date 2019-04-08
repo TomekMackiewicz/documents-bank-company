@@ -31,7 +31,7 @@
                         </li>
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('transfer_index') }}">
-                                {{ 'transfers'|trans|capitalize }}
+                                {{ 'orders'|trans|capitalize }}
                             </a>                           
                         </li>                    
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">
@@ -78,17 +78,19 @@
                 {% endif %}
                 <ul class="navbar-nav">                   
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <span class="navbar-brand">
-                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                        </span>
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                            </span>
+                        </li>                        
                         <div class="btn-group" role="group">
                             {% if app.request.locale is same as('en') %}
                                 <li class="nav-item">
-                                    <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
+                                    <a class="btn btn-info" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
                                 </li>
                             {% elseif app.request.locale is same as('pl') %}
                                 <li class="nav-item">
-                                    <a class="btn btn-light" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
+                                    <a class="btn btn-info" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
                                 </li>
                             {% endif %}
                         </div>                         

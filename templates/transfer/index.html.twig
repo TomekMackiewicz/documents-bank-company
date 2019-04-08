@@ -6,7 +6,7 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Transfers</h2></a>
+                <a><h2>{{ 'orders'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,21 +14,17 @@
         <ul class="nav float-right">
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('transfer_new') }}">
-                <i class="fas fa-plus"></i> New transfer
+                <i class="fas fa-plus"></i> {{ 'order_new'|trans|capitalize }}
             </a>
           </li>
           <li class="nav-item pl-2">
             <button class="btn btn-light" id="print">
-                <i class="fas fa-print"></i> PDF
+                <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
             </button>        
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                    Combined search of inventory transfers for given dates.<br>
-                    You can also get combined results for multiple types (in, out...) and/or customers.<br>
-                    Search results are limited to 100 records.
-            ">
-                <i class="fas fa-info-circle"></i> Info
+            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_index'|trans }}">
+                <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
             </button>        
           </li>          
         </ul>
@@ -41,7 +37,7 @@
             <div class="input-group">
                 {{ form_errors(searchForm.dateFrom) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date from</div>
+                <div class="input-group-text">{{ 'date_from'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(searchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -50,7 +46,7 @@
             <div class="input-group">
                 {{ form_errors(searchForm.dateTo) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date to</div>
+                <div class="input-group-text">{{ 'date_to'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(searchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -59,7 +55,7 @@
             <div class="input-group">
                 {{ form_errors(searchForm.type) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Type</div>
+                <div class="input-group-text">{{ 'type'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
             </div>                    
@@ -68,14 +64,14 @@
             <div class="input-group">
                 {{ form_errors(searchForm.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
-                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
+                {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple-male'}}) }}
             </div>                     
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="fab fa-searchengin"></i> Search
+                <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>
     </div>
@@ -87,10 +83,10 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Show</th>
+                        <th scope="col">{{ 'date'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'customer'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'actions'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,17 +95,17 @@
                             <td>{{ transfer.date|date('d-m-Y') }}</td>
                             <td>
                                 {% if transfer.type == 1 %}
-                                    In
+                                    {{ 'transfer_in'|trans|capitalize }}
                                 {% elseif transfer.type == 2 %}
-                                    Out
+                                    {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
-                                    Adjustment
+                                    {{ 'transfer_adjustment'|trans|capitalize }}
                                 {% endif %}
                             </td>
                             <td>{{ transfer.customer.name }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
-                                    Show
+                                    {{ 'show'|trans|capitalize }}
                                 </a>
                             </td>                            
                         </tr>
@@ -118,7 +114,7 @@
             </table>               
         {% elseif app.request.method is same as('POST') %}
             <div class="alert alert-light" role="alert">
-                No results
+                {{ 'no_results'|trans|capitalize }}
             </div>
         {% endif %}         
     </div>
@@ -126,28 +122,28 @@
 
 {% if searchResults is not empty %}
     <div id="metadata" hidden>
-        <h4>Transfers</h4>
+        <h4>{{ 'transfers'|trans|capitalize }}</h4>
         <table class="table table-borderless">
             <tbody>
                 <tr>                   
-                    <td>Type:</td>
+                    <td>{{ 'type'|trans|capitalize }}:</td>
                     <th>
                         {% if searchForm.vars.value.type is not empty %}
                             {% for type in searchForm.vars.value.type %}
                                 {% if type == 1 %}
-                                    In                       
+                                    {{ 'transfer_in'|trans|capitalize }}                       
                                 {% elseif type == 2 %}
-                                    Out
+                                    {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
-                                    Adjustment
+                                    {{ 'transfer_adjustment'|trans|capitalize }}
                                 {% endif %}
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         {% else %}
-                            All
+                            {{ 'all'|trans|capitalize }}
                         {% endif %}                        
                     </th>
-                    <td>Customers:</td>
+                    <td>{{ 'customers'|trans|capitalize }}:</td>
                     <th>
                         {% if searchForm.vars.value.customer is not empty %}
                             {% for customer in searchForm.vars.value.customer %}
@@ -155,7 +151,7 @@
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         {% else %}
-                            All
+                            {{ 'all_male'|trans|capitalize }}
                         {% endif %}                        
                     </th>
                 </tr>
@@ -164,9 +160,9 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td>From:</td>
+                    <td>{{ 'date_from'|trans|capitalize }}:</td>
                     <th>{{ searchForm.vars.value.dateFrom|date('d-m-Y') }}</th>
-                    <td>To:</td>
+                    <td>{{ 'date_to'|trans|capitalize }}:</td>
                     <th>{{ searchForm.vars.value.dateTo|date('d-m-Y') }}</th>
                 </tr>
             </tbody>

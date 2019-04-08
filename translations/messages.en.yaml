@@ -1,3 +1,4 @@
+actions: actions
 all: all
 all_male: all
 back: back
@@ -32,10 +33,15 @@ info_file_new: Add one or multiple files (comma separated).<br>
                Signature should be <u>unique for given customer</u>.
 info_file_show: Here you can see file details and also check inventory in's and out's for given period.<br>
                 Search results are limited to 100 records.
-
+info_transfer_index: Combined search of inventory transfers for given dates.<br>
+                     You can also get combined results for multiple types (in, out...) and/or customers.<br>
+                     Search results are limited to 100 records.
+                     
 log: log
 no_results: no results
 note: note
+orders: transfers
+order_new: new transfer
 pdf: pdf
 search: search
 show: show

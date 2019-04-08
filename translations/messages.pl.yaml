@@ -1,3 +1,4 @@
+actions: działania
 all: wszystkie
 all_male: wszyscy
 back: wróć
@@ -32,10 +33,15 @@ info_file_new: Możesz dodać jeden lub więcej dokumentów (oddzielając kolejn
                Sygnatura powinna być <u>unikalna dla danego klienta</u>.
 info_file_show: Tutaj wyświetlane są szczegóy dokumentu, dodatkowo można wyświetlić jego historię (przywozy, dostawy, przesunięcia magazynowe dla podanego zakresu dat).<br>
                 Wyniki wyszukiwania są ograniczone do 100 rekordów.
-                
+info_transfer_index: Wyszukiwanie zamówień dla wybranego zakresu dat.<br>
+                     Można łączyć poszczególne kryteria wyszukiwania (wydania, przyjęcia, przesunięcia, klienci).<br>
+                     Wyniki wyszukiwania są ograniczone do 100 rekordów.
+                     
 log: log
 no_results: brak wyników
 note: notatka
+orders: zamówienia
+order_new: nowe zamówienie
 pdf: pdf
 search: szukaj
 show: pokaż
