@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * 
  * @ORM\Table(name="fees")
  * @ORM\Entity(repositoryClass="App\Repository\FeeRepository")
- * @UniqueEntity("user")
+ * @UniqueEntity("customer")
  */
 class Fee 
 {
@@ -156,7 +156,7 @@ class Fee
      * @param Customer $customer
      * @return Fee
      */
-    public function setUser(Customer $customer = null)
+    public function setCustomer(Customer $customer = null)
     {
         $this->customer = $customer;
         return $this;

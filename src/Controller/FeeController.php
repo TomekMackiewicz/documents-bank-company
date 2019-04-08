@@ -19,7 +19,7 @@ class FeeController extends AbstractController
      * @Route("/calculate", name="fee_calculate", methods={"GET","POST"})
      */    
     public function calculateAction(Request $request)
-    {        
+    { 
         $calculation = null;
         $calculateFeeForm = $this->createForm('App\Form\FeeCountType');
         $calculateFeeForm->handleRequest($request);
@@ -28,15 +28,13 @@ class FeeController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $data = $calculateFeeForm->getData();
             
-            $dateFrom = $data["dateFrom"]->format('Y-m-d');
-            $dateTo = $data["dateTo"]->format('Y-m-d');
-            $user = $data['customer']->getId();
-            if(strtotime($dateFrom) <= strtotime($dateTo)) {
-                $calculation = $em->getRepository('App:Fee')->actionsToCalculate($user, $dateFrom, $dateTo);
-            } else { 
-                $this->addFlash('error', "Start value can't be higher than end date");
-            }            
+            $month = $data["month"]->format('Y-m');
+            $customer = $data['customer']->getId();
+            $calculation = $em->getRepository('App:Fee')->actionsToCalculate($customer, $month);
             
+            if (!$calculation) {
+                $this->addFlash('error', 'Add fees for this customer first');
+            }            
         }
         
         return $this->render('fee/calculate.html.twig', array(
