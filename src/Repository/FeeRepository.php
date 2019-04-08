@@ -7,9 +7,13 @@ use App\Entity\Transfer;
 
 class FeeRepository extends EntityRepository 
 {
-    public function actionsToCalculate($id, $from, $to) 
+    public function actionsToCalculate($id, $month) 
     {
         $result = [];
+        // First day of the month
+        $from = date('Y-m-01', strtotime($month));
+        // Last day of the month
+        $to = date('Y-m-t', strtotime($month));
 
         $transfersQuery = $this->getEntityManager()->createQuery(
             "SELECT 
@@ -28,15 +32,19 @@ class FeeRepository extends EntityRepository
         ->setParameter(':to', $to)
         ->setParameter(':typeIn', Transfer::$transferIn)
         ->setParameter(':typeOut', Transfer::$transferOut)
-        ->getResult();
+        ->getOneOrNullResult();
         
-        $result['transfers'] = $transfersQuery[0];
+        $result['transfers'] = $transfersQuery;
 
         $feesQuery = $this->getEntityManager()->createQuery(
                 "SELECT f.import, f.delivery, f.storage, f.boxPrice AS boxes FROM App:Fee f WHERE f.customer = :id"
-        )->setParameter(':id', $id)->getResult();
+        )->setParameter(':id', $id)->getOneOrNullResult();
         
-        $result['fees'] = $feesQuery[0];
+        if ($feesQuery) {
+            $result['fees'] = $feesQuery;
+        } else {
+            return null;
+        }
 
         $result['subtotals'] = array_map(function($x, $y) { return $x * $y; },
                    $result['transfers'], $result['fees']); 

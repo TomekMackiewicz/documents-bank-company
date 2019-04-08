@@ -37,20 +37,11 @@
     <div class="row pb-4">    
         <div class="col-auto">
             <div class="input-group">
-                {{ form_errors(form.dateFrom) }}
+                {{ form_errors(form.month) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date from</div>
+                <div class="input-group-text">Month</div>
             </div>    
-                {{ form_widget(form.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
-            </div>
-        </div>
-        <div class="col-auto">
-            <div class="input-group">
-                {{ form_errors(form.dateTo) }}
-            <div class="input-group-prepend">
-                <div class="input-group-text">Date to</div>
-            </div>    
-                {{ form_widget(form.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
+                {{ form_widget(form.month, { 'attr' : { 'class': 'monthpicker' }}) }}
             </div>
         </div>            
         <div class="col-auto">
@@ -119,8 +110,8 @@
 
 {% if calculation is not null %}
     <div id="metadata" hidden>
-        <p>Calculation for {{ form.vars.value.user.company }}
-            ({{ form.vars.value.dateFrom|date('d-m-Y') }} - {{ form.vars.value.dateTo|date('d-m-Y') }})
+        <p>Calculation for {{ form.vars.value.customer.name }}
+            ({{ form.vars.value.month|date('m-Y') }})
         </p>
     </div>
 {% endif %}

@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Fee for {{ fee.user.company }}</h2>
+                    <h2>Fee for {{ fee.customer.name }}</h2>
                 </a>
             </li>
         </ul>
@@ -61,7 +61,7 @@
                     <td>Box price:</td>
                     <th>{{ fee.boxPrice }}</th>
                     <td>Customer:</td>
-                    <th><a href="{{ path('customer_show', {'id':fee.user.id}) }}">{{ fee.user.company }}</a></th>
+                    <th><a href="{{ path('customer_show', {'id':fee.customer.id}) }}">{{ fee.customer.name }}</a></th>
                 </tr>
             </tbody>
         </table>         
