@@ -41,30 +41,45 @@ class StringToFileTransformer implements DataTransformerInterface
     /**
      * Transforms a string to an object
      *
-     * @param  string $signature
-     * @return File|null
+     * @param  string $signaturesString
+     * @return array|null
      * @throws TransformationFailedException if object is not found
      */
-    public function reverseTransform($signature)
+    public function reverseTransform($signaturesString)
     {
-        if (!$signature) {
+        if (!$signaturesString) {
             return;
         }
-
-        
-        $signatures = explode(',', $signature);
        
+        $signatures = explode(',', $signaturesString);
+
+        $alreadyProcessed = [];
         foreach ($signatures as $signature) {
-            if (empty($signature)) {
+            $trimmed = trim($signature);
+            if (empty($trimmed)) {
                 continue;
             }
-            $files[] = $this->entityManager->getRepository(File::class)->findOneBy(array('signature' => trim($signature)));
+            $file = $this->entityManager->getRepository(File::class)->findOneBy(array('signature' => $trimmed));
+
+            if (!$file) {
+                $dummy = new File();
+                $dummy->setSignature('n_'.$trimmed);                
+                $files[] = $dummy;
+            } elseif(in_array($trimmed, $alreadyProcessed)) {
+                $dummy = new File();
+                $dummy->setSignature('d_'.$trimmed);                
+                $files[] = $dummy;                
+            } else {
+                $files[] = $file;
+            }
+
+            $alreadyProcessed[] = $trimmed;                       
         }
 
         if (null === $files) {
             throw new TransformationFailedException(sprintf(
-                'File with signature "%s" does not exist!',
-                $signature
+                'Files cannot be null',
+                $signaturesString
             ));
         }
 

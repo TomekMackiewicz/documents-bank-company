@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use App\Entity\File;
 
 /**
  * @ORM\Table(name="transfers")
@@ -60,14 +62,87 @@ class Transfer
     public function __construct() 
     {
         $this->files = new ArrayCollection();
-    }    
+    }  
     
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $files = $this->getFiles();
+        $signatures = [];
+        $duplicates = [];
+        $nonExistent = [];
+        $invalidType = [];
+        $disposed = [];
+        $unknown = [];
+       
+        foreach ($files as $file) {
+            $signature = $file->getSignature();
+            $signatures[] = $signature;
+            
+            if (strpos($signature, 'd_') !== false || strpos($signature, 'n_') !== false) {
+                continue;
+            } 
+            
+            // If file is in the stock while transfer request is from customer & vice versa
+            if ($file->getStatus() == $this->getType()) {
+               $invalidType[] = $signature; 
+            }
+            // If someone wants to transfer disposed file
+            if ($file->getStatus() == File::$statusDisposed) {
+               $disposed[] = $signature; 
+            }
+            // If someone wants to transfer missing file
+            if ($file->getStatus() == File::$statusUnknown) {
+               $unknown[] = $signature; 
+            }             
+        }
+
+        foreach ($signatures as $signature) {
+            // If file is duplicated
+            if (strpos($signature, 'd_') !== false) {
+                $duplicates[] = substr($signature, strpos($signature, "_") + 1);
+            }
+            // If file with this signature does not exists
+            if (strpos($signature, 'n_') !== false) {
+                $nonExistent[] = substr($signature, strpos($signature, "_") + 1);
+            }            
+        }
+       
+        if (!empty($duplicates)) {
+            $context->buildViolation('File(s) '.implode(', ', $duplicates).' are duplicated.')
+                    ->atPath('files')
+                    ->addViolation();             
+        }
+        if (!empty($nonExistent)) {
+            $context->buildViolation('File(s) '.implode(', ', $nonExistent).' does not exists.')
+                    ->atPath('files')
+                    ->addViolation(); 
+        } 
+        if (!empty($invalidType)) {
+            $context->buildViolation('File(s) '.implode(', ', $invalidType).' has invalid status.') //$this->getType()
+                    ->atPath('files')
+                    ->addViolation(); 
+        } 
+        if (!empty($disposed)) {
+            $context->buildViolation('File(s) '.implode(', ', $disposed).' are disposed.')
+                    ->atPath('files')
+                    ->addViolation(); 
+        } 
+        if (!empty($unknown)) {
+            $context->buildViolation('File(s) '.implode(', ', $unknown).' are missing (status unknown).')
+                    ->atPath('files')
+                    ->addViolation(); 
+        }       
+    }
+
     /**
      * @return integer 
      */
     public function getId() 
     {
-          return $this->id;
+        return $this->id;
     }
 
     /**
