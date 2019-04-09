@@ -62,7 +62,7 @@
                             </li>
                         {% endif %}
                     </ul>
-                {% else %}
+                {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'user_files') ? 'active' }}">
                             <a class="nav-link" href="{{ path('user_files') }}">
@@ -86,11 +86,11 @@
                         <div class="btn-group" role="group">
                             {% if app.request.locale is same as('en') %}
                                 <li class="nav-item">
-                                    <a class="btn btn-info" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'pl'}) }}">pl</a>
+                                    <a class="btn btn-info" href="{{ path('set_language', {route: 'dashboard', language: 'pl'}) }}">pl</a>
                                 </li>
                             {% elseif app.request.locale is same as('pl') %}
                                 <li class="nav-item">
-                                    <a class="btn btn-info" href="{{ path('set_language', {route: app.request.attributes.get('_route'), language: 'en'}) }}">en</a>
+                                    <a class="btn btn-info" href="{{ path('set_language', {route: 'dashboard', language: 'en'}) }}">en</a>
                                 </li>
                             {% endif %}
                         </div>                         
@@ -106,9 +106,7 @@
                                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                                 </a>
                             </div>
-                        </li>                                              
-                    {% else %}
-                        <li class="nav-item"><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </li>
                     {% endif %}
                 </ul>                              
             </div>                          
