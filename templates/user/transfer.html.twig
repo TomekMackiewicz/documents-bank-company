@@ -9,19 +9,19 @@
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td>Customer:</td>
+                            <td>{{ 'customer'|trans|capitalize }}:</td>
                             <th>{{ transfer.customer.name }}</th>
-                            <td>Type:</td>
+                            <td>{{ 'type'|trans|capitalize }}:</td>
                             <th>
                                 {% if transfer.type == 1 %}
-                                    In
+                                    {{ 'transfer_in'|trans|capitalize }}
                                 {% elseif transfer.type == 2 %}
-                                    Out
+                                    {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
-                                    Adjustment
+                                    {{ 'transfer_adjustment'|trans|capitalize }}
                                 {% endif %}
                             </th>
-                            <td>Date:</td>
+                            <td>{{ 'date'|trans|capitalize }}:</td>
                             <th>{{ transfer.date|date('Y-m-d') }}</th>                            
                         </tr>
                     </tbody>
@@ -33,20 +33,13 @@
         <ul class="nav float-right">  
             <li class="nav-item pl-2">
               <button class="btn btn-light" id="print" {%if app.request.method is same as('GET') %}disabled{%endif%}>
-                  <i class="fas fa-print"></i> PDF
+                  <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
               </button>        
             </li>
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('user_transfers') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
-            </li>
-            <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Here you can see transfer details.
-              ">
-                  <i class="fas fa-info-circle"></i> Info
-              </button>        
             </li>             
         </ul>
     </div>
@@ -55,7 +48,7 @@
 {% if transfer.boxes > 0 %}
     <div class="row pb-4">
         <div class="col-sm-12">
-            <h4>Empty boxes: {{ transfer.boxes }}</h4>
+            <h4>{{ 'boxes'|trans|capitalize }}: {{ transfer.boxes }}</h4>
         </div>
     </div>
 {% endif %}
@@ -63,7 +56,7 @@
 {% if transfer.files is not empty %}
     <div class="row pb-4">
         <div class="col-sm-12">
-            <h4>Files</h4>
+            <h4>{{ 'files'|trans|capitalize }}</h4>
         </div>
     </div>    
 {% endif %}
@@ -74,10 +67,10 @@
         <table class="table table-striped">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Signature</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Note</th>
+                    <th scope="col">{{ 'signature'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'customer'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'note'|trans|capitalize }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,13 +81,13 @@
                         </td>
                         <td>
                             {% if file.status == 0 %}
-                                <span class="text-warning">Disposed</span>
+                                <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
                             {% elseif file.status == 1 %}
-                                In                                    
+                                {{ 'file_status_in'|trans|capitalize }}                                    
                             {% elseif file.status == 2 %}
-                                Out
+                                {{ 'file_status_out'|trans|capitalize }}
                             {% else %}
-                                <span class="text-danger">Unknown</span>
+                                <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
                             {% endif %}
                         </td>
                         <td>{{ file.customer.name }}</td>
@@ -105,7 +98,7 @@
         </table>
         {% else %}
             <div class="alert alert-light" role="alert">
-                No files
+                {{ 'no_results'|trans|capitalize }}
             </div>            
         {% endif %}
     </div>
@@ -116,18 +109,18 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td>Transfer date:</td>
+                    <td>{{ 'date'|trans|capitalize }}:</td>
                     <th>{{ transfer.date|date('Y-m-d') }}</th> 
-                    <td>Customer:</td>
+                    <td>{{ 'customer'|trans|capitalize }}:</td>
                     <th>{{ transfer.customer.name }}</th>
-                    <td>Type:</td>
+                    <td>{{ 'type'|trans|capitalize }}:</td>
                     <th>
                         {% if transfer.type == 1 %}
-                            In
+                            {{ 'transfer_in'|trans|capitalize }}
                         {% elseif transfer.type == 2 %}
-                            Out
+                            {{ 'transfer_out'|trans|capitalize }}
                         {% else %}
-                            Adjustment
+                            {{ 'transfer_adjustment'|trans|capitalize }}
                         {% endif %}
                     </th>                           
                 </tr>

@@ -31,6 +31,7 @@ class UserController extends AbstractController implements LogManagerInterface
         if ($filesSearchForm->isSubmitted() && $filesSearchForm->isValid()) {
             $filesSearchCriteria = $filesSearchForm->getData();
             $filesSearchCriteria['customer'] = $user->getCustomer();
+            $filesSearchCriteria['sort'] = $filesSearchForm->get("sort")->getData();
             $filesSearchResults = $em->getRepository('App:File')->searchFiles($filesSearchCriteria);
         }       
         
@@ -56,6 +57,7 @@ class UserController extends AbstractController implements LogManagerInterface
         if ($transfersSearchForm->isSubmitted() && $transfersSearchForm->isValid()) {
             $transfersSearchCriteria = $transfersSearchForm->getData(); 
             $transfersSearchCriteria['customer'] = $user->getCustomer();
+            $transfersSearchCriteria['sort'] = $transfersSearchForm->get("sort")->getData();
             $dateFrom = $transfersSearchCriteria["dateFrom"]->format('Y-m-d');
             $dateTo = $transfersSearchCriteria["dateTo"]->format('Y-m-d');
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
@@ -228,15 +230,26 @@ class UserController extends AbstractController implements LogManagerInterface
             ])
             ->add('status', ChoiceType::class, [
                 'choices'  => [
-                    'In' => File::$statusIn,
-                    'Out' => File::$statusOut,
-                    'Unknown' => File::$statusUnknown,
-                    'Disposed' => File::$statusDisposed
+                    'file_status_in' => File::$statusIn,
+                    'file_status_out' => File::$statusOut,
+                    'file_status_unknown' => File::$statusUnknown,
+                    'file_status_disposed' => File::$statusDisposed
                 ],
                 'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
+            ])
+            ->add('sort', ChoiceType::class, [
+                'choices'  => [
+                    'signature_asc' => 'ASC',
+                    'signature_desc' => 'DESC'
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'label' => false,
+                'mapped' => false
             ])
             ->getForm();        
     }     
@@ -263,14 +276,25 @@ class UserController extends AbstractController implements LogManagerInterface
             ))                 
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'In' => Transfer::$transferIn,
-                    'Out' => Transfer::$transferOut,
-                    'Adjustment' => Transfer::$transferAdjustment
+                    'transfer_in' => Transfer::$transferIn,
+                    'transfer_out' => Transfer::$transferOut,
+                    'transfer_adjustment' => Transfer::$transferAdjustment
                 ],
                 'required' => false,
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
+            ])
+            ->add('sort', ChoiceType::class, [
+                'choices'  => [
+                    'date_asc' => 'ASC',
+                    'date_desc' => 'DESC'
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'label' => false,
+                'mapped' => false
             ])
             ->getForm();        
     } 

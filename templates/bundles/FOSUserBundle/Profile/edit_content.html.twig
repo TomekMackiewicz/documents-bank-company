@@ -1,7 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="jumbotron">
-    <h1>Update profile</h1>
+    <h1>{{ 'profile.update'|trans|capitalize }}</h1>
     {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
         {{ form_widget(form) }}
         <div>
