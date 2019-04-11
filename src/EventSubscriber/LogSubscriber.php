@@ -14,7 +14,7 @@ class LogSubscriber implements EventSubscriberInterface
 {    
     public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $em)
     {
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->tokenStorage = $tokenStorage;
         $this->em = $em;
     }    
     
@@ -32,6 +32,7 @@ class LogSubscriber implements EventSubscriberInterface
             $match = (str_replace($actions, '', $route) != $route);
            
             if ($match && ($event->getRequest()->isMethod('POST') || $event->getRequest()->isMethod('DELETE'))) {
+                $this->user = $this->tokenStorage->getToken()->getUser();
                 $content = '';                
                 $user = 'id: '.$this->user->getId().' name: '.$this->user->getUsername();
                 $action = $event->getRequest()->attributes->get('_controller');                
