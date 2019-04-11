@@ -4,6 +4,7 @@ all_male: wszyscy
 back: wróć
 box: pudło
 boxes: pudła
+calculate: oblicz
 change_password: zmień hasło
 create: utwórz
 customer: klient
@@ -18,6 +19,8 @@ date_to: data do
 delete: usuń
 edit: edytuj
 edit_profile: edytuj profil
+fee: opłata
+fee_new: nowa opłata
 fees: opłaty
 file: dokument
 files: dokumenty
@@ -55,13 +58,18 @@ info_transfer_new: Możesz dodać wiele dokuemntów oddzielonych przecinkiem.<br
                    Wybór dokumentu należącego do innego klienta lub posiadającego niewłaściwy status (np. wybrakowany, zaginiony) będzie skutkowało ostrzeżeniem o błędzie.
                      
 log: log
+month: miesiąc
 no_results: brak wyników
 note: notatka
 pdf: pdf
+quantity: ilość
+rate: rata
 search: szukaj
 show: pokaż
 signature: sygnatura
 status: status
+storage: przechowywanie
+sum: suma
 transfer: transfer
 transfers: zamówienia
 transfer_adjustment: przesunięcie magazynowe
@@ -72,4 +80,5 @@ transfer_new: nowe zamówienie
 transfer_out: przyjęcie
 transfers_show: pokaż wydania, przyjęcia i przesunięcia magazynowe
 type: typ
+unit_price: cena j.
 users: użytkownicy

@@ -4,6 +4,7 @@ all_male: all
 back: back
 box: box
 boxes: boxes
+calculate: calculate
 change_password: change password
 create: create
 customer: customer
@@ -18,6 +19,8 @@ date_to: date to
 delete: delete
 edit: edit
 edit_profile: edit profile
+fee: fee
+fee_new: new fee
 fees: fees
 file: file
 files: files
@@ -55,13 +58,18 @@ info_transfer_new: You can add multiple files - comma separated.<br>
                    Choosing document that belongs to different customer or has invalid status (ex. disposed) will prevent form from being submitted.
  
 log: log
+month: month
 no_results: no results
 note: note
 pdf: pdf
+quantity: quantity
+rate: rate
 search: search
 show: show
 signature: signature
 status: status
+storage: storage
+sum: sum
 transfer: transfer
 transfers: transfers
 transfer_adjustment: adjustment
@@ -72,4 +80,5 @@ transfer_new: new transfer
 transfer_out: out
 transfers_show: show transfers
 type: type
+unit_price: unit price
 users: users

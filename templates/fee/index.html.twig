@@ -6,7 +6,7 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Fees</h2></a>
+                <a><h2>{{ 'fees'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,20 +14,13 @@
         <ul class="nav float-right">
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('fee_calculate') }}">
-                <i class="fas fa-cash-register"></i> Calculate
+                <i class="fas fa-cash-register"></i> {{ 'calculate'|trans|capitalize }}
             </a>
           </li>            
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('fee_new') }}">
-                <i class="fas fa-plus"></i> New fee
+                <i class="fas fa-plus"></i> {{ 'fee_new'|trans|capitalize }}
             </a>
-          </li>
-          <li class="nav-item pl-2">
-            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                    Todo.
-            ">
-                <i class="fas fa-info-circle"></i> Info
-            </button>        
           </li>          
         </ul>
     </div>
@@ -38,11 +31,11 @@
             <table class="table table-striped">
               <thead class="thead-light">
                 <tr>
-                  <th>Delivery</th>
-                  <th>Import</th>
-                  <th>Storage</th>
-                  <th>Customer</th>
-                  <th>Show</th>
+                  <th>{{ 'transfer_in'|trans|capitalize }}</th>
+                  <th>{{ 'transfer_out'|trans|capitalize }}</th>
+                  <th>{{ 'storage'|trans|capitalize }}</th>
+                  <th>{{ 'customer'|trans|capitalize }}</th>
+                  <th>{{ 'show'|trans|capitalize }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,14 +45,14 @@
                   <td>{{ fee.import }}</td>
                   <td>{{ fee.storage }}</td>
                   <td>{{ fee.customer.name }}</td>
-                  <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">Show</a></td>
+                  <td><a href="{{ path('fee_show', { 'id': fee.id }) }}">{{ 'show'|trans|capitalize }}</a></td>
                 </tr>
               {% endfor %}
               </tbody>
             </table>
         {% else %}
             <div class="alert alert-light" role="alert">
-                No results
+                {{ 'no_results'|trans|capitalize }}
             </div>
         {% endif %}          
     </div>
