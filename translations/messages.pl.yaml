@@ -2,6 +2,8 @@ actions: działania
 all: wszystkie
 all_male: wszyscy
 back: wróć
+box: pudło
+boxes: pudła
 change_password: zmień hasło
 create: utwórz
 customer: klient
@@ -18,6 +20,7 @@ files: dokumenty
 file_edit: edytuj dokument
 file_new: nowy dokument
 files_new: nowy dokument
+files_none: brak dokumentów
 file_status_disposed: wybrakowany
 file_status_in: w magazynie
 file_status_out: u klienta
@@ -36,21 +39,27 @@ info_file_show: Tutaj wyświetlane są szczegóy dokumentu, dodatkowo można wy�
 info_transfer_index: Wyszukiwanie zamówień dla wybranego zakresu dat.<br>
                      Można łączyć poszczególne kryteria wyszukiwania (wydania, przyjęcia, przesunięcia, klienci).<br>
                      Wyniki wyszukiwania są ograniczone do 100 rekordów.
+info_transfer_edit: Edycja zamówienia podlega ograniczeniom, narzuconym w celu zapewnienia spójności danych.<br>
+                    Z tego powodu nie jest możliwazmiana jego dokumentów, jeśli dla danego dokumentu istnieją wcześniejsze lub późniejsze dostawy.
+info_transfer_new: Możesz dodać wiele dokuemntów oddzielonych przecinkiem.<br>
+                   Dokumenty pojawiające się na liście podpowiedzi są ograniczone do wybranego klienta oraz typu zamówienia.<br>
+                   Wybór dokumentu należącego do innego klienta lub posiadającego niewłaściwy status (np. wybrakowany, zaginiony) będzie skutkowało ostrzeżeniem o błędzie.
                      
 log: log
 no_results: brak wyników
 note: notatka
-orders: zamówienia
-order_new: nowe zamówienie
 pdf: pdf
 search: szukaj
 show: pokaż
 signature: sygnatura
 status: status
 transfer: transfer
-transfers: dostawy
+transfers: zamówienia
 transfer_adjustment: przesunięcie magazynowe
+transfer_date: data zamówienia
+transfer_edit: edycja zamówienia
 transfer_in: wydanie
+transfer_new: nowe zamówienie
 transfer_out: przyjęcie
 transfers_show: pokaż wydania, przyjęcia i przesunięcia magazynowe
 type: typ

@@ -2,6 +2,8 @@ actions: actions
 all: all
 all_male: all
 back: back
+box: box
+boxes: boxes
 change_password: change password
 create: create
 customer: customer
@@ -18,6 +20,7 @@ files: files
 file_edit: edit file
 file_new: new file
 files_new: new file(s)
+files_none: no files
 file_status_disposed: disposed
 file_status_in: in
 file_status_out: out
@@ -36,12 +39,15 @@ info_file_show: Here you can see file details and also check inventory in's and 
 info_transfer_index: Combined search of inventory transfers for given dates.<br>
                      You can also get combined results for multiple types (in, out...) and/or customers.<br>
                      Search results are limited to 100 records.
-                     
+info_transfer_edit: There are certain restricions imposed on edition of the transfer to ensure data consistency.<br>
+                    For that reason you cannot edit files for which there are earlier or later transfers.
+info_transfer_new: You can add multiple files - comma separated.<br>
+                   Files are restricted to the choosen customer and type of transfer.<br>
+                   Choosing document that belongs to different customer or has invalid status (ex. disposed) will prevent form from being submitted.
+ 
 log: log
 no_results: no results
 note: note
-orders: transfers
-order_new: new transfer
 pdf: pdf
 search: search
 show: show
@@ -50,7 +56,10 @@ status: status
 transfer: transfer
 transfers: transfers
 transfer_adjustment: adjustment
+transfer_date: transfer date
+transfer_edit: edit transfer
 transfer_in: in
+transfer_new: new transfer
 transfer_out: out
 transfers_show: show transfers
 type: type
