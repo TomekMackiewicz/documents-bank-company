@@ -6,7 +6,7 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Customers</h2></a>
+                <a><h2>{{ 'customers'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
         <ul class="nav float-right">
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('customer_new') }}">
-                <i class="fas fa-plus"></i> New customer
+                <i class="fas fa-plus"></i> {{ 'customer_new'|trans|capitalize }}
             </a>
           </li>        
         </ul>
@@ -26,8 +26,8 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Company name</th>
-                        <th scope="col">Address</th>
+                        <th scope="col">{{ 'customer_name'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'customer_address'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>

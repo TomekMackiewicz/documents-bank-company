@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Add customer</h2>
+                    <h2>{{ 'customer_new'|trans|capitalize }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,14 +16,14 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('customer_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
               <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                       Todo
               ">
-                  <i class="fas fa-info-circle"></i> Info
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>
         </ul>
@@ -35,7 +35,7 @@
             <div class="input-group">
                 {{ form_errors(form.name) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Name</div>
+                    <div class="input-group-text">{{ 'customer_name'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.name) }}
             </div>
@@ -46,7 +46,7 @@
             <div class="input-group">
                 {{ form_errors(form.address) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Address</div>
+                    <div class="input-group-text">{{ 'customer_address'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.address) }}
             </div>
@@ -55,7 +55,7 @@
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Create
+                <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}
             </button>
         </div>            
     </div>

@@ -168,9 +168,9 @@ class CustomerController extends AbstractController implements LogManagerInterfa
             ))                 
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'In' => Transfer::$transferIn,
-                    'Out' => Transfer::$transferOut,
-                    'Adjustment' => Transfer::$transferAdjustment
+                    'transfer_in' => Transfer::$transferIn,
+                    'transfer_out' => Transfer::$transferOut,
+                    'transfer_adjustment' => Transfer::$transferAdjustment
                 ],
                 'required' => false,
                 'expanded' => false,

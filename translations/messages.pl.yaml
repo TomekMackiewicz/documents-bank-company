@@ -7,6 +7,10 @@ boxes: pudła
 change_password: zmień hasło
 create: utwórz
 customer: klient
+customer_address: adres
+customer_edit: edycja klienta
+customer_name: nazwa
+customer_new: nowy klient
 customers: klienci
 date: data
 date_from: data od
@@ -19,6 +23,11 @@ file: dokument
 files: dokumenty
 file_edit: edytuj dokument
 file_new: nowy dokument
+files_all: Ilość dokumentów
+files_count_disposed: Dokumenty wybrakowane
+files_count_in: Dokumenty w magazynie
+files_count_out: Dokumenty u klienta
+files_count_unknown: Dokumenty zagubione
 files_new: nowy dokument
 files_none: brak dokumentów
 file_status_disposed: wybrakowany

@@ -7,6 +7,10 @@ boxes: boxes
 change_password: change password
 create: create
 customer: customer
+customer_address: address
+customer_edit: edit customer
+customer_name: name
+customer_new: new customer
 customers: customers
 date: date
 date_from: date from
@@ -19,6 +23,11 @@ file: file
 files: files
 file_edit: edit file
 file_new: new file
+files_all: Number of files
+files_count_disposed: files disposed
+files_count_in: files in
+files_count_out: files out
+files_count_unknown: files unknown
 files_new: new file(s)
 files_none: no files
 file_status_disposed: disposed

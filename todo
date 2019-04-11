@@ -2,7 +2,10 @@ umożliwić druk:
 - transfer show
 - file show?
 
-delete transfer restrictions + info trans
+delete transfer restrictions + info trans (tak samo jak edycja)
 
 do new/edit/show (delete!) dodać info o załatwieniu sprawy przesunięciem magazynowym
 przesunięcie magazynowe musi mieć opcję notki (wyjasniamy w niej dlaczego!)
+
+customer new info?
+customer show info?
