@@ -16,23 +16,28 @@ class TransferRepository extends EntityRepository
         )->setMaxResults(5)->getResult();		
     }
 
-    public function fileTransfersFromTo($id, $from, $to) 
+    public function fileTransfersFromTo($id, $from, $to, $sortMethod) 
     {
-        return $this->getEntityManager()->createQuery(
-            "SELECT t FROM App:Transfer t 
-             WHERE :id MEMBER OF t.files
-             AND t.date BETWEEN :from and :to
-             ORDER BY t.date DESC"
-        )->setParameter(':id', $id)
-         ->setParameter(':from', $from)
-         ->setParameter(':to', $to)
-         ->setMaxResults(100)
-         ->getResult();
+        $sort = $sortMethod !== null ? $sortMethod : 'ASC';
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('t')->from('App:Transfer', 't')
+           ->andWhere(':id MEMBER OF t.files')
+           ->andWhere('t.date >= :from')
+           ->andWhere('t.date <= :to')
+           ->orderBy('t.date', $sort)
+           ->setParameter(':id', $id)
+           ->setParameter(':from', $from)
+           ->setParameter(':to', $to)
+           ->setMaxResults(100);
+        
+        return $qb->getQuery()->getResult();
     }
 
     public function searchTransfers($searchCriteria)
     {
         $ids = [];
+        $sort = $searchCriteria['sort'] !== null ? $searchCriteria['sort'] : 'ASC';
         
         if ($searchCriteria['customer'] instanceof ArrayCollection) {
             $customers = $searchCriteria['customer']->toArray();
@@ -64,7 +69,7 @@ class TransferRepository extends EntityRepository
                ->setParameter(":customers", $ids);
         }
         
-        $qb->orderBy('t.date', 'DESC')->setMaxResults(100);
+        $qb->orderBy('t.date', $sort)->setMaxResults(100);
         
         return $qb->getQuery()->getResult();           
     }     

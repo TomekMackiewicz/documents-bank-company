@@ -50,6 +50,7 @@ class FileController extends AbstractController implements LogManagerInterface
       
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchCriteria = $searchForm->getData();
+            $searchCriteria['sort'] = $searchForm->get("sort")->getData(); 
             $em = $this->getDoctrine()->getManager();
             $searchResults = $em->getRepository('App:File')->searchFiles($searchCriteria);  
         }
@@ -148,9 +149,10 @@ class FileController extends AbstractController implements LogManagerInterface
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
             $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
+            $sort = $transfersForm->get("sort")->getData();
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $transfersFromTo = $em->getRepository('App:Transfer')
-                    ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo);
+                    ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo, $sort);
             } else { 
                 $this->addFlash('error', "Start value cannot be higher than end date");
             }
@@ -285,6 +287,17 @@ class FileController extends AbstractController implements LogManagerInterface
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
+            ])
+            ->add('sort', ChoiceType::class, [
+                'choices'  => [
+                    'signature_asc' => 'ASC',
+                    'signature_desc' => 'DESC'
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'label' => false,
+                'mapped' => false
             ])
             ->getForm();        
     } 

@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ActionType extends AbstractType 
 {
@@ -25,7 +26,18 @@ class ActionType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'html5' => false
-            ));            
+            ))
+            ->add('sort', ChoiceType::class, [
+                'choices'  => [
+                    'date_asc' => 'ASC',
+                    'date_desc' => 'DESC'
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'label' => false,
+                'mapped' => false
+            ]);            
     }
 
 }

@@ -77,7 +77,8 @@ class CustomerController extends AbstractController implements LogManagerInterfa
 
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $searchCriteria = $transfersForm->getData();
-            $searchCriteria['customer'] = $customer;            
+            $searchCriteria['customer'] = $customer;
+            $searchCriteria['sort'] = $transfersForm->get("sort")->getData();            
             $dateFrom = $searchCriteria["dateFrom"]->format('Y-m-d');
             $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
@@ -176,6 +177,17 @@ class CustomerController extends AbstractController implements LogManagerInterfa
                 'expanded' => false,
                 'multiple' => true,
                 'label' => false
+            ])
+            ->add('sort', ChoiceType::class, [
+                'choices'  => [
+                    'date_asc' => 'ASC',
+                    'date_desc' => 'DESC'
+                ],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'label' => false,
+                'mapped' => false
             ])
             ->getForm();        
     }      

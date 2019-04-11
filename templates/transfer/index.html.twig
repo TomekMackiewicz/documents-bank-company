@@ -70,6 +70,15 @@
             </div>                     
         </div>
         <div class="col-auto">
+            <div class="input-group">
+                {{ form_errors(searchForm.sort) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ 'sort'|trans|capitalize }}</div>
+            </div>    
+                {{ form_widget(searchForm.sort) }}
+            </div>                    
+        </div>
+        <div class="col-auto">
             <button type="submit" class="btn btn-light">
                 <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>

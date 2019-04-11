@@ -66,6 +66,7 @@ class FileRepository extends EntityRepository
     public function searchFiles($searchCriteria)
     {
         $ids = [];
+        $sort = $searchCriteria['sort'] !== null ? $searchCriteria['sort'] : 'ASC';
         
         if ($searchCriteria['customer'] instanceof \Doctrine\Common\Collections\ArrayCollection) {
             $customers = $searchCriteria['customer']->toArray();            
@@ -92,7 +93,7 @@ class FileRepository extends EntityRepository
                ->setParameter(":customers", $ids);
         }
         
-        $qb->orderBy('f.signature', 'ASC')->setMaxResults(100);
+        $qb->orderBy('f.signature', $sort)->setMaxResults(100);
         
         return $qb->getQuery()->getResult();           
     }
