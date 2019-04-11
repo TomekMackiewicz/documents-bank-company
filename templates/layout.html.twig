@@ -31,7 +31,7 @@
                         </li>
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'transfer_index') ? 'active' }}">
                             <a class="nav-link" href="{{ path('transfer_index') }}">
-                                {{ 'orders'|trans|capitalize }}
+                                {{ 'transfers'|trans|capitalize }}
                             </a>                           
                         </li>                    
                         <li class="nav-item {{ (app.request.attributes.get('_route') == 'customer_index') ? 'active' }}">

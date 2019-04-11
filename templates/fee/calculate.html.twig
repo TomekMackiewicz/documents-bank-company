@@ -6,7 +6,7 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Calculate fee</h2></a>
+                <a><h2>{{ 'calculate'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,19 +14,19 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
                 <button class="btn btn-light" id="print" {%if app.request.method is same as('GET') %}disabled{%endif%}>
-                    <i class="fas fa-print"></i> PDF
+                    <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
                 </button>        
             </li>
             <li class="nav-item pl-2">
                 <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                         Todo.
                 ">
-                    <i class="fas fa-info-circle"></i> Info
+                    <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
                 </button>        
             </li>          
         </ul>
@@ -39,7 +39,7 @@
             <div class="input-group">
                 {{ form_errors(form.month) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Month</div>
+                <div class="input-group-text">{{ 'month'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.month, { 'attr' : { 'class': 'monthpicker' }}) }}
             </div>
@@ -48,14 +48,14 @@
             <div class="input-group">
                 {{ form_errors(form.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(form.customer) }}
             </div>
         </div> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Calculate
+                <i class="far fa-edit"></i> {{ 'calculate'|trans|capitalize }}
             </button>
         </div>            
     </div>
@@ -67,10 +67,10 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th>Type</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
-                        <th>Sum</th>
+                        <th>{{ 'type'|trans|capitalize }}</th>
+                        <th>{{ 'quantity'|trans|capitalize }}</th>
+                        <th>{{ 'unit_price'|trans|capitalize }}</th>
+                        <th>{{ 'sum'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>

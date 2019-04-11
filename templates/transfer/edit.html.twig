@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Edit transfer</h2>
+                    <h2>{{ 'transfer_edit'|trans|capitalize }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,14 +16,12 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('transfer_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      You can edit multiple files - comma separated.
-              ">
-                  <i class="fas fa-info-circle"></i> Info
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_edit'|trans|capitalize }}">
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>
         </ul>
@@ -35,7 +33,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.type) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Type</div>
+                <div class="input-group-text">{{ 'type'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.type) }}
             </div>
@@ -46,7 +44,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.files) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Files</div>
+                <div class="input-group-text">{{ 'files'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.files) }}
             </div>
@@ -57,7 +55,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.boxes) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Boxes</div>
+                <div class="input-group-text">{{ 'boxes'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.boxes) }}
             </div>
@@ -68,7 +66,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.customer) }}
             </div>
@@ -79,7 +77,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.date) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date</div>
+                <div class="input-group-text">{{ 'date'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.date, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -88,7 +86,7 @@
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Edit
+                <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
             </button>
         </div>            
     </div>

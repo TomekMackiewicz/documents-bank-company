@@ -9,7 +9,7 @@
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td>Customer:</td>
+                            <td>{{ 'customer'|trans|capitalize }}:</td>
                             <th>{{ customer.name }}</th>                         
                         </tr>
                     </tbody>
@@ -21,30 +21,23 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
-                    <i class="far fa-edit"></i> Edit
+                    <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
               <button class="btn btn-light" id="print" {%if app.request.method is same as('GET') %}disabled{%endif%}>
-                  <i class="fas fa-print"></i> PDF
+                  <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
               </button>        
             </li>
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('customer_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
-            </li>
-            <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Todo.
-              ">
-                  <i class="fas fa-info-circle"></i> Info
-              </button>        
-            </li>             
+            </li>            
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -56,12 +49,12 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td>Address: {{ customer.address }}</td>
-                    <td>Number of files: <strong>{{ files.all }}</strong></td>
-                    <td>Files in: <strong>{{ files.in }}</strong></td>
-                    <td>Files out: <strong>{{ files.out }}</strong></td>
-                    <td>Files missing: <strong>{{ files.unknown }}</strong></td>
-                    <td>Files disposed: <strong>{{ files.disposed }}</strong></td>                
+                    <td>{{ 'customer_address'|trans|capitalize }}: {{ customer.address }}</td>
+                    <td>{{ 'files_all'|trans|capitalize }}: <strong>{{ files.all }}</strong></td>
+                    <td>{{ 'files_count_in'|trans|capitalize }}: <strong>{{ files.in }}</strong></td>
+                    <td>{{ 'files_count_out'|trans|capitalize }}: <strong>{{ files.out }}</strong></td>
+                    <td>{{ 'files_count_unknown'|trans|capitalize }}: <strong>{{ files.unknown }}</strong></td>
+                    <td>{{ 'files_count_disposed'|trans|capitalize }}: <strong>{{ files.disposed }}</strong></td>                
                 </tr>
             </tbody>
         </table>        
@@ -69,7 +62,7 @@
 </div>   
 <div class="row pb-4">
     <div class="col-sm-12">
-        <h4>Transfers</h4>
+        <h4>{{ 'transfers'|trans|capitalize }}</h4>
     </div>
 </div>                         
 {{ form_start(transfersForm) }}
@@ -78,7 +71,7 @@
             <div class="input-group">
                 {{ form_errors(transfersForm.dateFrom) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date from</div>
+                <div class="input-group-text">{{ 'date_from'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(transfersForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -87,7 +80,7 @@
             <div class="input-group">
                 {{ form_errors(transfersForm.dateTo) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Date to</div>
+                <div class="input-group-text">{{ 'date_to'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(transfersForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
@@ -96,14 +89,14 @@
             <div class="input-group">
                 {{ form_errors(transfersForm.type) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Type</div>
+                <div class="input-group-text">{{ 'type'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(transfersForm.type, {'attr': { 'multiple':'multiple', 'class': 'multiple' }}) }}
             </div>                    
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="fab fa-searchengin"></i> Search
+                <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>
     </div>
@@ -115,10 +108,10 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Show</th>
+                        <th scope="col">{{ 'date'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'customer'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'show'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,17 +120,17 @@
                             <td>{{ transfer.date|date('d-m-Y') }}</td>
                             <td>
                                 {% if transfer.type == 1 %}
-                                    In
+                                    {{ 'transfer_in'|trans|capitalize }}
                                 {% elseif transfer.type == 2 %}
-                                    Out
+                                    {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
-                                    Adjustment
+                                    {{ 'transfer_adjustment'|trans|capitalize }}
                                 {% endif %}
                             </td>
                             <td>{{ transfer.customer.name }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
-                                    Show
+                                    {{ 'show'|trans|capitalize }}
                                 </a>
                             </td>                            
                         </tr>
@@ -146,7 +139,7 @@
             </table>               
         {% elseif app.request.method is same as('POST') %}
             <div class="alert alert-light" role="alert">
-                No results
+                {{ 'no_results'|trans|capitalize }}
             </div>
         {% endif %}          
     </div>        
@@ -158,25 +151,25 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td>From:</td>
+                    <td>{{ 'date_from'|trans|capitalize }}:</td>
                     <th>{{ transfersForm.vars.value.dateFrom|date('d-m-Y') }}</th>
-                    <td>To:</td>
+                    <td>{{ 'date_to'|trans|capitalize }}:</td>
                     <th>{{ transfersForm.vars.value.dateTo|date('d-m-Y') }}</th>
-                    <td>Type:</td>
+                    <td>{{ 'type'|trans|capitalize }}:</td>
                     <th>
                         {% if transfersForm.vars.value.type is not empty %}
                             {% for type in transfersForm.vars.value.type %}
                                 {% if type == 1 %}
-                                    In                       
+                                    {{ 'transfer_in'|trans|capitalize }}                       
                                 {% elseif type == 2 %}
-                                    Out
+                                    {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
-                                    Adjustment
+                                    {{ 'transfer_adjustment'|trans|capitalize }}
                                 {% endif %}
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         {% else %}
-                            All
+                            {{ 'all'|trans|capitalize }}
                         {% endif %}                        
                     </th>
                 </tr>
