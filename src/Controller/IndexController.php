@@ -52,6 +52,9 @@ class IndexController extends AbstractController
                   crossorigin="anonymous">';
         $output .= $request->request->get('metadata');
         $output .= $request->request->get('content');
+        
+        $output = preg_replace('#<a.*?>([^>]*)</a>#i', '$1', $output);
+        
         $pdfOptions = new Options();
         
         $dompdf = new Dompdf($pdfOptions);        

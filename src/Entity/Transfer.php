@@ -55,6 +55,11 @@ class Transfer
     
     /**
      * @var int
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]*$/",
+     *     match = true,
+     *     message = "Only digits are allowed"
+     * ) 
      * @ORM\Column(name="boxes", type="integer", nullable=true) 
      */
     private $boxes;
@@ -62,8 +67,8 @@ class Transfer
     public function __construct() 
     {
         $this->files = new ArrayCollection();
-    }  
-    
+    }    
+
     /**
      * @Assert\Callback
      */

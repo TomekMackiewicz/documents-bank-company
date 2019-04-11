@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="nav-item pl-2">
-                <button class="btn btn-light" id="print">
+                <button class="btn btn-light" id="print" {%if app.request.method is same as('GET') %}disabled{%endif%}>
                     <i class="fas fa-print"></i> PDF
                 </button>        
             </li>
