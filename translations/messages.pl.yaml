@@ -3,12 +3,15 @@ all: wszystkie
 all_male: wszyscy
 back: wróć
 box: pudło
+box_price: cena pudła
 boxes: pudła
 calculate: oblicz
+calculation_for: kalkulacja dla
 change_password: zmień hasło
 create: utwórz
 customer: klient
 customer_address: adres
+customer_choose: wybierz klienta
 customer_edit: edycja klienta
 customer_name: nazwa
 customer_new: nowy klient
@@ -20,8 +23,10 @@ date_from: data od
 date_to: data do
 delete: usuń
 edit: edytuj
+edit_fee_for: edytuj opłatę dla
 edit_profile: edytuj profil
 fee: opłata
+fee_for: opłata dla
 fee_new: nowa opłata
 fees: opłaty
 file: dokument
@@ -42,6 +47,7 @@ file_status_unknown: zaginiony
 import: import
 info: info
 
+info_fee_new: Ustal cenę usług (wydanie z magazynu, przywozy, przechowywanie, pudła) dla wybranego klienta.
 info_file_index: Możesz wyszukać dokumenty wpisując sygnaturę lub jej fragment, status dokumentu i/lub nazwę klienta.<br>
                  Pole sygnatury działa na zasadzie wildcard (np. po wpisaniu A1 wyświetlą się dokumenty A101 oraz A123).<br>
                  Wyniki wyszukiwania są ograniczone do 100 rekordów.
@@ -81,8 +87,10 @@ transfer_adjustment: przesunięcie magazynowe
 transfer_date: data zamówienia
 transfer_edit: edycja zamówienia
 transfer_in: wydanie
+transfers_in: wydania
 transfer_new: nowe zamówienie
 transfer_out: przyjęcie
+transfers_out: przyjęcia
 transfers_show: pokaż wydania, przyjęcia i przesunięcia magazynowe
 type: typ
 unit_price: cena j.

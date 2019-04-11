@@ -75,31 +75,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>Transfers (in)</th> 
+                        <th>{{ 'transfers_in'|trans|capitalize }}</th> 
                         <td>{{ calculation.transfers.import }}</td>
                         <td>{{ calculation.fees.import }}</td>
                         <td>{{ calculation.subtotals.0 }}</td>
                     </tr>
                     <tr>
-                        <th>Transfers (out)</th> 
+                        <th>{{ 'transfers_out'|trans|capitalize }}</th> 
                         <td>{{ calculation.transfers.delivery }}</td>
                         <td>{{ calculation.fees.delivery }}</td>
                         <td>{{ calculation.subtotals.1 }}</td>
                     </tr>
                     <tr>
-                        <th>Storage</th> 
+                        <th>{{ 'storage'|trans|capitalize }}</th> 
                         <td>---</td>
                         <td>{{ calculation.fees.storage }}</td>
                         <td>{{ calculation.subtotals.2 }}</td>
                     </tr> 
                     <tr>
-                        <th>Boxes</th> 
+                        <th>{{ 'boxes'|trans|capitalize }}</th> 
                         <td>{{ calculation.transfers.boxes }}</td>
                         <td>{{ calculation.fees.boxes }}</td>
                         <td>{{ calculation.subtotals.3 }}</td>
                     </tr> 
                     <tr>
-                        <th colspan='3'>Sum</th>
+                        <th colspan='3'>{{ 'sum'|trans|capitalize }}</th>
                         <th>{{ calculation.total }}</th>
                     </tr>            
                 </tbody>                             
@@ -110,7 +110,7 @@
 
 {% if calculation is not null %}
     <div id="metadata" hidden>
-        <p>Calculation for {{ form.vars.value.customer.name }}
+        <p>{{ 'calculation_for'|trans|capitalize }} {{ form.vars.value.customer.name }}
             ({{ form.vars.value.month|date('m-Y') }})
         </p>
     </div>

@@ -29,7 +29,7 @@ class FeeCountType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 },
                 'label' => false,
-                'placeholder' => 'Choose customer'
+                'placeholder' => 'customer_choose'
             ]);                        
     }
 

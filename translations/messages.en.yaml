@@ -3,12 +3,15 @@ all: all
 all_male: all
 back: back
 box: box
+box_price: box price
 boxes: boxes
 calculate: calculate
+calculation_for: calculation for 
 change_password: change password
 create: create
 customer: customer
 customer_address: address
+customer_choose: choose customer
 customer_edit: edit customer
 customer_name: name
 customer_new: new customer
@@ -20,8 +23,10 @@ date_from: date from
 date_to: date to
 delete: delete
 edit: edit
+edit_fee_for: edit fee for
 edit_profile: edit profile
 fee: fee
+fee_for: fee for
 fee_new: new fee
 fees: fees
 file: file
@@ -42,6 +47,7 @@ file_status_unknown: unknown
 import: import
 info: info
 
+info_fee_new: Set fee for transfers, storage and boxes for given customer.
 info_file_index: Combined search by file signature, status and / or customer.<br>
                  You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
                  You can also get combined results for multiple statuses or customers.<br>Search results are limited to 100 records.
@@ -81,8 +87,10 @@ transfer_adjustment: adjustment
 transfer_date: transfer date
 transfer_edit: edit transfer
 transfer_in: in
+transfers_in: transfers in
 transfer_new: new transfer
 transfer_out: out
+transfers_out: transfers out
 transfers_show: show transfers
 type: type
 unit_price: unit price

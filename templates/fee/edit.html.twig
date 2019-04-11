@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Edit fee for {{ fee.customer.name }}</h2>
+                    <h2>{{ 'edit_fee_for'|trans|capitalize }} {{ fee.customer.name }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,13 +16,13 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -30,13 +30,24 @@
     </div>
 </div>    
     
-{{ form_start(edit_form) }}            
+{{ form_start(edit_form) }}  
+    <div class="row pb-4"> 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(edit_form.import) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ 'transfer_in'|trans|capitalize }}</div>
+            </div>    
+                {{ form_widget(edit_form.import) }}
+            </div>
+        </div> 
+    </div>
     <div class="row pb-4">    
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="input-group">
                 {{ form_errors(edit_form.delivery) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Transfer (out)</div>
+                <div class="input-group-text">{{ 'transfer_out'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.delivery) }}
             </div>
@@ -45,20 +56,9 @@
     <div class="row pb-4"> 
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="input-group">
-                {{ form_errors(edit_form.import) }}
-            <div class="input-group-prepend">
-                <div class="input-group-text">Transfer (in)</div>
-            </div>    
-                {{ form_widget(edit_form.import) }}
-            </div>
-        </div> 
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="input-group">
                 {{ form_errors(edit_form.storage) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Storage</div>
+                <div class="input-group-text">{{ 'storage'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.storage) }}
             </div>
@@ -69,7 +69,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.boxPrice) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Box price</div>
+                <div class="input-group-text">{{ 'box_price'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.boxPrice) }}
             </div>
@@ -80,7 +80,7 @@
             <div class="input-group">
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
-                <div class="input-group-text">Customer</div>
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
             </div>    
                 {{ form_widget(edit_form.customer) }}
             </div>
@@ -89,7 +89,7 @@
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Edit
+                <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
             </button>
         </div>            
     </div>

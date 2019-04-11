@@ -28,7 +28,7 @@ class Fee
      * @Assert\Regex(
      *     pattern = "/^[0-9.]*$/",
      *     match = true,
-     *     message = "Only digits and dot are allowed"
+     *     message = "error_only_digits_and_dots"
      * ) 
      */
     private $delivery;
@@ -39,7 +39,7 @@ class Fee
      * @Assert\Regex(
      *     pattern = "/^[0-9.]*$/",
      *     match = true,
-     *     message = "Only digits and dot are allowed"
+     *     message = "error_only_digits_and_dots"
      * ) 
      */
     private $import;
@@ -50,7 +50,7 @@ class Fee
      * @Assert\Regex(
      *     pattern = "/^[0-9.]*$/",
      *     match = true,
-     *     message = "Only digits and dot are allowed"
+     *     message = "error_only_digits_and_dots"
      * ) 
      */
     private $storage;
@@ -61,7 +61,7 @@ class Fee
      * @Assert\Regex(
      *     pattern = "/^[0-9.]*$/",
      *     match = true,
-     *     message = "Only digits and dot are allowed"
+     *     message = "error_only_digits_and_dots"
      * ) 
      */
     private $boxPrice;    

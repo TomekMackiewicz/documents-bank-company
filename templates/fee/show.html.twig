@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Fee for {{ fee.customer.name }}</h2>
+                    <h2>{{ 'fee_for'|trans|capitalize }} {{ fee.customer.name }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,30 +16,18 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('fee_edit', { 'id': fee.id }) }}" class="btn btn-default inline">
-                    <i class="far fa-edit"></i> Edit
+                    <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light">
-                  <i class="fas fa-print"></i> Print
-              </button>        
-            </li>
-            <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
-            </li>
-            <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Todo.
-              ">
-                  <i class="fas fa-info-circle"></i> Info
-              </button>        
-            </li>             
+            </li>            
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -52,15 +40,15 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td>Transfer (out):</td>
-                    <th>{{ fee.delivery }}</th>
-                    <td>Transfer (in):</td>
+                    <td>{{ 'transfers_in'|trans|capitalize }}:</td>
                     <th>{{ fee.import }}</th>
-                    <td>Storage:</td>
+                    <td>{{ 'transfers_out'|trans|capitalize }}:</td>
+                    <th>{{ fee.delivery }}</th>
+                    <td>{{ 'storage'|trans|capitalize }}:</td>
                     <th>{{ fee.storage }}</th>
-                    <td>Box price:</td>
+                    <td>{{ 'box_price'|trans|capitalize }}:</td>
                     <th>{{ fee.boxPrice }}</th>
-                    <td>Customer:</td>
+                    <td>{{ 'customer'|trans|capitalize }}:</td>
                     <th><a href="{{ path('customer_show', {'id':fee.customer.id}) }}">{{ fee.customer.name }}</a></th>
                 </tr>
             </tbody>
