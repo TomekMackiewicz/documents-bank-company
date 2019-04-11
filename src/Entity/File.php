@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @UniqueEntity(
  *     fields={"signature", "customer"},
- *     message="File with this signature already exists"
+ *     message="file_already_exists"
  * )
  */
 class File 
@@ -34,12 +34,12 @@ class File
      * @var string
      * @ORM\Column(name="signature", type="string", length=32)
      * @Assert\NotBlank(
-     *   message = "Signature cannot be empty."
+     *   message = "field_cannot_be_empty"
      * ) 
      * @Assert\Regex(
      *     pattern = "/^[a-zA-Z0-9, ]*$/",
      *     match = true,
-     *     message = "Only letters and digits are allowed"
+     *     message = "only_letters_and_digits"
      * )  
      */
     private $signature;
@@ -48,11 +48,11 @@ class File
      * @var string
      * @ORM\Column(name="status", type="integer")
      * @Assert\NotBlank(
-     *   message = "Status cannot be empty."
+     *   message = "field_cannot_be_empty"
      * )
      * @Assert\Choice(
      *   choices = { 0, 1, 2, 3 },
-     *   message = "Choose a valid value."
+     *   message = "invalid_value"
      * )        
      */
     private $status;
@@ -67,7 +67,7 @@ class File
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="files")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank(
-     *   message = "Customer field cannot be empty."
+     *   message = "field_cannot_be_empty"
      * )    
      */
     private $customer;

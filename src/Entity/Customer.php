@@ -27,7 +27,7 @@ class Customer
      * @var string
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank(
-     *   message = "Customer name cannot be empty."
+     *   message = "field_cannot_be_empty"
      * )     
      */
     private $name;
@@ -36,7 +36,7 @@ class Customer
      * @var string
      * @ORM\Column(name="address", type="string", length=255)
      * @Assert\NotBlank(
-     *   message = "Address field cannot be empty."
+     *   message = "field_cannot_be_empty"
      * )       
      */
     private $address;

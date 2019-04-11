@@ -7,7 +7,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a>
-                    <h2>Add user</h2>
+                    <h2>{{ 'user_new'|trans|capitalize }}</h2>
                 </a>
             </li>
         </ul>
@@ -16,15 +16,8 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
-            </li>
-            <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
-                      Todo
-              ">
-                  <i class="fas fa-info-circle"></i> Info
-              </button>        
             </li>
         </ul>
     </div>
@@ -35,7 +28,7 @@
             <div class="input-group">
                 {{ form_errors(form.username) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Username</div>
+                    <div class="input-group-text">{{ 'user_name'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.username) }}
             </div>
@@ -46,7 +39,7 @@
             <div class="input-group">
                 {{ form_errors(form.email) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Email</div>
+                    <div class="input-group-text">{{ 'email'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.email) }}
             </div>
@@ -57,7 +50,7 @@
             <div class="input-group">
                 {{ form_errors(form.customer) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Customer</div>
+                    <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.customer) }}
             </div>
@@ -68,7 +61,7 @@
             <div class="input-group">
                 {{ form_errors(form.roles) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Roles</div>
+                    <div class="input-group-text">{{ 'user_role'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.roles) }}
             </div>
@@ -79,7 +72,7 @@
             <div class="input-group">
                 {{ form_errors(form.password.first) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Password</div>
+                    <div class="input-group-text">{{ 'password'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.password.first) }}
             </div>
@@ -90,7 +83,7 @@
             <div class="input-group">
                 {{ form_errors(form.password.second) }}
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Repeat password</div>
+                    <div class="input-group-text">{{ 'password_repeat'|trans|capitalize }}</div>
                 </div>    
                 {{ form_widget(form.password.second) }}
             </div>
@@ -99,7 +92,7 @@
     <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-light">
-                <i class="far fa-edit"></i> Create
+                <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}
             </button>
         </div>            
     </div>

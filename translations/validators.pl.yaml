@@ -1,1 +1,6 @@
 error_only_digits_and_dots: Dozwolone są tylko cyfry i kropka
+field_cannot_be_empty: Pole nie może być puste
+file_already_exists: Dokument o tej sygnaturze już istnieje
+invalid_value: Wybierz właściwą wartość
+only_digits: Dozwolone są tylko cyfry
+only_letters_and_digits: Tylko litery i cyfry są dozwolone

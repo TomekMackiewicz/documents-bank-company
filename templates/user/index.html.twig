@@ -6,7 +6,7 @@
     <div class="col-sm-6">               
         <ul class="nav">
             <li class="nav-item">
-                <a><h2>Users</h2></a>
+                <a><h2>{{ 'users'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
         <ul class="nav float-right">
           <li class="nav-item pl-2">
             <a class="btn btn-light" href="{{ path('user_new') }}">
-                <i class="fas fa-plus"></i> New user
+                <i class="fas fa-plus"></i> {{ 'user_new'|trans|capitalize }}
             </a>
           </li>        
         </ul>
@@ -26,9 +26,9 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Company name</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">{{ 'user_name'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'user_address'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'user_role'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,11 +43,11 @@
                             <td>
                                 {% for role in user.roles %}
                                     {% if role is same as('ROLE_SUPER_ADMIN') %}
-                                        Super Admin
+                                        {{ 'role_super_admin'|trans|capitalize }}
                                     {% elseif role is same as('ROLE_ADMIN') %}
-                                        Admin    
+                                        {{ 'role_admin'|trans|capitalize }}    
                                     {% elseif role is same as('ROLE_CUSTOMER') %}
-                                        Customer
+                                        {{ 'role_customer'|trans|capitalize }}
                                     {% endif %}
                                 {% endfor %}
                             </td>

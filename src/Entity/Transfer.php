@@ -30,7 +30,7 @@ class Transfer
      * @var string
      * @ORM\Column(name="type", type="integer") 
      * @Assert\NotBlank(
-     *   message = "Type cannot be empty."
+     *   message = "field_cannot_be_empty"
      * ) 
      */
     private $type;
@@ -58,7 +58,7 @@ class Transfer
      * @Assert\Regex(
      *     pattern = "/^[0-9]*$/",
      *     match = true,
-     *     message = "Only digits are allowed"
+     *     message = "only_digits"
      * ) 
      * @ORM\Column(name="boxes", type="integer", nullable=true) 
      */

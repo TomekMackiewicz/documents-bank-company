@@ -15,6 +15,7 @@ customer_choose: choose customer
 customer_edit: edit customer
 customer_name: name
 customer_new: new customer
+customer_none: None
 customers: customers
 date: date
 date_asc: date asc
@@ -25,6 +26,7 @@ delete: delete
 edit: edit
 edit_fee_for: edit fee for
 edit_profile: edit profile
+email: email
 fee: fee
 fee_for: fee for
 fee_new: new fee
@@ -69,9 +71,14 @@ log: log
 month: month
 no_results: no results
 note: note
+password: password
+password_repeat: repeat password
 pdf: pdf
 quantity: quantity
 rate: rate
+role_admin: admin
+role_customer: customer
+role_super_admin: super admin
 search: search
 show: show
 signature: signature
@@ -94,4 +101,10 @@ transfers_out: transfers out
 transfers_show: show transfers
 type: type
 unit_price: unit price
+user: user
+user_address: user adddress
+user_edit: edit user
+user_name: username
+user_new: new user
+user_role: user role
 users: users

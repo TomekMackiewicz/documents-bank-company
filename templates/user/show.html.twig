@@ -9,7 +9,6 @@
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td>User:</td>
                             <th>{{ user.username }}</th>                         
                         </tr>
                     </tbody>
@@ -21,30 +20,25 @@
         <ul class="nav float-right">
             <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-default inline">
-                    <i class="far fa-edit"></i> Edit
+                    <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light" id="print" {%if app.request.method is same as('GET') %}disabled{%endif%}>
-                  <i class="fas fa-print"></i> PDF
-              </button>        
-            </li>
-            <li class="nav-item pl-2">
                 <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
-                    <i class="fas fa-undo"></i> Back
+                    <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
               <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                       Todo.
               ">
-                  <i class="fas fa-info-circle"></i> Info
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> Delete
+                        <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
@@ -56,7 +50,7 @@
         <table class="table table-striped">
             <tbody>
                 <tr> 
-                    <td>Email: {{ user.email }}</td>  
+                    <td>{{ 'email'|trans|capitalize }}: {{ user.email }}</td>  
                 </tr>
             </tbody>
         </table>        

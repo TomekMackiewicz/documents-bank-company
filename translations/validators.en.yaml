@@ -1,1 +1,6 @@
 error_only_digits_and_dots: Only digits and dot are allowed
+field_cannot_be_empty: Field cannot be empty
+file_already_exists: File with this signature already exists
+invalid_value: Choose a valid value
+only_digits: Only digits are allowed
+only_letters_and_digits: Only letters and digits are allowed
