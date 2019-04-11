@@ -50,6 +50,9 @@ import: import
 info: info
 
 info_fee_new: Ustal cenę usług (wydanie z magazynu, przywozy, przechowywanie, pudła) dla wybranego klienta.
+info_file_edit: Zmiana klienta jest możliwa jedynie wtedy, gdy dla danego dokumentu nie ma żadnych przesunięć magazynowych.<br>
+                <strong>Uwaga!</strong> Usunięcie dokumentu kasuje go z systemu, jeśli chcesz go oznaczyć jako wybrakowany, ustaw odpowiedni status.<br>
+                Edycja dokumentu tworzy nowe przesunięcie magazynowe.
 info_file_index: Możesz wyszukać dokumenty wpisując sygnaturę lub jej fragment, status dokumentu i/lub nazwę klienta.<br>
                  Pole sygnatury działa na zasadzie wildcard (np. po wpisaniu A1 wyświetlą się dokumenty A101 oraz A123).<br>
                  Wyniki wyszukiwania są ograniczone do 100 rekordów.
@@ -57,7 +60,8 @@ info_file_new: Możesz dodać jeden lub więcej dokumentów (oddzielając kolejn
                Formularz konwertuje sygnatury do wielkich liter, nie musisz więc używać shifta ani capslocka ;)<br>
                Sygnatura powinna być <u>unikalna dla danego klienta</u>.
 info_file_show: Tutaj wyświetlane są szczegóy dokumentu, dodatkowo można wyświetlić jego historię (przywozy, dostawy, przesunięcia magazynowe dla podanego zakresu dat).<br>
-                Wyniki wyszukiwania są ograniczone do 100 rekordów.
+                Wyniki wyszukiwania są ograniczone do 100 rekordów.<br>
+                <strong>Uwaga!</strong> Usunięcie dokumentu kasuje go z systemu, jeśli chcesz go oznaczyć jako wybrakowany, ustaw odpowiedni status.
 info_transfer_index: Wyszukiwanie zamówień dla wybranego zakresu dat.<br>
                      Można łączyć poszczególne kryteria wyszukiwania (wydania, przyjęcia, przesunięcia, klienci).<br>
                      Wyniki wyszukiwania są ograniczone do 100 rekordów.

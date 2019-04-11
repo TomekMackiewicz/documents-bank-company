@@ -20,6 +20,13 @@
                 </a>
             </li>
             <li class="nav-item pl-2">
+              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                      {{ 'info_file_edit'|trans }}
+              ">
+                  <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
+              </button>        
+            </li> 
+            <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
@@ -69,8 +76,12 @@
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
-            </div>    
-                {{ form_widget(edit_form.customer) }}
+            </div> 
+                {% if file.transfers|length > 1 %}
+                    {{ form_widget(edit_form.customer, { 'attr':{'disabled':'disabled'} }) }}
+                {% else %}
+                    {{ form_widget(edit_form.customer) }}
+                {% endif %}
             </div>
         </div>
     </div>

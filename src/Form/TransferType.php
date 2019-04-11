@@ -30,8 +30,8 @@ class TransferType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'In' => Transfer::$transferIn,
-                    'Out' => Transfer::$transferOut
+                    'transfer_in' => Transfer::$transferIn,
+                    'transfer_out' => Transfer::$transferOut
                 ],
                 'label' => false
             ])                

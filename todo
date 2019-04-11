@@ -1,11 +1,24 @@
 
 import
 
-umożliwić druk:
-- transfer show
-- file show?
+translate flash messages
+
 
 delete transfer restrictions + info trans (tak samo jak edycja)
 
-do new/edit/show (delete!) dodać info o załatwieniu sprawy przesunięciem magazynowym
-przesunięcie magazynowe musi mieć opcję notki (wyjasniamy w niej dlaczego!)
+do new?/edit/show (delete!) dodać info o załatwieniu sprawy przesunięciem magazynowym (edycja dokumentu)
+
+- transfer new?
+- transfer edit
+- transfer show
+
+transfer note!
+
+
+
+new transfer:
+- poprzedni musi być inny
+- następny nie może być taki sam
+
+edit transfer:
+- blokada zmiany, jeśli tr wcześniejszy lub późniejszy

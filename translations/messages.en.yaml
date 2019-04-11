@@ -50,6 +50,8 @@ import: import
 info: info
 
 info_fee_new: Set fee for transfers, storage and boxes for given customer.
+info_file_edit: Changing customer is possible only if no transfers for this document was made.<br>
+                <strong>Caution</strong> Deleting document removes it from the system, if you want to mark it as disposed, use proper status.
 info_file_index: Combined search by file signature, status and / or customer.<br>
                  You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
                  You can also get combined results for multiple statuses or customers.<br>Search results are limited to 100 records.
@@ -57,7 +59,8 @@ info_file_new: Add one or multiple files (comma separated).<br>
                Form is case insesitive, meaning that you don't need to use shift or capslock ;)<br>
                Signature should be <u>unique for given customer</u>.
 info_file_show: Here you can see file details and also check inventory in's and out's for given period.<br>
-                Search results are limited to 100 records.
+                Search results are limited to 100 records.<br>
+                <strong>Caution</strong> Deleting document removes it from the system, if you want to mark it as disposed, use proper status.
 info_transfer_index: Combined search of inventory transfers for given dates.<br>
                      You can also get combined results for multiple types (in, out...) and/or customers.<br>
                      Search results are limited to 100 records.
