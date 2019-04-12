@@ -1,22 +1,16 @@
 
 1) import
 
-3) translate log
+2) delete transfer restrictions + info trans (tak samo jak edycja)
 
-4) delete transfer restrictions + info trans (tak samo jak edycja)
-5) do new?/edit/show (delete!) dodać info o załatwieniu sprawy przesunięciem magazynowym (edycja dokumentu)
-- transfer new?
-- transfer edit
+3) do new?/edit/show (delete!) dodać info o załatwieniu sprawy przesunięciem magazynowym (edycja dokumentu)
++ transfer new
++ transfer edit
 - transfer show
 
-7) doc location
+4) doc location
 
-8) transfer validation
-new transfer:
-- poprzedni musi być inny
-- następny nie może być taki sam
+5) transfer aax file - uwzględnić datę!
 
-edit transfer:
+6) transfer edit - pozwolić na edycję doc
 - blokada zmiany, jeśli tr wcześniejszy lub późniejszy
-
-9) transfer edit - pozwolić na edycję doc

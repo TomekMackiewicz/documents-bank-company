@@ -77,11 +77,16 @@ info_transfer_index: Wyszukiwanie zamówień dla wybranego zakresu dat.<br>
                      Można łączyć poszczególne kryteria wyszukiwania (wydania, przyjęcia, przesunięcia, klienci).<br>
                      Wyniki wyszukiwania są ograniczone do 100 rekordów.
 info_transfer_edit: Edycja zamówienia podlega ograniczeniom, narzuconym w celu zapewnienia spójności danych.<br>
-                    Z tego powodu nie jest możliwazmiana jego dokumentów, jeśli dla danego dokumentu istnieją wcześniejsze lub późniejsze dostawy.
+                    Z tego powodu nie jest możliwa zmiana jego dokumentów, jeśli dla danego dokumentu istnieją wcześniejsze lub późniejsze dostawy.<br>
+                    <strong>Jeśli status dokumentu dla danej daty uniemożliwia przeprowadzenie operacji, rozważ dokonanie przesunięcia magazynowego 
+                    (ekran edycji dokumentu).</strong>
 info_transfer_new: Możesz dodać wiele dokuemntów oddzielonych przecinkiem.<br>
                    Dokumenty pojawiające się na liście podpowiedzi są ograniczone do wybranego klienta oraz typu zamówienia.<br>
-                   Wybór dokumentu należącego do innego klienta lub posiadającego niewłaściwy status (np. wybrakowany, zaginiony) będzie skutkowało ostrzeżeniem o błędzie.
-                     
+                   Wybór dokumentu należącego do innego klienta lub posiadającego niewłaściwy status (np. wybrakowany, zaginiony) będzie skutkowało ostrzeżeniem o błędzie.<br>
+                   <strong>Jeśli status dokumentu dla danej daty uniemożliwia przeprowadzenie operacji, rozważ dokonanie przesunięcia magazynowego 
+                   (ekran edycji dokumentu).</strong>
+info_transfer_show: Status dokumentu dla danej daty może uniemożliwiać operację usuwania, jeśli grozi to utracie spójności danych.<br>
+                    Np. gdyby usunięcie zamówienia danego dokumentu spowodowało powstanie dwóch kolejnych wydań magazynowych.                    
 log: log
 month: miesiąc
 no_results: brak wyników

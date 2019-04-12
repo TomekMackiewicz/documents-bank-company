@@ -77,9 +77,13 @@ info_transfer_index: Combined search of inventory transfers for given dates.<br>
                      Search results are limited to 100 records.
 info_transfer_edit: There are certain restricions imposed on edition of the transfer to ensure data consistency.<br>
                     For that reason you cannot edit files for which there are earlier or later transfers.
+                    <strong>If document status (in, out) for given date makes it impossible to perform operation, consider warehouse transfer (edit document page).</strong>
 info_transfer_new: You can add multiple files - comma separated.<br>
                    Files are restricted to the choosen customer and type of transfer.<br>
                    Choosing document that belongs to different customer or has invalid status (ex. disposed) will prevent form from being submitted.
+                   <strong>If document status (in, out) for given date makes it impossible to perform operation, consider warehouse transfer (edit document page).</strong>
+info_transfer_show: <strong>Document status (in, out) for given date can make it impossible to perform operation, if it is at risk of losing data integrity.<br>
+                    For example if removing the document would cause two consecutive deliveries.</strong>
  
 log: log
 month: month
