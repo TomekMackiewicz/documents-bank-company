@@ -1,4 +1,5 @@
 actions: działania
+add_fees_first: Nie ustalono opłat klienta
 all: wszystkie
 all_male: wszyscy
 back: wróć
@@ -12,7 +13,10 @@ create: utwórz
 customer: klient
 customer_address: adres
 customer_choose: wybierz klienta
+customer_created: Dodano nowego klienta
+customer_deleted: Klient został usunięty
 customer_edit: edycja klienta
+customer_edited: Dane klienta zostały uaktualnione
 customer_name: nazwa
 customer_new: nowy klient
 customer_none: Brak
@@ -28,12 +32,18 @@ edit_fee_for: edytuj opłatę dla
 edit_profile: edytuj profil
 email: email
 fee: opłata
+fee_added: Opłata dodana
+fee_deleted: Opłata usunięta
+fee_edited: Opłata uaktualniona
 fee_for: opłata dla
 fee_new: nowa opłata
 fees: opłaty
 file: dokument
 files: dokumenty
+file_created: Dodano dokument
+file_deleted: Dokument został usunięty
 file_edit: edytuj dokument
+file_edited: Dokument uaktualniony
 file_new: nowy dokument
 files_all: Ilość dokumentów
 files_count_disposed: Dokumenty wybrakowane
@@ -89,14 +99,18 @@ signature: sygnatura
 signature_asc: sygnatura rosnąco
 signature_desc: sygnatura malejąco
 sort: sortowanie
+start_date_higher_than_end_date: Data początkowa nie może być późniejsza niż końcowa
 status: status
 storage: przechowywanie
 sum: suma
 transfer: transfer
 transfers: zamówienia
 transfer_adjustment: przesunięcie magazynowe
+transfer_created: Zamówienie zostało dodane
 transfer_date: data zamówienia
+transfer_deleted: Zamówienie zostało usunięte
 transfer_edit: edycja zamówienia
+transfer_edited: Zamówienie zostało uaktualnione
 transfer_in: wydanie
 transfers_in: wydania
 transfer_new: nowe zamówienie
@@ -107,7 +121,10 @@ type: typ
 unit_price: cena j.
 user: użytkownik
 user_address: adres użytkownika
+user_created: Użytkownik zostało utworzony
+user_deleted: Użytkownik został usunięty
 user_edit: edytuj użytkownika
+user_edited: Dane użytkownika zostały uaktualnione
 user_name: nazwa użytkownika
 user_new: nowy użytkownik
 user_role: rola

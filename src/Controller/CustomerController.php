@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("admin/customer")
@@ -37,7 +38,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
      * 
      * @Route("/new", name="customer_new", methods={"GET","POST"})
      */
-    public function newAction(Request $request) 
+    public function newAction(Request $request, TranslatorInterface $translator) 
     {
         $customer = new Customer();
         $form = $this->createForm('App\Form\CustomerType', $customer);
@@ -49,7 +50,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
             $em->persist($customer);
             $em->flush($customer);
             
-            $this->addFlash('success', 'Customer created');
+            $this->addFlash('success', $translator->trans('customer_created'));
 
             return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
@@ -66,7 +67,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
      * @param Request $request
      * @Route("/{id}", name="customer_show", methods={"GET","POST"})
      */
-    public function showAction(Request $request, Customer $customer) 
+    public function showAction(Request $request, Customer $customer, TranslatorInterface $translator) 
     {
         $searchResults = [];
 
@@ -84,7 +85,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
             } else { 
-                $this->addFlash('error', "Start value can't be higher than end date");
+                $this->addFlash('error', $translator->trans('start_date_higher_than_end_date'));
             }           
         }
 
@@ -104,7 +105,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
      * @param Customer $customer
      * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Customer $customer) 
+    public function editAction(Request $request, Customer $customer, TranslatorInterface $translator) 
     {
         $deleteForm = $this->createDeleteForm($customer);
         $editForm = $this->createForm('App\Form\CustomerType', $customer);
@@ -112,7 +113,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Customer edited');
+            $this->addFlash('success', $translator->trans('customer_edited'));
             
             return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
         }
@@ -131,7 +132,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
      * @param Customer $customer
      * @Route("/{id}", name="customer_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Customer $customer) 
+    public function deleteAction(Request $request, Customer $customer, TranslatorInterface $translator) 
     {
         $form = $this->createDeleteForm($customer);
         $form->handleRequest($request);
@@ -141,7 +142,7 @@ class CustomerController extends AbstractController implements LogManagerInterfa
             $em->remove($customer);
             $em->flush($customer);
             
-            $this->addFlash('success', 'Customer deleted');
+            $this->addFlash('success', $translator->trans('customer_deleted'));
         }
         
         return $this->redirectToRoute('customer_index');

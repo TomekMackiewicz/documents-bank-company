@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("admin/file")
@@ -68,7 +69,7 @@ class FileController extends AbstractController implements LogManagerInterface
      * @Route("/new", name="file_new", methods={"GET","POST"})
      * @return array
      */
-    public function newAction(Request $request) 
+    public function newAction(Request $request, TranslatorInterface $translator) 
     {
         $file = new File();
         $transfer = new Transfer();
@@ -84,20 +85,12 @@ class FileController extends AbstractController implements LogManagerInterface
             $transfer->setType(Transfer::$transferAdjustment);
             $transfer->setCustomer($data->getCustomer());
             
-            $filesAlreadyIn = [];
             foreach ($signatures as $signature) {
                 if (empty($signature)) {
                     continue;
                 }
                 
-                $signature = trim(strtoupper($signature));
-                
-                $fileToCheck = $em->getRepository('App:File')->checkFileAlreadyExists($signature, $data->getCustomer());
-                if ($fileToCheck) {
-                    $filesAlreadyIn[] = $signature;
-                    continue;
-                }
-                
+                $signature = trim(strtoupper($signature));                
                 $file = new File();
                 $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
@@ -109,18 +102,10 @@ class FileController extends AbstractController implements LogManagerInterface
                 $transfer->addFile($file);
             }
             
-            if (!empty($filesAlreadyIn)) {
-                $this->addFlash('error', 'File(s) '.implode(',', $filesAlreadyIn).' for customer '.$data->getCustomer()->getName().' already exists');
-                return $this->render('file/new.html.twig', array(
-                    'file' => $file,
-                    'form' => $form->createView()
-                ));
-            }
-            
             $em->persist($transfer);
             $em->flush();
             
-            $this->addFlash('success', 'New file(s) created');
+            $this->addFlash('success', $translator->trans('file_created'));
             
             return $this->redirectToRoute('file_index');
         }
@@ -139,7 +124,7 @@ class FileController extends AbstractController implements LogManagerInterface
      * @Route("/{id}", name="file_show", methods={"GET","POST"})
      * @return array
      */
-    public function showAction(Request $request, File $file) 
+    public function showAction(Request $request, File $file, TranslatorInterface $translator) 
     {
         $transfersFromTo = null;
         $em = $this->getDoctrine()->getManager();
@@ -154,7 +139,7 @@ class FileController extends AbstractController implements LogManagerInterface
                 $transfersFromTo = $em->getRepository('App:Transfer')
                     ->fileTransfersFromTo($file->getId(), $dateFrom, $dateTo, $sort);
             } else { 
-                $this->addFlash('error', "Start value cannot be higher than end date");
+                $this->addFlash('error', $translator->trans('start_date_higher_than_end_date'));
             }
         }
         
@@ -174,7 +159,7 @@ class FileController extends AbstractController implements LogManagerInterface
      * @Route("/{id}/edit", name="file_edit", methods={"GET","POST"})
      * @return array
      */
-    public function editAction(Request $request, File $file) 
+    public function editAction(Request $request, File $file, TranslatorInterface $translator) 
     {
         $fileStatus = $file->getStatus();
         $editForm = $this->createForm('App\Form\FileType', $file);
@@ -196,7 +181,7 @@ class FileController extends AbstractController implements LogManagerInterface
             
             $em->flush();
             
-            $this->addFlash('success', 'File edited successfully');
+            $this->addFlash('success', $translator->trans('file_edited'));
 
             return $this->redirectToRoute('file_show', array('id' => $file->getId()));
         }
@@ -215,7 +200,7 @@ class FileController extends AbstractController implements LogManagerInterface
      * @param File $file
      * @Route("/{id}", name="file_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, File $file) 
+    public function deleteAction(Request $request, File $file, TranslatorInterface $translator) 
     {
         $form = $this->createDeleteForm($file);
         $form->handleRequest($request);
@@ -232,7 +217,7 @@ class FileController extends AbstractController implements LogManagerInterface
                 $em->flush($orphan);
             }
 
-            $this->addFlash('success', 'File deleted');
+            $this->addFlash('success', $translator->trans('file_deleted'));
         }
         
         return $this->redirectToRoute('file_index');

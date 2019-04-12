@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\Fee;
 
 /**
@@ -18,7 +19,7 @@ class FeeController extends AbstractController
      * @param Request $request
      * @Route("/calculate", name="fee_calculate", methods={"GET","POST"})
      */    
-    public function calculateAction(Request $request)
+    public function calculateAction(Request $request, TranslatorInterface $translator)
     { 
         $calculation = null;
         $calculateFeeForm = $this->createForm('App\Form\FeeCountType');
@@ -33,7 +34,7 @@ class FeeController extends AbstractController
             $calculation = $em->getRepository('App:Fee')->actionsToCalculate($customer, $month);
             
             if (!$calculation) {
-                $this->addFlash('error', 'Add fees for this customer first');
+                $this->addFlash('error', $translator->trans('add_fees_first'));
             }            
         }
         
@@ -64,7 +65,7 @@ class FeeController extends AbstractController
      * @param Request $request
      * @Route("/new", name="fee_new", methods={"GET","POST"})
      */
-    public function newAction(Request $request) 
+    public function newAction(Request $request, TranslatorInterface $translator) 
     {
         $fee = new Fee();
         $form = $this->createForm('App\Form\FeeType', $fee);
@@ -75,7 +76,7 @@ class FeeController extends AbstractController
             $em->persist($fee);
             $em->flush($fee);
             
-            $this->addFlash('success', 'Fee added');
+            $this->addFlash('success', $translator->trans('fee_added'));
 
             return $this->redirectToRoute('fee_show', array('id' => $fee->getId()));
         }
@@ -108,7 +109,7 @@ class FeeController extends AbstractController
      * @param Fee $fee
      * @Route("/{id}/edit", name="fee_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Fee $fee) 
+    public function editAction(Request $request, Fee $fee, TranslatorInterface $translator) 
     {
         $deleteForm = $this->createDeleteForm($fee);
         $editForm = $this->createForm('App\Form\FeeType', $fee);
@@ -117,7 +118,7 @@ class FeeController extends AbstractController
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             
-            $this->addFlash('success', 'Fee edited');
+            $this->addFlash('success', $translator->trans('fee_edited'));
             
             return $this->redirectToRoute('fee_show', array('id' => $fee->getId()));
         }
@@ -136,7 +137,7 @@ class FeeController extends AbstractController
      * @param Fee $fee
      * @Route("/{id}", name="fee_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Fee $fee) 
+    public function deleteAction(Request $request, Fee $fee, TranslatorInterface $translator) 
     {
         $form = $this->createDeleteForm($fee);
         $form->handleRequest($request);
@@ -146,7 +147,7 @@ class FeeController extends AbstractController
             $em->remove($fee);
             $em->flush($fee);
             
-            $this->addFlash('success', 'Fee deleted');
+            $this->addFlash('success', $translator->trans('fee_deleted'));
         }
         
         return $this->redirectToRoute('fee_index');

@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("admin/transfer")
@@ -23,7 +24,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
      * @Route("/", name="transfer_index", methods={"GET","POST"})
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, TranslatorInterface $translator)
     {
         $searchResults = [];
         $searchForm = $this->createSearchForm();
@@ -38,7 +39,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
                 $em = $this->getDoctrine()->getManager();
                 $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
             } else { 
-                $this->addFlash('error', "Start value can't be higher than end date");
+                $this->addFlash('error', $translator->trans('start_date_higher_than_end_date'));
             }
         }
 
@@ -55,7 +56,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
      * @Route("/new", name="transfer_new", methods={"GET","POST"})
      * @return array
      */
-    public function newAction(Request $request) 
+    public function newAction(Request $request, TranslatorInterface $translator) 
     {
         $transfer = new Transfer();
         $form = $this->createForm('App\Form\TransferType', $transfer);
@@ -78,7 +79,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
             $em->persist($transfer);
             $em->flush();
             
-            $this->addFlash('success', 'New transfer created');
+            $this->addFlash('success', $translator->trans('transfer_created'));
             
             return $this->redirectToRoute('transfer_index');
         }
@@ -110,7 +111,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
      * @param Transfer $transfer
      * @Route("/{id}/edit", name="transfer_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Transfer $transfer) 
+    public function editAction(Request $request, Transfer $transfer, TranslatorInterface $translator) 
     {
         $editForm = $this->createForm('App\Form\TransferType', $transfer);
         $editForm->handleRequest($request);
@@ -132,7 +133,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
             $em->persist($transfer);
             $em->flush();
             
-            $this->addFlash('success', 'Transfer edited');
+            $this->addFlash('success', $translator->trans('transfer_edited'));
             
             return $this->redirectToRoute('transfer_index');
         }
@@ -151,7 +152,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
      * @param Transfer $transfer
      * @Route("/{id}", name="transfer_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Transfer $transfer) 
+    public function deleteAction(Request $request, Transfer $transfer, TranslatorInterface $translator) 
     {
         $form = $this->createDeleteForm($transfer);
         $form->handleRequest($request);
@@ -161,7 +162,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
             $em->remove($transfer);
             $em->flush($transfer);
             
-            $this->addFlash('success', 'Transfer deleted');
+            $this->addFlash('success', $translator->trans('transfer_deleted'));
         }
 
         return $this->redirectToRoute('transfer_index');

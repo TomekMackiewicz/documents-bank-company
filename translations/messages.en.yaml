@@ -1,4 +1,5 @@
 actions: actions
+add_fees_first: Add fees for this customer first
 all: all
 all_male: all
 back: back
@@ -12,7 +13,10 @@ create: create
 customer: customer
 customer_address: address
 customer_choose: choose customer
+customer_created: customer created
+customer_deleted: Customer deleted
 customer_edit: edit customer
+customer_edited: Customer edited
 customer_name: name
 customer_new: new customer
 customer_none: None
@@ -28,12 +32,18 @@ edit_fee_for: edit fee for
 edit_profile: edit profile
 email: email
 fee: fee
+fee_added: Fee added
+fee_deleted: Fee deleted
+fee_edited: Fee edited
 fee_for: fee for
 fee_new: new fee
 fees: fees
 file: file
 files: files
+file_created: New file(s) created
+file_deleted: File deleted
 file_edit: edit file
+file_edited: File edited
 file_new: new file
 files_all: Number of files
 files_count_disposed: files disposed
@@ -88,14 +98,18 @@ signature: signature
 signature_asc: signature asc
 signature_desc: signature desc
 sort: sort
+start_date_higher_than_end_date: Start value can't be higher than end date
 status: status
 storage: storage
 sum: sum
 transfer: transfer
 transfers: transfers
 transfer_adjustment: adjustment
+transfer_created: New transfer created
 transfer_date: transfer date
+transfer_deleted: Transfer deleted
 transfer_edit: edit transfer
+transfer_edited: Transfer edited
 transfer_in: in
 transfers_in: transfers in
 transfer_new: new transfer
@@ -106,7 +120,10 @@ type: type
 unit_price: unit price
 user: user
 user_address: user adddress
+user_created: User created
+user_deleted: User deleted
 user_edit: edit user
+user_edited: User edited
 user_name: username
 user_new: new user
 user_role: user role

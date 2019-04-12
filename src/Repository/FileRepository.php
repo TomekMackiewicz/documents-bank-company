@@ -97,15 +97,6 @@ class FileRepository extends EntityRepository
         
         return $qb->getQuery()->getResult();           
     }
-    
-    public function checkFileAlreadyExists($signature, $customer)
-    {
-        return $this->getEntityManager()->createQuery(
-            "SELECT f.id FROM App:File f WHERE f.signature = :signature AND f.customer = :customer"
-        )->setParameter(":signature", $signature)
-         ->setParameter(":customer", $customer)
-         ->getOneOrNullResult();        
-    }
 
     public function getOrphanedTransfers($file)
     {

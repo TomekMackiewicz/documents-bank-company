@@ -47,7 +47,7 @@ class UserController extends AbstractController implements LogManagerInterface
      * 
      * @Route("profile/transfers", name="user_transfers", methods={"GET", "POST"})
      */
-    public function transfersAction(Request $request) 
+    public function transfersAction(Request $request, TranslatorInterface $translator) 
     {
         $user = $this->getUser();
         $transfersSearchResults = [];
@@ -64,7 +64,7 @@ class UserController extends AbstractController implements LogManagerInterface
                 $em = $this->getDoctrine()->getManager();
                 $transfersSearchResults = $em->getRepository('App:Transfer')->searchTransfers($transfersSearchCriteria); 
             } else { 
-                $this->addFlash('error', "Start value can't be higher than end date");
+                $this->addFlash('error', $translator->trans('start_date_higher_than_end_date'));
             }
         }        
         
@@ -109,7 +109,7 @@ class UserController extends AbstractController implements LogManagerInterface
      * 
      * @Route("admin/user/new", name="user_new", methods={"GET","POST"})
      */
-    public function newAction(Request $request) 
+    public function newAction(Request $request, TranslatorInterface $translator) 
     {
         $user = new User();
         $user->setEnabled(true);
@@ -127,7 +127,7 @@ class UserController extends AbstractController implements LogManagerInterface
             $em->persist($user);
             $em->flush($user);
             
-            $this->addFlash('success', 'User created');
+            $this->addFlash('success', $translator->trans('user_created'));
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
@@ -159,7 +159,7 @@ class UserController extends AbstractController implements LogManagerInterface
      * @param User $user
      * @Route("admin/user/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, User $user) 
+    public function editAction(Request $request, User $user, TranslatorInterface $translator) 
     {
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('App\Form\UserType', $user);
@@ -167,7 +167,7 @@ class UserController extends AbstractController implements LogManagerInterface
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'User edited');
+            $this->addFlash('success', $translator->trans('user_edited'));
             
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
@@ -186,7 +186,7 @@ class UserController extends AbstractController implements LogManagerInterface
      * @param User $user
      * @Route("admin/user/{id}", name="user_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, User $user) 
+    public function deleteAction(Request $request, User $user, TranslatorInterface $translator) 
     {
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
@@ -196,7 +196,7 @@ class UserController extends AbstractController implements LogManagerInterface
             $em->remove($user);
             $em->flush($user);
             
-            $this->addFlash('success', 'User deleted');
+            $this->addFlash('success', $translator->trans('user_deleted'));
         }
         
         return $this->redirectToRoute('user_index');
