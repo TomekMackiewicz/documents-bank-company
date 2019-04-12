@@ -64,6 +64,12 @@ class Transfer
      */
     private $boxes;
 
+    /**
+     * @var string
+     * @ORM\Column(name="note", type="text", nullable=true)       
+     */
+    private $note;    
+    
     public function __construct() 
     {
         $this->files = new ArrayCollection();
@@ -269,5 +275,23 @@ class Transfer
     public function getBoxes() 
     {
         return $this->boxes;
-    }    
+    } 
+    
+    /**
+     * @param int $note
+     * @return Transfer
+     */
+    public function setNote($note) 
+    {
+        $this->note = $note;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNote() 
+    {
+        return $this->note;
+    } 
 }

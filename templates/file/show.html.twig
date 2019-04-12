@@ -113,6 +113,7 @@
                     <tr>
                         <th>{{ 'type'|trans|capitalize }}</th>
                         <th>{{ 'date'|trans|capitalize }}</th>
+                        <th>{{ 'note'|trans|capitalize }}</th>
                         <th>{{ 'transfer'|trans|capitalize }}</th>
                     </tr>  
                 </thead>         
@@ -129,6 +130,7 @@
                             {% endif %}                            
                         </td>
                         <td>{{ transfer.date|date('Y-m-d') }}</td>
+                        <td>{{ transfer.note }}</td>
                         <td>
                             <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                 {{ 'show'|trans|capitalize }}

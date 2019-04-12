@@ -120,6 +120,7 @@
                         <th scope="col">{{ 'date'|trans|capitalize }}</th>
                         <th scope="col">{{ 'type'|trans|capitalize }}</th>
                         <th scope="col">{{ 'customer'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'note'|trans|capitalize }}</th>
                         <th scope="col">{{ 'show'|trans|capitalize }}</th>
                     </tr>
                 </thead>
@@ -137,6 +138,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ transfer.customer.name }}</td>
+                            <td>{{ transfer.note }}</td>
                             <td>
                                 <a href="{{ path('transfer_show', { 'id': transfer.id }) }}">
                                     {{ 'show'|trans|capitalize }}

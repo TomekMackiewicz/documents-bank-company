@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Transfer;
@@ -50,6 +51,10 @@ class TransferType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 },
                 'label' => false
+            ])
+            ->add('note', TextareaType::class, [
+                'label' => false,
+                'required' => false
             ])
             ->add('date', DateType::class, array(
                 'widget' => 'single_text',
