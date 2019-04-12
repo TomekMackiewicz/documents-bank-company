@@ -74,6 +74,7 @@ class Transfer
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
+        $transferDate = $this->getDate()->format('Y-m-d');
         $files = $this->getFiles();
         $signatures = [];
         $duplicates = [];
@@ -81,7 +82,7 @@ class Transfer
         $invalidType = [];
         $disposed = [];
         $unknown = [];
-       
+
         foreach ($files as $file) {
             $signature = $file->getSignature();
             $signatures[] = $signature;
@@ -90,15 +91,29 @@ class Transfer
                 continue;
             } 
             
-            // If file is in the stock while transfer request is from customer & vice versa
-            if ($file->getStatus() == $this->getType()) {
+            $previousTransfer = $file->getLastTransactionForDate($transferDate);
+            $nextTransfer = $file->getNextTransactionForDate($transferDate);
+
+            // If previous transfer and previous transfer type equals this transfer type
+            if (false !== $previousTransfer && $previousTransfer->getType() == $this->getType()) {
                $invalidType[] = $signature; 
             }
-            // If someone wants to transfer disposed file
+            
+            // If next transfer and next transfer type not equals this transfer type
+            if (false !== $nextTransfer && $nextTransfer->getType() == $this->getType()) {
+               $invalidType[] = $signature; 
+            }
+            
+//            If file is in the stock while transfer request is from customer & vice versa
+//            if ($file->getStatus() == $this->getType()) {
+//               $invalidType[] = $signature; 
+//            }
+
+            // If file is disposed
             if ($file->getStatus() == File::$statusDisposed) {
                $disposed[] = $signature; 
             }
-            // If someone wants to transfer missing file
+            // If file is missing
             if ($file->getStatus() == File::$statusUnknown) {
                $unknown[] = $signature; 
             }             

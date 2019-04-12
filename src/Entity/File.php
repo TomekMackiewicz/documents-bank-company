@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\Criteria;
+use App\Entity\Transfer;
 
 /**
  * @ORM\Table(name="files")
@@ -82,6 +84,30 @@ class File
         $this->transfers = new ArrayCollection();
     }
 
+    public function getLastTransactionForDate($date)
+    {
+        $criteria = Criteria::create()
+            ->orderBy(array('date'=>'DESC'))
+            ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
+            ->andWhere(Criteria::expr()->lte("date", $date))
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        return $this->transfers->matching($criteria)->first();
+    }    
+
+    public function getNextTransactionForDate($date)
+    {
+        $criteria = Criteria::create()
+            ->orderBy(array('date'=>'ASC'))
+            ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
+            ->andWhere(Criteria::expr()->gte("date", $date))
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        return $this->transfers->matching($criteria)->first();
+    } 
+    
     /**
      * @return integer 
      */
