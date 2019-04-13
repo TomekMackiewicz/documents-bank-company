@@ -72,6 +72,7 @@ class Transfer
     
     public function __construct() 
     {
+        $this->date = new \DateTime();
         $this->files = new ArrayCollection();
     }    
 
