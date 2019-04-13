@@ -57,6 +57,7 @@ file_status_disposed: wybrakowany
 file_status_in: w magazynie
 file_status_out: u klienta
 file_status_unknown: zaginiony
+forbidden: brak dostępu
 import: import
 info: info
 
@@ -98,6 +99,7 @@ password_repeat: powtórz hasło
 pdf: pdf
 quantity: ilość
 rate: rata
+return_to_login: wróć do strony logowania
 role_admin: admin
 role_customer: klient
 role_super_admin: super admin

@@ -7,11 +7,11 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td>Number of files: <strong>{{ files.all }}</strong></td>
-                    <td>Files in: <strong>{{ files.in }}</strong></td>
-                    <td>Files out: <strong>{{ files.out }}</strong></td>
-                    <td>Files missing: <strong>{{ files.unknown }}</strong></td>
-                    <td>Files disposed: <strong>{{ files.disposed }}</strong></td>                
+                    <td>{{ 'files_all'|trans|capitalize }}: <strong>{{ files.all }}</strong></td>
+                    <td>{{ 'files_count_in'|trans|capitalize }}: <strong>{{ files.in }}</strong></td>
+                    <td>{{ 'files_count_out'|trans|capitalize }}: <strong>{{ files.out }}</strong></td>
+                    <td>{{ 'files_count_unknown'|trans|capitalize }}: <strong>{{ files.unknown }}</strong></td>
+                    <td>{{ 'files_count_disposed'|trans|capitalize }}: <strong>{{ files.disposed }}</strong></td>                
                 </tr>
             </tbody>
         </table>        

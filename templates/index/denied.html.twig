@@ -4,11 +4,11 @@
 
     <div class="jumbotron col-sm-12 col-md-6 offset-md-3">
       <h1 class="display-1 text-center">403</h1>
-      <h2 class="text-center">Forbidden</h2>
+      <h2 class="text-center">{{ 'forbidden'|trans|capitalize }}</h2>
       <hr class="my-4">
       <p class="text-center">
           <a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_login') }}" role="button">
-              Return to login page
+              {{ 'return_to_login'|trans|capitalize }}
           </a>
       </p>
     </div>    

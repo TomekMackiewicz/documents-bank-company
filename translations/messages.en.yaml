@@ -57,6 +57,7 @@ file_status_disposed: disposed
 file_status_in: in
 file_status_out: out
 file_status_unknown: unknown
+forbidden: forbidden
 import: import
 info: info
 
@@ -95,6 +96,7 @@ password_repeat: repeat password
 pdf: pdf
 quantity: quantity
 rate: rate
+return_to_login: return to login page
 role_admin: admin
 role_customer: customer
 role_super_admin: super admin
