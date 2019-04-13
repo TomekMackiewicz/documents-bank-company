@@ -1,11 +1,11 @@
 
 1) import
 
-2) delete transfer restrictions + info trans (tak samo jak edycja)
+2) delete - transfer restrictions
 
-3) doc location
-
-4) transfer add file - uwzględnić datę!
-
-5) transfer edit - pozwolić na edycję doc
+4) transfer edit - pozwolić na edycję doc
 - blokada zmiany, jeśli tr wcześniejszy lub późniejszy
+
+5) Co kiedy poprzedni / następny tr to adjustment?
+
+Edit jeśli user zablokowany!

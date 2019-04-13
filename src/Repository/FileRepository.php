@@ -8,24 +8,45 @@ use App\Entity\Transfer;
 
 class FileRepository extends EntityRepository 
 {
-    public function getAllFiles($term, $customer, $type)
-    {
-        $status = $type == Transfer::$transferIn ? File::$statusOut : File::$statusIn;
-        
-        return $this->getEntityManager()->createQuery(
-            "SELECT f.signature
+    public function getAllFiles($term, $customer, $type, $date)
+    {        
+        $newDate = date("Y-m-d H:i", strtotime($date));        
+
+        $files = $this->getEntityManager()->createQuery(
+            "SELECT f
              FROM App:File f 
              WHERE f.signature LIKE :signature 
              AND f.customer = :customer
-             AND f.status = :status
              ORDER BY f.signature"
         )->setParameter(":signature", '%'.$term.'%')
          ->setParameter(":customer", $customer)
-         ->setParameter(":status", $status)
          ->setMaxResults(10)
-         ->getArrayResult();        
-    }
+         ->getResult(); 
 
+        $resp = [];        
+        foreach ($files as $file) {
+            $previousTransfer = $file->getLastTransactionForDate($newDate);
+            $nextTransfer = $file->getNextTransactionForDate($newDate);
+            
+            if (false === $previousTransfer && false === $nextTransfer) {
+               $resp[] = ['signature' => $file->getSignature()];
+               continue;                
+            }
+
+            if ((false !== $previousTransfer && $previousTransfer->getType() != $type) && (false !== $nextTransfer && $nextTransfer->getType() != $type)) {
+               $resp[] = ['signature' => $file->getSignature()];
+               continue;
+            }
+
+            if ((false === $nextTransfer) && (false !== $previousTransfer && $previousTransfer->getType() != $type)) {
+               $resp[] = ['signature' => $file->getSignature()];
+            }
+                      
+        }
+     
+        return $resp;       
+    }
+            
     public function filesByType()
     {
         return $this->getEntityManager()->createQuery("

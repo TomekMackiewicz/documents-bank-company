@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Transfer;
 use App\Form\DataTransformer\StringToFileTransformer;
@@ -56,10 +56,10 @@ class TransferType extends AbstractType
                 'label' => false,
                 'required' => false
             ])
-            ->add('date', DateType::class, array(
+            ->add('date', DateTimeType::class, array(
                 'widget' => 'single_text',
                 'label' => false,
-                'format' => 'dd-MM-yyyy',
+                'format' => 'dd-MM-yyyy HH:mm',
                 'html5' => false                
             ));
             

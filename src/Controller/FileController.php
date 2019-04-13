@@ -21,16 +21,17 @@ class FileController extends AbstractController implements LogManagerInterface
     /**
      * API to autocomplete
      * 
-     * @Route("/api/{text}/{customer}/{type}", name="files_api", methods={"GET"})
+     * @Route("/api/{text}/{customer}/{type}/{date}", name="files_api", methods={"GET"})
      * @param string $text
      * @param string $customer
      * @param string $type
+     * @param date $date
      * 
      * @return JSON
      */
-    public function filesAction($text, $customer, $type)
+    public function filesAction($text, $customer, $type, $date)
     {
-        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer, $type);
+        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer, $type, $date);
         $files = array_column($data, 'signature');
 
         return $this->json($files);

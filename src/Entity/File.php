@@ -95,7 +95,7 @@ class File
         $criteria = Criteria::create()
             ->orderBy(array('date'=>'DESC'))
             ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
-            ->andWhere(Criteria::expr()->lte("date", $date))
+            ->andWhere(Criteria::expr()->lt("date", $date))
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -107,7 +107,7 @@ class File
         $criteria = Criteria::create()
             ->orderBy(array('date'=>'ASC'))
             ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
-            ->andWhere(Criteria::expr()->gte("date", $date))
+            ->andWhere(Criteria::expr()->gt("date", $date))
             ->setFirstResult(0)
             ->setMaxResults(1);
 

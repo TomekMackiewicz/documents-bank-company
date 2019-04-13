@@ -37,7 +37,7 @@ class Transfer
 
     /**
      * @var \Date
-     * @ORM\Column(name="date", type="date")    
+     * @ORM\Column(name="date", type="datetime")    
      */
     private $date;
 
@@ -101,21 +101,6 @@ class Transfer
             $previousTransfer = $file->getLastTransactionForDate($transferDate);
             $nextTransfer = $file->getNextTransactionForDate($transferDate);
 
-            // If previous transfer and previous transfer type equals this transfer type
-            if (false !== $previousTransfer && $previousTransfer->getType() == $this->getType()) {
-               $invalidType[] = $signature; 
-            }
-            
-            // If next transfer and next transfer type not equals this transfer type
-            if (false !== $nextTransfer && $nextTransfer->getType() == $this->getType()) {
-               $invalidType[] = $signature; 
-            }
-            
-//            If file is in the stock while transfer request is from customer & vice versa
-//            if ($file->getStatus() == $this->getType()) {
-//               $invalidType[] = $signature; 
-//            }
-
             // If file is disposed
             if ($file->getStatus() == File::$statusDisposed) {
                $disposed[] = $signature; 
@@ -123,7 +108,18 @@ class Transfer
             // If file is missing
             if ($file->getStatus() == File::$statusUnknown) {
                $unknown[] = $signature; 
-            }             
+            }  
+            
+            // If previous transfer and previous transfer type equals this transfer type
+            if (false !== $previousTransfer && $previousTransfer->getType() == $this->getType()) {
+               $invalidType[] = $signature;
+               continue;
+            }
+            
+            // If next transfer and next transfer type not equals this transfer type
+            if (false !== $nextTransfer && $nextTransfer->getType() == $this->getType()) {
+               $invalidType[] = $signature; 
+            }           
         }
 
         foreach ($signatures as $signature) {
