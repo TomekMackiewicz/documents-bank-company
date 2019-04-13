@@ -89,6 +89,7 @@
                     <tr>
                         <th scope="col">{{ 'signature'|trans|capitalize }}</th>
                         <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'location'|trans|capitalize }}</th>
                         <th scope="col">{{ 'note'|trans|capitalize }}</th>
                     </tr>
                 </thead>
@@ -109,6 +110,7 @@
                                     <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
                                 {% endif %}
                             </td>
+                            <td>{{ file.location }}</td>
                             <td>{{ file.note }}</td>
                         </tr>
                     {% endfor %}

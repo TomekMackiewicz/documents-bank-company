@@ -32,6 +32,10 @@ class FileType extends AbstractType
                 ],
                 'label' => false
             ])
+            ->add('location', TextareaType::class, [
+                'label' => false,
+                'required' => false
+            ])                
             ->add('note', TextareaType::class, [
                 'label' => false,
                 'required' => false

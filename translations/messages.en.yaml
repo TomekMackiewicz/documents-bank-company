@@ -67,7 +67,7 @@ info_file_index: Combined search by file signature, status and / or customer.<br
                  You can search by part of the signature (ex. A1 will mach file A101 as well as file A123).<br>
                  You can also get combined results for multiple statuses or customers.<br>Search results are limited to 100 records.
 info_file_new: Add one or multiple files (comma separated).<br>
-               Form is case insesitive, meaning that you don't need to use shift or capslock ;)<br>
+               Form is case insesitive, meaning that you don't need to use shift or capslock<br>
                Signature should be <u>unique for given customer</u>.
 info_file_show: Here you can see file details and also check inventory in's and out's for given period.<br>
                 Search results are limited to 100 records.<br>
@@ -84,7 +84,8 @@ info_transfer_new: You can add multiple files - comma separated.<br>
                    <strong>If document status (in, out) for given date makes it impossible to perform operation, consider warehouse transfer (edit document page).</strong>
 info_transfer_show: <strong>Document status (in, out) for given date can make it impossible to perform operation, if it is at risk of losing data integrity.<br>
                     For example if removing the document would cause two consecutive deliveries.</strong>
- 
+
+location: location
 log: log
 month: month
 no_results: no results

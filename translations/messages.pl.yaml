@@ -68,7 +68,7 @@ info_file_index: Możesz wyszukać dokumenty wpisując sygnaturę lub jej fragme
                  Pole sygnatury działa na zasadzie wildcard (np. po wpisaniu A1 wyświetlą się dokumenty A101 oraz A123).<br>
                  Wyniki wyszukiwania są ograniczone do 100 rekordów.
 info_file_new: Możesz dodać jeden lub więcej dokumentów (oddzielając kolejne przecinkiem).<br>
-               Formularz konwertuje sygnatury do wielkich liter, nie musisz więc używać shifta ani capslocka ;)<br>
+               Formularz konwertuje sygnatury do wielkich liter, nie musisz więc używać shifta ani capslocka<br>
                Sygnatura powinna być <u>unikalna dla danego klienta</u>.
 info_file_show: Tutaj wyświetlane są szczegóy dokumentu, dodatkowo można wyświetlić jego historię (przywozy, dostawy, przesunięcia magazynowe dla podanego zakresu dat).<br>
                 Wyniki wyszukiwania są ograniczone do 100 rekordów.<br>
@@ -87,6 +87,8 @@ info_transfer_new: Możesz dodać wiele dokuemntów oddzielonych przecinkiem.<br
                    (ekran edycji dokumentu).</strong>
 info_transfer_show: Status dokumentu dla danej daty może uniemożliwiać operację usuwania, jeśli grozi to utracie spójności danych.<br>
                     Np. gdyby usunięcie zamówienia danego dokumentu spowodowało powstanie dwóch kolejnych wydań magazynowych.                    
+
+location: lokalizacja
 log: log
 month: miesiąc
 no_results: brak wyników

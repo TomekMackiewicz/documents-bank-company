@@ -61,6 +61,12 @@ class File
 
     /**
      * @var string
+     * @ORM\Column(name="location", type="text", nullable=true)       
+     */
+    private $location; 
+    
+    /**
+     * @var string
      * @ORM\Column(name="note", type="text", nullable=true)       
      */
     private $note;    
@@ -152,6 +158,24 @@ class File
         return $this->status;
     }
 
+    /**
+     * @param string $location
+     * @return File
+     */
+    public function setLocation($location) 
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return string 
+     */
+    public function getLocation() 
+    {
+        return $this->location;
+    }  
+    
     /**
      * @param string $note
      * @return File

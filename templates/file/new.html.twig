@@ -53,6 +53,17 @@
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
             <div class="input-group">
+                {{ form_errors(form.location) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ 'location'|trans|capitalize }}</div>
+            </div>    
+                {{ form_widget(form.location) }}
+            </div>
+        </div> 
+    </div>
+    <div class="row pb-4"> 
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
                 {{ form_errors(form.note) }}
             <div class="input-group-prepend">
                 <div class="input-group-text">{{ 'note'|trans|capitalize }}</div>

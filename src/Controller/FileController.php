@@ -94,6 +94,7 @@ class FileController extends AbstractController implements LogManagerInterface
                 $file = new File();
                 $file->setSignature($signature);
                 $file->setStatus($data->getStatus());
+                $file->setLocation($data->getLocation());
                 $file->setNote($data->getNote());
                 $file->setCustomer($data->getCustomer());
                 $file->addTransfer($transfer);
