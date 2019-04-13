@@ -7,10 +7,10 @@ use App\Entity\File;
 use App\Entity\Transfer;
 
 class FileRepository extends EntityRepository 
-{
-    public function getAllFiles($term, $customer, $type, $date)
+{    
+    public function getAvailableFiles($term, $customer, $type, $date)
     {        
-        $newDate = date("Y-m-d H:i", strtotime($date));        
+        $date = date("Y-m-d H:i", strtotime($date));        
 
         $files = $this->getEntityManager()->createQuery(
             "SELECT f
@@ -23,28 +23,14 @@ class FileRepository extends EntityRepository
          ->setMaxResults(10)
          ->getResult(); 
 
-        $resp = [];        
+        $availableFiles = [];        
         foreach ($files as $file) {
-            $previousTransfer = $file->getLastTransactionForDate($newDate);
-            $nextTransfer = $file->getNextTransactionForDate($newDate);
-            
-            if (false === $previousTransfer && false === $nextTransfer) {
-               $resp[] = ['signature' => $file->getSignature()];
-               continue;                
-            }
-
-            if ((false !== $previousTransfer && $previousTransfer->getType() != $type) && (false !== $nextTransfer && $nextTransfer->getType() != $type)) {
-               $resp[] = ['signature' => $file->getSignature()];
-               continue;
-            }
-
-            if ((false === $nextTransfer) && (false !== $previousTransfer && $previousTransfer->getType() != $type)) {
-               $resp[] = ['signature' => $file->getSignature()];
-            }
-                      
+            if ($this->getFileStatusForDate($file, $date, $type)) {
+                $availableFiles[] = ['signature' => $file->getSignature()];
+            }         
         }
      
-        return $resp;       
+        return $availableFiles;       
     }
             
     public function filesByType()
@@ -132,4 +118,24 @@ class FileRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getFileStatusForDate($file, $date, $type)
+    {
+        $previousTransfer = $file->getLastTransactionForDate($date);
+        $nextTransfer = $file->getNextTransactionForDate($date);
+
+        if (false === $previousTransfer && false === $nextTransfer) {
+           return true;                
+        }
+
+        if ((false !== $previousTransfer && $previousTransfer->getType() != $type) && (false !== $nextTransfer && $nextTransfer->getType() != $type)) {
+           return true;
+        }
+
+        if ((false === $nextTransfer) && (false !== $previousTransfer && $previousTransfer->getType() != $type)) {
+           return true;
+        } 
+        
+        return false;
+    }    
+    
 }

@@ -82,8 +82,8 @@ info_transfer_new: You can add multiple files - comma separated.<br>
                    Files are restricted to the choosen customer and type of transfer.<br>
                    Choosing document that belongs to different customer or has invalid status (ex. disposed) will prevent form from being submitted.
                    <strong>If document status (in, out) for given date makes it impossible to perform operation, consider warehouse transfer (edit document page).</strong>
-info_transfer_show: <strong>Document status (in, out) for given date can make it impossible to perform operation, if it is at risk of losing data integrity.<br>
-                    For example if removing the document would cause two consecutive deliveries.</strong>
+info_transfer_show: Document status (in, out) for given date can make it impossible to delete, if it is at risk of losing data integrity.<br>
+                    For example if removing the document would cause two consecutive deliveries.
 
 location: location
 log: log

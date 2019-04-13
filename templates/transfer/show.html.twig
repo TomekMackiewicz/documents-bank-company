@@ -55,7 +55,7 @@
             </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger" {%if canDelete == false%}disabled{%endif%}>
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}

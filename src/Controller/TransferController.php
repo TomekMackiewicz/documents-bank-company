@@ -98,10 +98,24 @@ class TransferController extends AbstractController implements LogManagerInterfa
      * @Route("/{id}", name="transfer_show", methods={"GET","POST"})
      */
     public function showAction(Transfer $transfer) 
-    {        
+    {
+        $em = $this->getDoctrine()->getManager(); 
+        $transferDate = $transfer->getDate()->format('Y-m-d H:i');
+        $transferType = $transfer->getType();
+        
+        $canDelete = true;
+        foreach ($transfer->getFiles() as $file) {
+            $fileStatus = $em->getRepository('App:File')->getFileStatusForDate($file, $transferDate, $transferType);
+            
+            if ($fileStatus === false) {
+                $canDelete = false;
+            }
+        }        
+        
         return $this->render('transfer/show.html.twig', [
             'transfer' => $transfer,            
-            'delete_form' => $this->createDeleteForm($transfer)->createView()
+            'delete_form' => $this->createDeleteForm($transfer)->createView(),
+            'canDelete' => $canDelete
         ]);
     }    
 
@@ -144,7 +158,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
             'edit_form' => $editForm->createView(),
             'delete_form' => $this->createDeleteForm($transfer)->createView()
         ));
-    }    
+    }
     
     /**
      * Delete transfer
