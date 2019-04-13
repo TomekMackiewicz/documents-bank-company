@@ -31,7 +31,7 @@ class FileController extends AbstractController implements LogManagerInterface
      */
     public function filesAction($text, $customer, $type, $date)
     {
-        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAllFiles($text, $customer, $type, $date);
+        $data = $this->getDoctrine()->getManager()->getRepository('App:File')->getAvailableFiles($text, $customer, $type, $date);
         $files = array_column($data, 'signature');
 
         return $this->json($files);

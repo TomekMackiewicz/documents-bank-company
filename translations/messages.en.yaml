@@ -124,6 +124,7 @@ transfers_out: transfers out
 transfers_show: show transfers
 type: type
 unit_price: unit price
+upload: upload
 user: user
 user_address: user adddress
 user_created: User created
