@@ -135,7 +135,7 @@ class FileController extends AbstractController implements LogManagerInterface
 
         if ($transfersForm->isSubmitted() && $transfersForm->isValid()) {
             $dateFrom = $transfersForm["dateFrom"]->getData()->format('Y-m-d');
-            $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d');
+            $dateTo = $transfersForm["dateTo"]->getData()->format('Y-m-d') . '23:59:59';
             $sort = $transfersForm->get("sort")->getData();
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $transfersFromTo = $em->getRepository('App:Transfer')

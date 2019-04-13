@@ -37,6 +37,7 @@ class TransferController extends AbstractController implements LogManagerInterfa
             $dateTo = $searchCriteria["dateTo"]->format('Y-m-d');
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
                 $em = $this->getDoctrine()->getManager();
+                $searchCriteria["dateTo"]->add(new \DateInterval("PT23H59M59S")); 
                 $searchResults = $em->getRepository('App:Transfer')->searchTransfers($searchCriteria); 
             } else { 
                 $this->addFlash('error', $translator->trans('start_date_higher_than_end_date'));

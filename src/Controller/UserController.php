@@ -62,6 +62,7 @@ class UserController extends AbstractController implements LogManagerInterface
             $dateFrom = $transfersSearchCriteria["dateFrom"]->format('Y-m-d');
             $dateTo = $transfersSearchCriteria["dateTo"]->format('Y-m-d');
             if(strtotime($dateFrom) <= strtotime($dateTo)) {
+                $transfersSearchCriteria["dateTo"]->add(new \DateInterval("PT23H59M59S"));
                 $em = $this->getDoctrine()->getManager();
                 $transfersSearchResults = $em->getRepository('App:Transfer')->searchTransfers($transfersSearchCriteria); 
             } else { 
