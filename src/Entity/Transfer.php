@@ -81,7 +81,7 @@ class Transfer
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        $transferDate = $this->getDate()->format('Y-m-d');
+        $transferDate = $this->getDate()->format('Y-m-d H:i');
         $files = $this->getFiles();
         $signatures = [];
         $duplicates = [];
