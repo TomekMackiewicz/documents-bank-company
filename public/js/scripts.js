@@ -34,7 +34,7 @@ $(document).ready(function() {
                 var customer = $( "#app_transfer_customer" ).val();
                 var type = $( "#app_transfer_type" ).val();
                 var date = $( "#app_transfer_date" ).val();
-                $.getJSON( "http://localhost:8000/admin/file/api/"+term.trim()+"/"+customer+"/"+type+"/"+date, {}, response );
+                $.getJSON( "/admin/file/api/"+term.trim()+"/"+customer+"/"+type+"/"+date, {}, response );
             },
             search: function() {
                 var term = extractLast( this.value );
@@ -143,7 +143,7 @@ $(document).ready(function() {
         metadata.replace('hidden', '');
 
         $.ajax({
-            url: 'http://localhost:8000/print',
+            url: '/print',
             method: 'POST',
             data: { content: content, metadata: metadata },
             xhrFields: {
