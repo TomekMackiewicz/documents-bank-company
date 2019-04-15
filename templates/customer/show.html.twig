@@ -3,40 +3,26 @@
 {% block body %}
     
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>{{ 'customer'|trans|capitalize }}:</td>
-                            <th>{{ customer.name }}</th>                         
-                        </tr>
-                    </tbody>
-                </table> 
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-outline-success" href="{{ path('customer_edit', { 'id': customer.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light" id="print" {%if transfersFromTo is empty%}disabled{%endif%}>
+              <button class="btn btn-outline-primary" id="print" {%if transfersFromTo is empty%}disabled{%endif%}>
                   <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
               </button>        
             </li>
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('customer_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('customer_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>            
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-outline-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
@@ -46,18 +32,27 @@
 </div>     
 <div class="row pb-4">
     <div class="col-sm-12">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>{{ 'customer_address'|trans|capitalize }}: {{ customer.address }}</td>
-                    <td>{{ 'files_all'|trans|capitalize }}: <strong>{{ files.all }}</strong></td>
-                    <td>{{ 'files_count_in'|trans|capitalize }}: <strong>{{ files.in }}</strong></td>
-                    <td>{{ 'files_count_out'|trans|capitalize }}: <strong>{{ files.out }}</strong></td>
-                    <td>{{ 'files_count_unknown'|trans|capitalize }}: <strong>{{ files.unknown }}</strong></td>
-                    <td>{{ 'files_count_disposed'|trans|capitalize }}: <strong>{{ files.disposed }}</strong></td>                
-                </tr>
-            </tbody>
-        </table>        
+        <h2>{{ customer.name }}</h2>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                {{ 'customer_address'|trans|capitalize }}: {{ customer.address }}
+            </li>
+            <li class="list-group-item">
+                {{ 'files_all'|trans|capitalize }}: <strong>{{ files.all }}</strong>
+            </li>
+            <li class="list-group-item">
+                {{ 'files_count_in'|trans|capitalize }}: <strong>{{ files.in }}</strong>
+            </li>
+            <li class="list-group-item">
+                {{ 'files_count_out'|trans|capitalize }}: <strong>{{ files.out }}</strong>
+            </li>
+            <li class="list-group-item">
+                {{ 'files_count_unknown'|trans|capitalize }}: <strong>{{ files.unknown }}</strong>
+            </li>
+            <li class="list-group-item">
+                {{ 'files_count_disposed'|trans|capitalize }}: <strong>{{ files.disposed }}</strong>
+            </li>
+        </ul>       
     </div>
 </div>   
 <div class="row pb-4">
@@ -85,6 +80,8 @@
                 {{ form_widget(transfersForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
+    </div>
+    <div class="row pb-4"> 
         <div class="col-auto">
             <div class="input-group">
                 {{ form_errors(transfersForm.type) }}
@@ -104,7 +101,7 @@
             </div>                    
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>

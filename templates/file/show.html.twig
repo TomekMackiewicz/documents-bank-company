@@ -3,66 +3,71 @@
 {% block body %}
     
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>{{ 'signature'|trans|capitalize }}:</td>
-                            <th>{{ file.signature }}</th>
-                            <td>{{ 'customer'|trans|capitalize }}:</td>
-                            <th><a href="{{ path('customer_show', {'id':file.customer.id}) }}">{{ file.customer.name }}</a></th>
-                            <td>{{ 'status'|trans|capitalize }}:</td>
-                            <th>
-                                {% if file.status == 0 %}
-                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
-                                {% elseif file.status == 1 %}
-                                    {{ 'file_status_in'|trans|capitalize }}                                    
-                                {% elseif file.status == 2 %}
-                                    {{ 'file_status_out'|trans|capitalize }}
-                                {% else %}
-                                    <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
-                                {% endif %}
-                            </th>
-                        </tr>
-                    </tbody>
-                </table> 
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('file_edit', { 'id': file.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-outline-success" href="{{ path('file_edit', { 'id': file.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light" id="print" {%if transfersFromTo is empty%}disabled{%endif%}>
+              <button class="btn btn-outline-primary" id="print" {%if transfersFromTo is empty%}disabled{%endif%}>
                   <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
               </button>                  
             </li>
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('file_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('file_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_show'|trans|capitalize }}">
+              <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_show'|trans|capitalize }}">
                   <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-outline-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
         </ul>
     </div>
-</div>    
+</div> 
+<div class="row pb-4">
+    <div class="col-sm-12">
+        <h2>{{ file.signature }}</h2>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                {{ 'customer'|trans|capitalize }}:
+                <a href="{{ path('customer_show', {'id':file.customer.id}) }}">
+                    {{ file.customer.name }}
+                </a>        
+            </li>
+            <li class="list-group-item">
+                {{ 'status'|trans|capitalize }}:
+                {% if file.status == 0 %}
+                    <span class="badge badge-pill badge-warning">
+                        {{ 'file_status_disposed'|trans|capitalize }}
+                    </span>
+                {% elseif file.status == 1 %} 
+                    <span class="badge badge-pill badge-info">
+                        {{ 'file_status_in'|trans|capitalize }}
+                    </span>
+                {% elseif file.status == 2 %}
+                    <span class="badge badge-pill badge-info">
+                        {{ 'file_status_out'|trans|capitalize }}
+                    </span>
+                {% else %}
+                    <span class="badge badge-pill badge-danger">
+                        {{ 'file_status_unknown'|trans|capitalize }}
+                    </span>
+                {% endif %}        
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="row pb-4">
     <div class="col-sm-12">
         <h4>{{ 'transfers_show'|trans|capitalize }}</h4>
@@ -98,7 +103,7 @@
             </div>                    
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-light float-right">
+            <button type="submit" class="btn btn-outline-primary float-right">
                 <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>
@@ -106,7 +111,7 @@
 {{ form_end(transfersForm) }}                    
 
 <div class="row pb-4">
-    <div class="col-auto printable">         
+    <div class="col-sm-12 printable">         
         {% if transfersFromTo is not empty %}
             <table class="table table-striped">
                 <thead class="thead-light">

@@ -3,21 +3,19 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a><h2>{{ 'customers'|trans|capitalize }}</h2></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
           <li class="nav-item pl-2">
-            <a class="btn btn-light" href="{{ path('customer_new') }}">
+            <a class="btn btn-outline-success" href="{{ path('customer_new') }}">
                 <i class="fas fa-plus"></i> {{ 'customer_new'|trans|capitalize }}
             </a>
           </li>        
         </ul>
+    </div>
+</div>
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'customers'|trans|capitalize }}</h2>
     </div>
 </div>
 <div class="row pb-4">   

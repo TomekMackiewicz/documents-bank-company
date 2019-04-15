@@ -3,24 +3,21 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a><h2>{{ 'log'|trans|capitalize }}</h2></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
           <li class="nav-item pl-2">
-            <button class="btn btn-light" id="print" {%if searchResults is empty%}disabled{%endif%}>
+            <button class="btn btn-outline-primary" id="print" {%if searchResults is empty%}disabled{%endif%}>
                 <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
             </button>        
           </li>         
         </ul>
     </div>
 </div>
-                    
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'log'|trans|capitalize }}</h2>
+    </div>    
+</div>
 {{ form_start(form) }}
     <div class="row pb-4">            
         <div class="col-auto">                    
@@ -42,7 +39,7 @@
             </div>
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>

@@ -3,28 +3,24 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a>
-                    <h2>{{ 'transfer_new'|trans|capitalize }}</h2>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('transfer_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('transfer_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_new'|trans|capitalize }}">
+              <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_new'|trans|capitalize }}">
                   <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>
         </ul>
+    </div>
+</div>
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'transfer_new'|trans|capitalize }}</h2>
     </div>
 </div>
 {{ form_start(form) }}            
@@ -38,6 +34,28 @@
                 {{ form_widget(form.type) }}
             </div>
         </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.customer) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
+            </div>    
+                {{ form_widget(form.customer) }}
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-8 col-lg-4">
+            <div class="input-group">
+                {{ form_errors(form.date) }}
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ 'date'|trans|capitalize }}</div>
+            </div>    
+                {{ form_widget(form.date, { 'attr' : { 'class': 'datetimepicker' }}) }}
+            </div>
+        </div> 
     </div>
     <div class="row pb-4">
         <div class="col-md-8 col-lg-4">
@@ -61,17 +79,6 @@
             </div>
         </div>
     </div>
-    <div class="row pb-4">
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.customer) }}
-            <div class="input-group-prepend">
-                <div class="input-group-text">{{ 'customer'|trans|capitalize }}</div>
-            </div>    
-                {{ form_widget(form.customer) }}
-            </div>
-        </div>
-    </div>
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
             <div class="input-group">
@@ -83,20 +90,9 @@
             </div>
         </div> 
     </div>
-    <div class="row pb-4">
-        <div class="col-md-8 col-lg-4">
-            <div class="input-group">
-                {{ form_errors(form.date) }}
-            <div class="input-group-prepend">
-                <div class="input-group-text">{{ 'date'|trans|capitalize }}</div>
-            </div>    
-                {{ form_widget(form.date, { 'attr' : { 'class': 'datetimepicker' }}) }}
-            </div>
-        </div> 
-    </div>
     <div class="row pb-4">            
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}
             </button>
         </div>            

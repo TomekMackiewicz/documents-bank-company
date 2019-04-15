@@ -3,27 +3,20 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a><h2>{{ 'calculate'|trans|capitalize }}</h2></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('fee_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-                <button class="btn btn-light" id="print" {%if calculation is null%}disabled{%endif%}>
+                <button class="btn btn-outline-primary" id="print" {%if calculation is null%}disabled{%endif%}>
                     <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
                 </button>        
             </li>
             <li class="nav-item pl-2">
-                <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+                <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                         Todo.
                 ">
                     <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
@@ -32,7 +25,11 @@
         </ul>
     </div>
 </div>    
-    
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'calculate'|trans|capitalize }}</h2>
+    </div>    
+</div>    
 {{ form_start(form) }}            
     <div class="row pb-4">    
         <div class="col-auto">
@@ -54,7 +51,7 @@
             </div>
         </div> 
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'calculate'|trans|capitalize }}
             </button>
         </div>            

@@ -3,48 +3,43 @@
 {% block body %}
     
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>{{ 'customer'|trans|capitalize }}:</td>
-                            <th>{{ transfer.customer.name }}</th>
-                            <td>{{ 'type'|trans|capitalize }}:</td>
-                            <th>
-                                {% if transfer.type == 1 %}
-                                    {{ 'transfer_in'|trans|capitalize }}
-                                {% elseif transfer.type == 2 %}
-                                    {{ 'transfer_out'|trans|capitalize }}
-                                {% else %}
-                                    {{ 'transfer_adjustment'|trans|capitalize }}
-                                {% endif %}
-                            </th>
-                            <td>{{ 'date'|trans|capitalize }}:</td>
-                            <th>{{ transfer.date|date('Y-m-d') }}</th>                            
-                        </tr>
-                    </tbody>
-                </table> 
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">  
             <li class="nav-item pl-2">
-              <button class="btn btn-light" id="print" {%if transfer.files is empty%}disabled{%endif%}>
+              <button class="btn btn-outline-primary" id="print" {%if transfer.files is empty%}disabled{%endif%}>
                   <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
               </button>        
             </li>
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('user_transfers') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('user_transfers') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>             
         </ul>
     </div>
 </div>
-
+<div class="row pb-4">
+    <div class="col-sm-12">     
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                {{ 'customer'|trans|capitalize }}: {{ transfer.customer.name }}
+            </li>
+            <li class="list-group-item">
+                {{ 'type'|trans|capitalize }}:
+                {% if transfer.type == 1 %}
+                    {{ 'transfer_in'|trans|capitalize }}
+                {% elseif transfer.type == 2 %}
+                    {{ 'transfer_out'|trans|capitalize }}
+                {% else %}
+                    {{ 'transfer_adjustment'|trans|capitalize }}
+                {% endif %}                
+            </li>
+            <li class="list-group-item">
+                {{ 'date'|trans|capitalize }}: {{ transfer.date|date('Y-m-d') }}
+            </li>
+        </ul>    
+    </div>    
+</div>
 {% if transfer.boxes > 0 %}
     <div class="row pb-4">
         <div class="col-sm-12">

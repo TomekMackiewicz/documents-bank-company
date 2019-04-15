@@ -89,6 +89,7 @@ info_transfer_new: Możesz dodać wiele dokuemntów oddzielonych przecinkiem.<br
 info_transfer_show: Status dokumentu dla danej daty może uniemożliwiać operację usuwania, jeśli grozi to utracie spójności danych.<br>
                     Np. gdyby usunięcie zamówienia danego dokumentu spowodowało powstanie dwóch kolejnych wydań magazynowych.                    
 
+last_login: ostatnie logowanie
 location: lokalizacja
 log: log
 month: miesiąc

@@ -3,25 +3,16 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a>
-                    <h2>{{ 'user_edit'|trans|capitalize }} {{ user.username }}</h2>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('user_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('user_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-outline-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
@@ -29,7 +20,11 @@
         </ul>
     </div>
 </div>    
-    
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'user_edit'|trans|capitalize }} {{ user.username }}</h2>
+    </div>    
+</div>    
 {{ form_start(edit_form) }}            
     <div class="row pb-4"> 
         <div class="col-md-8 col-lg-4">
@@ -99,7 +94,7 @@
     </div>             
     <div class="row pb-4"> 
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
             </button>
         </div>            

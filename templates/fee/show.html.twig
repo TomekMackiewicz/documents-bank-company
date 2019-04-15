@@ -3,30 +3,21 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a>
-                    <h2>{{ 'fee_for'|trans|capitalize }} {{ fee.customer.name }}</h2>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('fee_edit', { 'id': fee.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-outline-success" href="{{ path('fee_edit', { 'id': fee.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('fee_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('fee_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>            
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-outline-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
@@ -34,25 +25,31 @@
         </ul>
     </div>
 </div> 
-            
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'fee_for'|trans|capitalize }} {{ fee.customer.name }}</h2>
+    </div>    
+</div>
 <div class="row pb-4">
     <div class="col-sm-12">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>{{ 'transfers_in'|trans|capitalize }}:</td>
-                    <th>{{ fee.import }}</th>
-                    <td>{{ 'transfers_out'|trans|capitalize }}:</td>
-                    <th>{{ fee.delivery }}</th>
-                    <td>{{ 'storage'|trans|capitalize }}:</td>
-                    <th>{{ fee.storage }}</th>
-                    <td>{{ 'box_price'|trans|capitalize }}:</td>
-                    <th>{{ fee.boxPrice }}</th>
-                    <td>{{ 'customer'|trans|capitalize }}:</td>
-                    <th><a href="{{ path('customer_show', {'id':fee.customer.id}) }}">{{ fee.customer.name }}</a></th>
-                </tr>
-            </tbody>
-        </table>         
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                {{ 'transfers_in'|trans|capitalize }}: {{ fee.import }}
+            </li>
+            <li class="list-group-item">
+                {{ 'transfers_out'|trans|capitalize }}: {{ fee.delivery }}
+            </li>
+            <li class="list-group-item">
+                {{ 'storage'|trans|capitalize }}: {{ fee.storage }}
+            </li>
+            <li class="list-group-item">
+                {{ 'box_price'|trans|capitalize }}: {{ fee.boxPrice }}
+            </li>
+            <li class="list-group-item">
+                {{ 'customer'|trans|capitalize }}:
+                <a href="{{ path('customer_show', {'id':fee.customer.id}) }}">{{ fee.customer.name }}</a>
+            </li>
+        </ul>        
     </div>
 </div>
    

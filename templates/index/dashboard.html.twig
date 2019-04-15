@@ -3,18 +3,35 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-12">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>{{ 'files_all'|trans|capitalize }}: <strong>{{ files.all }}</strong></td>
-                    <td>{{ 'files_count_in'|trans|capitalize }}: <strong>{{ files.in }}</strong></td>
-                    <td>{{ 'files_count_out'|trans|capitalize }}: <strong>{{ files.out }}</strong></td>
-                    <td>{{ 'files_count_unknown'|trans|capitalize }}: <strong>{{ files.unknown }}</strong></td>
-                    <td>{{ 'files_count_disposed'|trans|capitalize }}: <strong>{{ files.disposed }}</strong></td>                
-                </tr>
-            </tbody>
-        </table>        
+{#    <div class="col-sm-3">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ files.all }}</h1>
+            <p class="lead">{{ 'files_all'|trans|capitalize }}</p>
+        </div>      
+    </div>#}
+    <div class="col-sm-3">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ files.in }}</h1>
+            <p class="lead">{{ 'files_count_in'|trans|capitalize }}</p>
+        </div>      
+    </div>
+    <div class="col-sm-3">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ files.out }}</h1>
+            <p class="lead">{{ 'files_count_out'|trans|capitalize }}</p>
+        </div>      
+    </div>
+    <div class="col-sm-3">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ files.unknown }}</h1>
+            <p class="lead">{{ 'files_count_unknown'|trans|capitalize }}</p>
+        </div>      
+    </div>
+    <div class="col-sm-3">
+        <div class="jumbotron">
+            <h1 class="display-4">{{ files.disposed }}</h1>
+            <p class="lead">{{ 'files_count_disposed'|trans|capitalize }}</p>
+        </div>      
     </div>
 </div>    
     

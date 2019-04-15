@@ -3,51 +3,25 @@
 {% block body %}
     
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>{{ 'customer'|trans|capitalize }}:</td>
-                            <th><a href="{{ path('customer_show', {'id':transfer.customer.id}) }}">{{ transfer.customer.name }}</a></th>
-                            <td>{{ 'type'|trans|capitalize }}:</td>
-                            <th>
-                                {% if transfer.type == 1 %}
-                                    {{ 'transfer_in'|trans|capitalize }}
-                                {% elseif transfer.type == 2 %}
-                                    {{ 'transfer_out'|trans|capitalize }}
-                                {% else %}
-                                    {{ 'transfer_adjustment'|trans|capitalize }}
-                                {% endif %}
-                            </th>
-                            <td>{{ 'date'|trans|capitalize }}:</td>
-                            <th>{{ transfer.date|date('Y-m-d') }}</th>                            
-                        </tr>
-                    </tbody>
-                </table> 
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('transfer_edit', { 'id': transfer.id }) }}" class="btn btn-default inline">
+                <a class="btn btn-outline-success" href="{{ path('transfer_edit', { 'id': transfer.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
             <li class="nav-item pl-2">
-              <button class="btn btn-light" id="print" {%if transfer.files is empty%}disabled{%endif%}>
+              <button class="btn btn-outline-primary" id="print" {%if transfer.files is empty%}disabled{%endif%}>
                   <i class="fas fa-print"></i> {{ 'pdf'|trans|capitalize }}
               </button>        
             </li>
             <li class="nav-item pl-2">
-                <a class="btn btn-light" href="{{ path('transfer_index') }}" class="btn btn-default inline">
+                <a class="btn btn-outline-secondary" href="{{ path('transfer_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item pl-2">
-              <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
+              <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                       {{ 'info_transfer_show'|trans|capitalize }}
               ">
                   <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
@@ -55,11 +29,36 @@
             </li>             
             <li class="nav-item pl-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
-                    <button type="submit" class="btn btn-danger" {%if canDelete == false%}disabled{%endif%}>
+                    <button type="submit" class="btn btn-outline-danger" {%if canDelete == false%}disabled{%endif%}>
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
                     </button>
                 {{ form_end(delete_form) }}
             </li> 
+        </ul>
+    </div>
+</div>
+<div class="row pb-4">
+    <div class="col-sm-6">               
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                {{ 'customer'|trans|capitalize }}:
+                <a href="{{ path('customer_show', {'id':transfer.customer.id}) }}">
+                    {{ transfer.customer.name }}
+                </a>
+            </li>
+            <li class="list-group-item">
+                {{ 'type'|trans|capitalize }}:
+                {% if transfer.type == 1 %}
+                    {{ 'transfer_in'|trans|capitalize }}
+                {% elseif transfer.type == 2 %}
+                    {{ 'transfer_out'|trans|capitalize }}
+                {% else %}
+                    {{ 'transfer_adjustment'|trans|capitalize }}
+                {% endif %}                
+            </li>
+            <li class="list-group-item">
+                 {{ 'date'|trans|capitalize }}: {{ transfer.date|date('Y-m-d') }}                
+            </li>
         </ul>
     </div>
 </div>

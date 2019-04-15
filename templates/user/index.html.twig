@@ -3,22 +3,20 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a><h2>{{ 'users'|trans|capitalize }}</h2></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
           <li class="nav-item pl-2">
-            <a class="btn btn-light" href="{{ path('user_new') }}">
+            <a class="btn btn-outline-success" href="{{ path('user_new') }}">
                 <i class="fas fa-plus"></i> {{ 'user_new'|trans|capitalize }}
             </a>
           </li>        
         </ul>
     </div>
+</div>
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'users'|trans|capitalize }}</h2>
+    </div>    
 </div>
 <div class="row pb-4">   
     <div class="col-sm-12">
@@ -27,8 +25,9 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">{{ 'user_name'|trans|capitalize }}</th>
-                        <th scope="col">{{ 'user_address'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'email'|trans|capitalize }}</th>
                         <th scope="col">{{ 'user_role'|trans|capitalize }}</th>
+                        <th scope="col">{{ 'last_login'|trans|capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +50,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>
+                            <td>{{ user.lastLogin|date('Y-m-d H:i') }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

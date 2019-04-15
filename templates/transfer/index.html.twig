@@ -3,34 +3,31 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
-        <ul class="nav">
-            <li class="nav-item">
-                <a><h2>{{ 'transfers'|trans|capitalize }}</h2></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav float-right">
           <li class="nav-item pl-2">
-            <a class="btn btn-light" href="{{ path('transfer_new') }}">
+            <a class="btn btn-outline-primary" href="{{ path('transfer_new') }}">
                 <i class="fas fa-plus"></i> {{ 'transfer_new'|trans|capitalize }}
             </a>
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light" id="print" {%if searchResults is empty%}disabled{%endif%}>
+            <button class="btn btn-outline-primary" id="print" {%if searchResults is empty%}disabled{%endif%}>
                 <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
             </button>        
           </li>
           <li class="nav-item pl-2">
-            <button class="btn btn-light" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_index'|trans }}">
+            <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_transfer_index'|trans }}">
                 <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
             </button>        
           </li>          
         </ul>
     </div>
 </div>
-            
+<div class="row pb-4">
+    <div class="col-sm-12">               
+        <h2>{{ 'transfers'|trans|capitalize }}</h2>
+    </div>
+</div>
 {{ form_start(searchForm) }}
     <div class="row pb-4">            
         <div class="col-auto">                    
@@ -51,6 +48,8 @@
                 {{ form_widget(searchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
+    </div>
+    <div class="row pb-4">
         <div class="col-auto">
             <div class="input-group">
                 {{ form_errors(searchForm.type) }}
@@ -79,7 +78,7 @@
             </div>                    
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="fab fa-searchengin"></i> {{ 'search'|trans|capitalize }}
             </button>
         </div>

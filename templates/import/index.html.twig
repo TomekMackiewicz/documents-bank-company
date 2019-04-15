@@ -3,15 +3,14 @@
 {% block body %}
 
 <div class="row pb-4">
-    <div class="col-sm-6">               
+    <div class="col-sm-12">               
         <ul class="nav">
             <li class="nav-item">
                 <a><h2>{{ 'import'|trans|capitalize }}</h2></a>
             </li>
         </ul>
     </div>
-</div>
-    
+</div>   
 {{ form_start(form) }}
     <div class="row pb-4">    
         <div class="col-md-8 col-lg-4">
@@ -37,7 +36,7 @@
     </div>
     <div class="row pb-4">            
         <div class="col-auto">
-            <button type="submit" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'upload'|trans|capitalize }}
             </button>
         </div>            
