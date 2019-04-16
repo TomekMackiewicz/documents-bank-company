@@ -39,8 +39,8 @@ class FileRepository extends EntityRepository
             SELECT
              SUM(CASE WHEN f.status = :in THEN 1 ELSE 0 END) AS in,
              SUM(CASE WHEN f.status = :out THEN 1 ELSE 0 END) AS out,
-             SUM(CASE WHEN f.status = :disposed THEN 1 ELSE 0 END) AS disposed,
              SUM(CASE WHEN f.status = :unknown THEN 1 ELSE 0 END) AS unknown,
+             SUM(CASE WHEN f.status = :disposed THEN 1 ELSE 0 END) AS disposed,
              COUNT(f.id) AS all
              FROM App:File f
         ")
@@ -122,20 +122,24 @@ class FileRepository extends EntityRepository
     {
         $previousTransfer = $file->getLastTransactionForDate($date);
         $nextTransfer = $file->getNextTransactionForDate($date);
-
+        
         if (false === $previousTransfer && false === $nextTransfer) {
            return true;                
         }
-
-        if ((false !== $previousTransfer && $previousTransfer->getType() != $type) && (false !== $nextTransfer && $nextTransfer->getType() != $type)) {
-           return true;
-        }
-
-        if ((false === $nextTransfer) && (false !== $previousTransfer && $previousTransfer->getType() != $type)) {
-           return true;
-        } 
         
-        return false;
+        if (false !== $previousTransfer) {
+            if ($previousTransfer->getType() == $type || $previousTransfer->getAdjustmentType() == $type) {
+                return false;
+            }            
+        }
+        
+        if (false !== $nextTransfer) {
+            if ($nextTransfer->getType() == $type || $nextTransfer->getAdjustmentType() == $type) {
+                return false;
+            }           
+        }
+        
+        return true;
     }    
     
 }

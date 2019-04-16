@@ -19,10 +19,10 @@ use App\Entity\Transfer;
  */
 class File 
 {
-    static $statusDisposed = 0;
     static $statusIn = 1;
     static $statusOut = 2;
     static $statusUnknown = 3;
+    static $statusDisposed = 4;
     
     /**
      * @var int
@@ -53,7 +53,7 @@ class File
      *   message = "field_cannot_be_empty"
      * )
      * @Assert\Choice(
-     *   choices = { 0, 1, 2, 3 },
+     *   choices = { 1, 2, 3, 4 },
      *   message = "invalid_value"
      * )        
      */
@@ -94,8 +94,7 @@ class File
     {
         $criteria = Criteria::create()
             ->orderBy(array('date'=>'DESC'))
-            ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
-            ->andWhere(Criteria::expr()->lt("date", $date))
+            ->Where(Criteria::expr()->lt("date", $date))
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -106,8 +105,7 @@ class File
     {
         $criteria = Criteria::create()
             ->orderBy(array('date'=>'ASC'))
-            ->where(Criteria::expr()->neq("type", Transfer::$transferAdjustment))
-            ->andWhere(Criteria::expr()->gt("date", $date))
+            ->Where(Criteria::expr()->gt("date", $date))
             ->setFirstResult(0)
             ->setMaxResults(1);
 

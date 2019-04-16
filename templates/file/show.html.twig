@@ -47,11 +47,7 @@
             </li>
             <li class="list-group-item">
                 {{ 'status'|trans|capitalize }}:
-                {% if file.status == 0 %}
-                    <span class="badge badge-pill badge-warning">
-                        {{ 'file_status_disposed'|trans|capitalize }}
-                    </span>
-                {% elseif file.status == 1 %} 
+                {% if file.status == 1 %} 
                     <span class="badge badge-pill badge-info">
                         {{ 'file_status_in'|trans|capitalize }}
                     </span>
@@ -59,9 +55,13 @@
                     <span class="badge badge-pill badge-info">
                         {{ 'file_status_out'|trans|capitalize }}
                     </span>
-                {% else %}
+                {% elseif file.status == 3 %}
                     <span class="badge badge-pill badge-danger">
                         {{ 'file_status_unknown'|trans|capitalize }}
+                    </span>
+                {% else %}
+                    <span class="badge badge-pill badge-warning">
+                        {{ 'file_status_disposed'|trans|capitalize }}
                     </span>
                 {% endif %}        
             </li>
@@ -134,6 +134,16 @@
                                 {{ 'transfer_out'|trans|capitalize }}
                             {% else %}
                                 {{ 'transfer_adjustment'|trans|capitalize }}
+                                
+                                {% if transfer.adjustmentType == 1 %}
+                                    ({{ 'file_status_in'|trans }})
+                                {% elseif transfer.adjustmentType == 2 %}
+                                    ({{ 'file_status_out'|trans }})
+                                {% elseif transfer.adjustmentType == 3 %}
+                                    ({{ 'file_status_unknown'|trans }})
+                                {% else %}
+                                    ({{ 'file_status_disposed'|trans }})
+                                {% endif %}
                             {% endif %}                            
                         </td>
                         <td>{{ transfer.date|date('Y-m-d') }}</td>

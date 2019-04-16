@@ -109,6 +109,15 @@
                                     {{ 'transfer_out'|trans|capitalize }}
                                 {% else %}
                                     {{ 'transfer_adjustment'|trans|capitalize }}
+                                        {% if transfer.adjustmentType == 1 %}
+                                            ({{ 'file_status_in'|trans }})
+                                        {% elseif transfer.adjustmentType == 2 %}
+                                            ({{ 'file_status_out'|trans }})
+                                        {% elseif transfer.adjustmentType == 3 %}
+                                            ({{ 'file_status_unknown'|trans }})
+                                        {% else %}
+                                            ({{ 'file_status_disposed'|trans }})
+                                        {% endif %}
                                 {% endif %}
                             </td>
                             <td>{{ transfer.customer.name }}</td>

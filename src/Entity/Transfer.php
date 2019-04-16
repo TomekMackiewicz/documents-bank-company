@@ -36,6 +36,12 @@ class Transfer
     private $type;
 
     /**
+     * @var string
+     * @ORM\Column(name="adjustment_type", type="integer", nullable=true) 
+     */
+    private $adjustmentType;
+
+    /**
      * @var \Date
      * @ORM\Column(name="date", type="datetime")    
      */
@@ -109,17 +115,20 @@ class Transfer
             if ($file->getStatus() == File::$statusUnknown) {
                $unknown[] = $signature; 
             }  
-            
-            // If previous transfer and previous transfer type equals this transfer type
-            if (false !== $previousTransfer && $previousTransfer->getType() == $this->getType()) {
-               $invalidType[] = $signature;
-               continue;
+
+            if (false !== $previousTransfer) {
+                if ($previousTransfer->getType() == $this->getType() || $previousTransfer->getAdjustmentType() == $this->getType()) {
+                    $invalidType[] = $signature;
+                    continue;
+                }            
             }
-            
-            // If next transfer and next transfer type not equals this transfer type
-            if (false !== $nextTransfer && $nextTransfer->getType() == $this->getType()) {
-               $invalidType[] = $signature; 
-            }           
+
+            if (false !== $nextTransfer) {
+                if ($nextTransfer->getType() == $this->getType() || $nextTransfer->getAdjustmentType() == $this->getType()) {
+                    $invalidType[] = $signature;
+                }           
+            }
+
         }
 
         foreach ($signatures as $signature) {
@@ -204,6 +213,24 @@ class Transfer
         return $this->type;
     }
 
+    /**
+     * @param string $adjustmentType
+     * @return Transfer
+     */
+    public function setAdjustmentType($adjustmentType) 
+    {
+        $this->adjustmentType = $adjustmentType;
+        return $this;
+    }
+
+    /**
+     * @return string 
+     */
+    public function getAdjustmentType() 
+    {
+        return $this->adjustmentType;
+    }
+    
     /**
      * @param Customer $customer
      * @return Action

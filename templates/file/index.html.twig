@@ -97,15 +97,15 @@
                                     {{ file.signature }}
                                 </a>
                             </td>
-                            <td>
-                                {% if file.status == 0 %}
-                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>
-                                {% elseif file.status == 1 %}
+                            <td>  
+                                {% if file.status == 1 %}
                                     {{ 'file_status_in'|trans|capitalize }}                                    
                                 {% elseif file.status == 2 %}
                                     {{ 'file_status_out'|trans|capitalize }}
-                                {% else %}
+                                {% elseif file.status == 3 %}
                                     <span class="text-danger">{{ 'file_status_unknown'|trans|capitalize }}</span>
+                                {% else %}
+                                    <span class="text-warning">{{ 'file_status_disposed'|trans|capitalize }}</span>    
                                 {% endif %}
                             </td>
                             <td>{{ file.customer.name }}</td>
