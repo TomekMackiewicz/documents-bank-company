@@ -11,6 +11,7 @@ calculation_for: calculation for
 change_password: change password
 create: create
 content: content
+current_status: current status
 customer: customer
 customer_address: address
 customer_choose: choose customer
@@ -32,6 +33,7 @@ edit: edit
 edit_fee_for: edit fee for
 edit_profile: edit profile
 email: email
+export: export
 fee: fee
 fee_added: Fee added
 fee_deleted: Fee deleted
@@ -40,6 +42,7 @@ fee_for: fee for
 fee_new: new fee
 fees: fees
 file: file
+filename: file name
 files: files
 file_created: New file(s) created
 file_deleted: File deleted

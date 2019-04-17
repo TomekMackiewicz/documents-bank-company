@@ -11,6 +11,7 @@ calculation_for: kalkulacja dla
 change_password: zmień hasło
 create: utwórz
 content: treść
+current_status: obecny status
 customer: klient
 customer_address: adres
 customer_choose: wybierz klienta
@@ -32,6 +33,7 @@ edit: edytuj
 edit_fee_for: edytuj opłatę dla
 edit_profile: edytuj profil
 email: email
+export: eksport
 fee: opłata
 fee_added: Opłata dodana
 fee_deleted: Opłata usunięta
@@ -40,6 +42,7 @@ fee_for: opłata dla
 fee_new: nowa opłata
 fees: opłaty
 file: dokument
+filename: nazwa pliku
 files: dokumenty
 file_created: Dodano dokument
 file_deleted: Dokument został usunięty

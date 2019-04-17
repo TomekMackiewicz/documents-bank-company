@@ -13,14 +13,14 @@ use App\Entity\Transfer;
 /**
  * @Route("admin/import")
  */
-class ImportController extends Controller {
-  
+class ImportController extends Controller 
+{  
     /**
-
      * @Route("/", name="import_index")
      * @Method({"GET", "POST"})
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request) 
+    {
         set_time_limit(600);
         $form = $this->createForm('App\Form\ImportType');
         $form->handleRequest($request);

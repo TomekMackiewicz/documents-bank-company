@@ -87,7 +87,7 @@ class FileRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('f')->from('App:File', 'f');
 
-        if ($searchCriteria['signature']) {
+        if (isset($searchCriteria['signature'])) {
             $qb->andWhere('f.signature LIKE :signature')
                 ->setParameter(":signature", '%'.$searchCriteria['signature'].'%');
         }
