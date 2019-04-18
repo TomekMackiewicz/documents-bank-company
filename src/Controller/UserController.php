@@ -168,6 +168,9 @@ class UserController extends AbstractController implements LogManagerInterface
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $password = $editForm['password']->getData();
+            $user->setPlainPassword($password);
+            
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $translator->trans('user_edited'));
             
