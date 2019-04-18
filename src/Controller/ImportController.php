@@ -54,7 +54,7 @@ class ImportController extends Controller
                 $transfer->setCustomer($customer);
                 $transfer->setDate(new \DateTime('now'));
                 $transfer->setType(Transfer::$transferAdjustment);
-                $transfer->setAdjustmentType(File::$statusIn);
+                $transfer->setAdjustmentType($file->getStatus());
 
                 $em->persist($file);
                 $em->persist($transfer);

@@ -63,8 +63,7 @@ $files = [];
         }
         
         return $this->render('export/index.html.twig', array(
-            'form' => $form->createView(),
-            'files' => $files
+            'form' => $form->createView()
         ));
     }
     
