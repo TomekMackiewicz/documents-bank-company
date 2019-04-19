@@ -20,7 +20,7 @@
 </div>
 {{ form_start(form) }}            
     <div class="row pb-4">    
-        <div class="col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.name) }}
                 <div class="input-group-prepend">
@@ -29,9 +29,7 @@
                 {{ form_widget(form.name) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.address) }}
                 <div class="input-group-prepend">
@@ -40,8 +38,6 @@
                 {{ form_widget(form.address) }}
             </div>
         </div>
-    </div>             
-    <div class="row pb-4"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}
