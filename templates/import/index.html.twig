@@ -13,7 +13,7 @@
 </div>   
 {{ form_start(form) }}
     <div class="row pb-4">    
-        <div class="col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.file) }}
             <div class="input-group-prepend">
@@ -22,9 +22,7 @@
                 {{ form_widget(form.file) }}
             </div>
         </div>
-    </div>   
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.customer) }}
             <div class="input-group-prepend">
@@ -32,9 +30,7 @@
             </div>    
                 {{ form_widget(form.customer) }}
             </div>
-        </div> 
-    </div>
-    <div class="row pb-4">            
+        </div>            
         <div class="col-auto">
             <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'upload'|trans|capitalize }}

@@ -20,7 +20,7 @@
 </div>
 {{ form_start(form) }}
     <div class="row pb-4">            
-        <div class="col-auto">                    
+        <div class="col-sm-12 col-md-auto pb-2">                    
             <div class="input-group">
                 {{ form_errors(form.dateFrom) }}
             <div class="input-group-prepend">
@@ -29,7 +29,7 @@
                 {{ form_widget(form.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.dateTo) }}
             <div class="input-group-prepend">
