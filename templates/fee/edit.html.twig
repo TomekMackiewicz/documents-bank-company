@@ -27,7 +27,7 @@
 </div>    
 {{ form_start(edit_form) }}  
     <div class="row pb-4"> 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(edit_form.import) }}
             <div class="input-group-prepend">
@@ -35,10 +35,8 @@
             </div>    
                 {{ form_widget(edit_form.import) }}
             </div>
-        </div> 
-    </div>
-    <div class="row pb-4">    
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        </div>     
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(edit_form.delivery) }}
             <div class="input-group-prepend">
@@ -47,9 +45,7 @@
                 {{ form_widget(edit_form.delivery) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(edit_form.storage) }}
             <div class="input-group-prepend">
@@ -57,10 +53,8 @@
             </div>    
                 {{ form_widget(edit_form.storage) }}
             </div>
-        </div> 
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        </div>  
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(edit_form.boxPrice) }}
             <div class="input-group-prepend">
@@ -69,9 +63,7 @@
                 {{ form_widget(edit_form.boxPrice) }}
             </div>
         </div> 
-    </div>
-    <div class="row pb-4"> 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(edit_form.customer) }}
             <div class="input-group-prepend">
@@ -79,9 +71,7 @@
             </div>    
                 {{ form_widget(edit_form.customer) }}
             </div>
-        </div>
-    </div>
-    <div class="row pb-4"> 
+        </div> 
         <div class="col-auto">
             <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}

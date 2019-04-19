@@ -32,7 +32,7 @@
 </div>    
 {{ form_start(form) }}            
     <div class="row pb-4">    
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.month) }}
             <div class="input-group-prepend">
@@ -41,7 +41,7 @@
                 {{ form_widget(form.month, { 'attr' : { 'class': 'monthpicker' }}) }}
             </div>
         </div>            
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.customer) }}
             <div class="input-group-prepend">
