@@ -5,17 +5,17 @@
 <div class="row pb-4">
     <div class="col-sm-12">               
         <ul class="nav float-right">
-          <li class="nav-item pl-2">
+          <li class="nav-item pl-2 pb-2">
             <a class="btn btn-outline-success" href="{{ path('file_new') }}">
                 <i class="fas fa-plus"></i> {{ 'file_new'|trans|capitalize }}
             </a>
           </li>
-          <li class="nav-item pl-2">
+          <li class="nav-item pl-2 pb-2">
             <button class="btn btn-outline-primary" id="print" {%if searchResults is empty%}disabled{%endif%}>
                 <i class="fas fa-print"></i> {{ 'pdf'|trans|upper }}
             </button>        
           </li>
-          <li class="nav-item pl-2">
+          <li class="nav-item pl-2 pb-2">
             <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="{{ 'info_file_index'|trans }}">
                 <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
             </button>        
