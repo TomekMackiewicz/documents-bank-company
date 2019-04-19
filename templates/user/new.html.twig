@@ -19,8 +19,8 @@
     </div>    
 </div>
 {{ form_start(form) }}            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+    <div class="row"> 
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.username) }}
                 <div class="input-group-prepend">
@@ -30,8 +30,8 @@
             </div>
         </div> 
     </div>
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+    <div class="row"> 
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.email) }}
                 <div class="input-group-prepend">
@@ -41,8 +41,8 @@
             </div>
         </div>
     </div>  
-    <div class="row pb-4">    
-        <div class="col-md-8 col-lg-4">
+    <div class="row">    
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.customer) }}
                 <div class="input-group-prepend">
@@ -52,8 +52,8 @@
             </div>
         </div>
     </div>
-    <div class="row pb-4">    
-        <div class="col-md-8 col-lg-4">
+    <div class="row">    
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.roles) }}
                 <div class="input-group-prepend">
@@ -63,8 +63,8 @@
             </div>
         </div>
     </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+    <div class="row"> 
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.password.first) }}
                 <div class="input-group-prepend">
@@ -74,8 +74,8 @@
             </div>
         </div>
     </div>            
-    <div class="row pb-4"> 
-        <div class="col-md-8 col-lg-4">
+    <div class="row"> 
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(form.password.second) }}
                 <div class="input-group-prepend">
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>             
-    <div class="row pb-4"> 
+    <div class="row"> 
         <div class="col-auto">
             <button type="submit" class="btn btn-outline-primary">
                 <i class="far fa-edit"></i> {{ 'create'|trans|capitalize }}

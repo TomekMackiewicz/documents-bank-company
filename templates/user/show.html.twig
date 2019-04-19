@@ -5,24 +5,24 @@
 <div class="row pb-4">
     <div class="col-sm-12">               
         <ul class="nav float-right">
-            <li class="nav-item pl-2">
+            <li class="nav-item pl-2 pb-2">
                 <a class="btn btn-outline-success" href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-default inline">
                     <i class="far fa-edit"></i> {{ 'edit'|trans|capitalize }}
                 </a>
             </li>  
-            <li class="nav-item pl-2">
+            <li class="nav-item pl-2 pb-2">
                 <a class="btn btn-outline-secondary" href="{{ path('user_index') }}" class="btn btn-default inline">
                     <i class="fas fa-undo"></i> {{ 'back'|trans|capitalize }}
                 </a>
             </li>
-            <li class="nav-item pl-2">
+            <li class="nav-item pl-2 pb-2">
               <button class="btn btn-outline-info" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-content="
                       Todo.
               ">
                   <i class="fas fa-info-circle"></i> {{ 'info'|trans|capitalize }}
               </button>        
             </li>             
-            <li class="nav-item pl-2">
+            <li class="nav-item pl-2 pb-2">
                 {{ form_start(delete_form, {'attr': {'class': 'inline'}}) }}
                     <button type="submit" class="btn btn-outline-danger">
                         <i class="far fa-trash-alt"></i> {{ 'delete'|trans|capitalize }}
