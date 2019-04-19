@@ -30,7 +30,7 @@
 </div>
 {{ form_start(searchForm) }}
     <div class="row pb-4">            
-        <div class="col-auto">                    
+        <div class="col-sm-12 col-md-auto pb-2">                    
             <div class="input-group">
                 {{ form_errors(searchForm.dateFrom) }}
             <div class="input-group-prepend">
@@ -39,7 +39,7 @@
                 {{ form_widget(searchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(searchForm.dateTo) }}
             <div class="input-group-prepend">
@@ -48,9 +48,7 @@
                 {{ form_widget(searchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4">
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(searchForm.type) }}
             <div class="input-group-prepend">
@@ -59,7 +57,7 @@
                 {{ form_widget(searchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
             </div>                    
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(searchForm.customer) }}
             <div class="input-group-prepend">
@@ -68,7 +66,7 @@
                 {{ form_widget(searchForm.customer, {'attr': {'multiple':'multiple', 'class': 'multiple-male'}}) }}
             </div>                     
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(searchForm.sort) }}
             <div class="input-group-prepend">
