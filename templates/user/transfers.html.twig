@@ -27,7 +27,7 @@
 </div>    
 {{ form_start(transfersSearchForm) }}
     <div class="row pb-4">            
-        <div class="col-auto">                    
+        <div class="col-sm-12 col-md-auto pb-2">                    
             <div class="input-group">
                 {{ form_errors(transfersSearchForm.dateFrom) }}
             <div class="input-group-prepend">
@@ -36,7 +36,7 @@
                 {{ form_widget(transfersSearchForm.dateFrom, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(transfersSearchForm.dateTo) }}
             <div class="input-group-prepend">
@@ -45,9 +45,7 @@
                 {{ form_widget(transfersSearchForm.dateTo, { 'attr' : { 'class': 'datepicker' }}) }}
             </div>
         </div>
-    </div>
-    <div class="row pb-4">
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(transfersSearchForm.type) }}
             <div class="input-group-prepend">
@@ -56,7 +54,7 @@
                 {{ form_widget(transfersSearchForm.type, {'attr': {'multiple':'multiple', 'class': 'multiple'}}) }}
             </div>                    
         </div>
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-auto pb-2">
             <div class="input-group">
                 {{ form_errors(transfersSearchForm.sort) }}
             <div class="input-group-prepend">
