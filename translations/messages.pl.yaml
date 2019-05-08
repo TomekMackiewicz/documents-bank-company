@@ -125,11 +125,11 @@ transfer_date: data zamówienia
 transfer_deleted: Zamówienie zostało usunięte
 transfer_edit: edycja zamówienia
 transfer_edited: Zamówienie zostało uaktualnione
-transfer_in: wydanie
-transfers_in: wydania
+transfer_in: przyjęcie
+transfers_in: przyjęcia
 transfer_new: nowe zamówienie
-transfer_out: przyjęcie
-transfers_out: przyjęcia
+transfer_out: wydanie
+transfers_out: wydania
 transfers_show: pokaż wydania, przyjęcia i przesunięcia magazynowe
 type: typ
 unit_price: cena j.
