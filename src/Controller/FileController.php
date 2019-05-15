@@ -83,7 +83,7 @@ class FileController extends AbstractController implements LogManagerInterface
             
             $signatures = explode(',', $data->getSignature());
             $transfer->setDate(new \DateTime());
-            $transfer->setType(Transfer::$transferAdjustment);
+            $transfer->setType($data->getStatus());
             $transfer->setAdjustmentType($data->getStatus());
             $transfer->setCustomer($data->getCustomer());
             
