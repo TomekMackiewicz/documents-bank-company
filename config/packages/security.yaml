@@ -29,4 +29,6 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin, role: ROLE_ADMIN }
-        #- { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/user, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/import, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/log, roles: ROLE_SUPER_ADMIN }
